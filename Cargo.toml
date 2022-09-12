@@ -1,9 +1,16 @@
 [package]
 name = "ipv4-heatmap"
 author = "boB Rudis (@hrbrmstr)"
-description = "Rustified IPv4 Heatmap"
+description = "Generate an IPv4 12th order Hilbert Heatmap from a file of IPv4 addresses."
+readme = "README.md"
+license = "MIT"
+categories = ["data-visualization", "command-line-interface"]
+keywords = ["cli", "ipaddress", "ipv4", "datavis", "hilbert"]
+homepage = "https://github.com/hrbrmstr/rust-ipv4-heatmap"
+repository = "https://github.com/hrbrmstr/rust-ipv4-heatmap"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-rustbitmap = "0.1.0"
+clap = { version = "3.2.20", features = ["derive"] }
+image = "0.24.3"
