@@ -55,119 +55,162 @@ pub const ylorrd_blue: [u8; 256] = [ 204, 202, 201, 199, 198, 197, 195, 194, 192
 pub const black: [u8; 256] = [0; 256];
 pub const white: [u8; 256] = [255; 256];
 
-pub fn set_palette(name: &str, channel: &str) -> [u8; 256] {
-  
+pub enum ColorChannel {
+  Red,
+  Green,
+  Blue,
+}
+
+pub use self::ColorChannel::{Red, Green, Blue};
+
+#[allow(non_camel_case_types)]
+pub enum ColorPalette {
+  viridis,
+  brbg,
+  puor,
+  rdbu,
+  rdgy,
+  rdylbu,
+  spectral,
+  bupu,
+  reds,
+  ylgnbu,
+  ylorbr,
+  ylorrd
+}
+
+pub use self::ColorPalette::{
+  viridis,
+  brbg,
+  puor,
+  rdbu,
+  rdgy,
+  rdylbu,
+  spectral,
+  bupu,
+  reds,
+  ylgnbu,
+  ylorbr,
+  ylorrd
+};
+
+pub fn palette(name: &str) -> ColorPalette {
   match name {
-    "viridis" => {
+    "viridis" => viridis,
+    "brbg" => brbg,
+    "puor" => puor,
+    "rdbu" => rdbu,
+    "rdgy" => rdgy,
+    "rdylbu" => rdylbu,
+    "spectral" => spectral,
+    "bupu" => bupu,
+    "reds" => reds,
+    "ylgnbu" => ylgnbu,
+    "ylorbr" => ylorbr,
+    "ylorrd" => ylorrd,
+    _ => viridis
+  }
+}
+
+pub fn set_palette(palette: &ColorPalette, channel: ColorChannel) -> [u8; 256] {
+  
+  match palette {
+    viridis => {
       match channel {
-        "red" => viridis_red,
-        "green" => viridis_green,
-        "blue" => viridis_blue,
-        _ => black
+        Red => viridis_red,
+        Green => viridis_green,
+        Blue => viridis_blue,
       }	
     },
     
-    "brbg" => {
+    brbg => {
       match channel {
-        "red" => brbg_red,
-        "green" => brbg_green,
-        "blue" => brbg_blue,
-        _ => black
+        Red => brbg_red,
+        Green => brbg_green,
+        Blue => brbg_blue,
       }	
     },
     
-    "puor" => {
+    puor => {
       match channel {
-        "red" => puor_red,
-        "green" => puor_green,
-        "blue" => puor_blue,
-        _ => black
+        Red => puor_red,
+        Green => puor_green,
+        Blue => puor_blue,
       }	
     },
     
-    "rdbu" => {
+    rdbu => {
       match channel {
-        "red" => rdbu_red,
-        "green" => rdbu_green,
-        "blue" => rdbu_blue,
-        _ => black
+        Red => rdbu_red,
+        Green => rdbu_green,
+        Blue => rdbu_blue,
       }	
     },
     
-    "rdgy" => {
+    rdgy => {
       match channel {
-        "red" => rdgy_red,
-        "green" => rdgy_green,
-        "blue" => rdgy_blue,
-        _ => black
+        Red => rdgy_red,
+        Green => rdgy_green,
+        Blue => rdgy_blue,
       }	
     },
     
-    "rdylbu" => {
+    rdylbu => {
       match channel {
-        "red" => rdylbu_red,
-        "green" => rdylbu_green,
-        "blue" => rdylbu_blue,
-        _ => black
+        Red => rdylbu_red,
+        Green => rdylbu_green,
+        Blue => rdylbu_blue,
       }	
     },
     
-    "spectral" => {
+    spectral => {
       match channel {
-        "red" => spectral_red,
-        "green" => spectral_green,
-        "blue" => spectral_blue,
-        _ => black
+        Red => spectral_red,
+        Green => spectral_green,
+        Blue => spectral_blue,
       }	
     },
     
-    "bupu" => {
+    bupu => {
       match channel {
-        "red" => bupu_red,
-        "green" => bupu_green,
-        "blue" => bupu_blue,
-        _ => black
+        Red => bupu_red,
+        Green => bupu_green,
+        Blue => bupu_blue,
       }	
     },
     
-    "reds" => {
+    reds => {
       match channel {
-        "red" => reds_red,
-        "green" => reds_green,
-        "blue" => reds_blue,
-        _ => black
+        Red => reds_red,
+        Green => reds_green,
+        Blue => reds_blue,
       }	
     },
     
-    "ylgnbu" => {
+    ylgnbu => {
       match channel {
-        "red" => ylgnbu_red,
-        "green" => ylgnbu_green,
-        "blue" => ylgnbu_blue,
-        _ => black
+        Red => ylgnbu_red,
+        Green => ylgnbu_green,
+        Blue => ylgnbu_blue,
       }	
     },
     
-    "ylorbr" => {
+    ylorbr => {
       match channel {
-        "red" => ylorbr_red,
-        "green" => ylorbr_green,
-        "blue" => ylorbr_blue,
-        _ => black
+        Red => ylorbr_red,
+        Green => ylorbr_green,
+        Blue => ylorbr_blue,
       }	
     },
     
-    "ylorrd" => {
+    ylorrd => {
       match channel {
-        "red" => ylorrd_red,
-        "green" => ylorrd_green,
-        "blue" => ylorrd_blue,
-        _ => black
+        Red => ylorrd_red,
+        Green => ylorrd_green,
+        Blue => ylorrd_blue,
       }	
     },
-    
-    _ => black
-    
+        
   }
   
 }

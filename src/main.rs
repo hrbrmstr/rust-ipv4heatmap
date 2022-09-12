@@ -1,4 +1,5 @@
 mod colors;
+use colors::ColorChannel::{Red, Green, Blue};
 
 use std::str::FromStr;
 use std::net::Ipv4Addr;
@@ -78,9 +79,11 @@ fn main() {
 	
 	let args = Args::parse();
 
-  let mut red = colors::set_palette(args.palette.as_str(), "red");
-  let mut green = colors::set_palette(args.palette.as_str(), "green");
-  let mut blue = colors::set_palette(args.palette.as_str(), "blue");
+	let chosen_palette = colors::palette(args.palette.as_str());
+
+  let mut red = colors::set_palette(&chosen_palette, Red);
+  let mut green = colors::set_palette(&chosen_palette, Green);
+  let mut blue = colors::set_palette(&chosen_palette, Blue);
 
 	if args.invert {
 	  red.reverse();
@@ -122,6 +125,6 @@ fn main() {
 		}
 	}
 	
-	img.save(args.output).unwrap();
+	img.save(args.output).expect("Error saving file.");
 	
 }
