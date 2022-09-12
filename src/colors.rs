@@ -1,8 +1,8 @@
 #![allow(non_upper_case_globals)]
 #![allow(dead_code)]
 
-/* GENERATED AUTOMATICALLY DO NOT EDIT BY HAND */
-/* SEE extra/colorgen.r for details */
+/* GENERATED AUTOMATICALLY [2022-09-12 12:50:14] DO NOT EDIT BY HAND */
+/* SEE extras/colorgen.r for details */
 
 use image::Rgba;
 

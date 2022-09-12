@@ -25,7 +25,11 @@ color_fil <- "colors.rs"
 cat(
   "#![allow(non_upper_case_globals)]",
   "#![allow(dead_code)]\n",
-  "/* GENERATED AUTOMATICALLY DO NOT EDIT BY HAND */\n/* SEE extra/colorgen.r for details */",
+  sprintf(
+    "/* GENERATED AUTOMATICALLY [%s] DO NOT EDIT BY HAND */\n/* SEE extras/colorgen.r for details */\n",
+    Sys.time()
+  ),
+  "use image::Rgba;",
   sep = "\n",
   file = color_fil
 )
@@ -93,10 +97,217 @@ walk(sequent, \(x) {
       tolower(x),
       paste0(b$blue, collapse = ", "))
     ,
-    file = color_fil, 
+    file = color_fil,
     append = TRUE
   )
 })
 
-cat("Please move 'colors.rs' to the 'src' directory under the main source tree.\n")
+cat(
+  r"(
+pub const white:Rgba<u8> = Rgba([255, 255, 255, 255]);
+pub const black:Rgba<u8> = Rgba([0, 0, 0, 255]);
+
+#[derive(Debug, PartialEq)]
+pub enum ColorChannel {
+  Red,
+  Green,
+  Blue,
+}
+
+use self::ColorChannel::{Red, Green, Blue};
+
+#[allow(non_camel_case_types)]
+#[derive(Debug, PartialEq)]
+ enum ColorPalette {
+  viridis,
+  brbg,
+  puor,
+  rdbu,
+  rdgy,
+  rdylbu,
+  spectral,
+  bupu,
+  reds,
+  ylgnbu,
+  ylorbr,
+  ylorrd
+}
+
+use self::ColorPalette::{
+  viridis,
+  brbg,
+  puor,
+  rdbu,
+  rdgy,
+  rdylbu,
+  spectral,
+  bupu,
+  reds,
+  ylgnbu,
+  ylorbr,
+  ylorrd
+};
+
+fn palette(name: &str) -> ColorPalette {
+  match name {
+    "viridis" => viridis,
+    "brbg" => brbg,
+    "puor" => puor,
+    "rdbu" => rdbu,
+    "rdgy" => rdgy,
+    "rdylbu" => rdylbu,
+    "spectral" => spectral,
+    "bupu" => bupu,
+    "reds" => reds,
+    "ylgnbu" => ylgnbu,
+    "ylorbr" => ylorbr,
+    "ylorrd" => ylorrd,
+    _ => viridis
+  }
+}
+
+fn set_palette(palette: &ColorPalette, channel: ColorChannel) -> [u8; 256] {
+  
+  match palette {
+    viridis => {
+      match channel {
+        Red => viridis_red,
+        Green => viridis_green,
+        Blue => viridis_blue,
+      }	
+    },
+    
+    brbg => {
+      match channel {
+        Red => brbg_red,
+        Green => brbg_green,
+        Blue => brbg_blue,
+      }	
+    },
+    
+    puor => {
+      match channel {
+        Red => puor_red,
+        Green => puor_green,
+        Blue => puor_blue,
+      }	
+    },
+    
+    rdbu => {
+      match channel {
+        Red => rdbu_red,
+        Green => rdbu_green,
+        Blue => rdbu_blue,
+      }	
+    },
+    
+    rdgy => {
+      match channel {
+        Red => rdgy_red,
+        Green => rdgy_green,
+        Blue => rdgy_blue,
+      }	
+    },
+    
+    rdylbu => {
+      match channel {
+        Red => rdylbu_red,
+        Green => rdylbu_green,
+        Blue => rdylbu_blue,
+      }	
+    },
+    
+    spectral => {
+      match channel {
+        Red => spectral_red,
+        Green => spectral_green,
+        Blue => spectral_blue,
+      }	
+    },
+    
+    bupu => {
+      match channel {
+        Red => bupu_red,
+        Green => bupu_green,
+        Blue => bupu_blue,
+      }	
+    },
+    
+    reds => {
+      match channel {
+        Red => reds_red,
+        Green => reds_green,
+        Blue => reds_blue,
+      }	
+    },
+    
+    ylgnbu => {
+      match channel {
+        Red => ylgnbu_red,
+        Green => ylgnbu_green,
+        Blue => ylgnbu_blue,
+      }	
+    },
+    
+    ylorbr => {
+      match channel {
+        Red => ylorbr_red,
+        Green => ylorbr_green,
+        Blue => ylorbr_blue,
+      }	
+    },
+    
+    ylorrd => {
+      match channel {
+        Red => ylorrd_red,
+        Green => ylorrd_green,
+        Blue => ylorrd_blue,
+      }	
+    },
+        
+  }
+  
+}
+
+pub fn select_palette(name: &str, invert: bool) -> Vec<image::Rgba<u8>> {
+
+	let chosen_palette = palette(name);
+
+  let mut red = set_palette(&chosen_palette, Red);
+  let mut green = set_palette(&chosen_palette, Green);
+  let mut blue = set_palette(&chosen_palette, Blue);
+
+	if invert {
+	  red.reverse();
+	  green.reverse();
+	  blue.reverse();
+	}
+	
+	(0..red.len()).into_iter().map(|i| image::Rgba([red[i], green[i], blue[i], 255])).collect()
+
+}
+
+#[cfg(test)]
+
+#[test]
+fn test_set_palette() {
+	let result = self::select_palette("viridis", false);
+	assert_eq!(result[0], image::Rgba([self::viridis_red[0], viridis_green[0], viridis_blue[0], 255]));
+}
+
+#[test]
+fn test_palette() {
+	let result = self::palette("ylorbr");
+	assert_eq!(result, self::ColorPalette::ylorbr);
+}
+
+)",
+    file = color_fil,
+    append = TRUE
+  )
+
+
+cat(
+  "Please move 'colors.rs' to the 'src' directory under the main source tree.\n"
+)
 
