@@ -1,11 +1,11 @@
 mod utils;
-
 mod colors;
 use colors::{white, black};
 
 use clap::Parser;
 
-use image::{ImageBuffer};
+// use image::ImageBuffer;
+use image::RgbaImage;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
@@ -19,17 +19,25 @@ struct Args {
 	#[clap(short, long)]
 	invert: bool,
 
-	/// reverse; white background, black text
+	/// reverse (white background, black text)
 	#[clap(short, long)]
 	reverse: bool,
 
-	/// filename of ips
+	/// file of IPs
 	#[clap(short, long, default_value_t = String::from("ips.txt"))]
   filename: String,
 
-	/// map output filename
+	/// map output file
 	#[clap(short, long, default_value_t = String::from("map.png"))]
   output: String,
+
+	/// shades file
+  #[clap(short, long)]
+	shades: Option<String>,
+
+	/// outlines file
+  #[clap(short, long)]
+	outlines: Option<String>,
 
 }
 
@@ -37,11 +45,11 @@ fn main() {
 	
 	let args = Args::parse();
 
-	let colors: Vec<image::Rgb<u8>> = colors::select_palette(args.palette.as_str(), args.invert);
-	
-	let mut img = ImageBuffer::from_fn(4096, 4096, |_x, _y| {
+	let colors: Vec<image::Rgba<u8>> = colors::select_palette(args.palette.as_str(), args.invert);
+
+	let mut img = RgbaImage::from_fn(4096, 4096, |_x, _y| {
     if args.reverse { white } else { black }
-  });
+  }); 
 	
 	if let Ok(lines) = utils::read_lines(args.filename) {
 		
@@ -50,7 +58,7 @@ fn main() {
 			if let Ok(ip) = line {
 				
 				let (x, y) = utils::hil_xy_from_s(utils::ip_to_numeric(ip), 12);
-				
+
 				let pixel = *img.get_pixel(x, y);
 				
 				let k = colors.iter().position(|x| x == &pixel);
@@ -66,7 +74,16 @@ fn main() {
 			}
 		}
 	}
+
+	if let Some(shades_file) = args.shades {
+    utils::shade_cidrs(&mut img, shades_file.as_str());
+	}
+
+	if let Some(outlines_file) = args.outlines {
+    utils::outline_cidrs(&mut img, outlines_file.as_str());
+	}
+
+ 	img.save(args.output).expect("Error saving file.");
 	
-	img.save(args.output).expect("Error saving file.");
 	
 }
