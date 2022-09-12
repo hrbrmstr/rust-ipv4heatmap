@@ -9,6 +9,12 @@ use image::RgbaImage;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
+// #[clap(group(
+//   ArgGroup::new("annnotate")
+//     .args(&["annotations", "font"])
+// 	  .required(true)
+//     .requires_all(&["annotations", "font"]),
+// ))]
 struct Args {
 
 	/// color palette; one of (viridis brbg puor rdbu rdgy rdylbu spectral bupu reds ylgnbu ylorbr ylorrd)
@@ -36,8 +42,16 @@ struct Args {
 	shades: Option<String>,
 
 	/// outlines file
-  #[clap(short, long)]
+  #[clap(long)]
 	outlines: Option<String>,
+
+	/// annotations file
+  #[clap(short, long, requires = "font", requires_all = &["font", "annotations"])]
+	annotations: Option<String>,
+
+		/// annotation font
+  #[clap(long, requires = "annotations", requires_all = &["font", "annotations"])]
+	font: Option<String>,
 
 }
 
@@ -81,6 +95,10 @@ fn main() {
 
 	if let Some(outlines_file) = args.outlines {
     utils::outline_cidrs(&mut img, outlines_file.as_str());
+	}
+
+	if let Some(annotations_file) = args.annotations {
+    utils::annotate_cidrs(&mut img, annotations_file.as_str(), args.font);		
 	}
 
  	img.save(args.output).expect("Error saving file.");

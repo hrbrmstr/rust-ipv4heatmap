@@ -1,0 +1,4 @@
+1.0.0.0/8	#FFFFFFFF	140	Way too small of ann
+50.0.0.0/8	#FFFFFFFF	200	Smaller ann
+200.0.0.0/8	#FFFFFFFF	400	Big anno
+100.0.0.0/8	#FFFFFFFF	300	Another annotation

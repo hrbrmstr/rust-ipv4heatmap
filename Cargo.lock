@@ -378,6 +378,7 @@ dependencies = [
  "hex_color",
  "image",
  "imageproc",
+ "rusttype",
 ]
 
 [[package]]
