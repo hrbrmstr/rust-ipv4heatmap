@@ -1,53 +1,11 @@
-mod colors;
-use colors::ColorChannel::{Red, Green, Blue};
+mod utils;
 
-use std::str::FromStr;
-use std::net::Ipv4Addr;
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+mod colors;
+use colors::{white, black};
 
 use clap::Parser;
 
 use image::{ImageBuffer};
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> where P: AsRef<Path>, {
-	let file = File::open(filename)?;
-	Ok(io::BufReader::new(file).lines())
-}
-
-fn hil_xy_from_s(ip_as_int: u32, order: i16) -> (u32, u32) {
-	
-	let mut i: i16;
-	let mut state: u32 = 0;
-	let mut x: u32 = 0;
-	let mut y: u32 = 0;
-	let mut row: u32;
-	
-	i = 2 * order - 2;
-	
-	let s = ip_as_int >> 8;
-	
-	while i >= 0 {
-		
-		row = 4 * state | ((s >> i) & 3);
-		x = (x << 1) | ((0x936C >> row) & 1);
-		y = (y << 1) | ((0x39C6 >> row) & 1);
-		state = (0x3E6B94C1 >> 2 * row) & 3;
-		
-		i = i - 2;
-		
-	}
-	
-	(x, y)
-	
-}
-
-fn ip_to_numeric(ip: String) -> u32 {
-	let addr = Ipv4Addr::from_str(&ip).expect("Invalid IPv4");
-  let addr_u32: u32 = addr.into();
-	addr_u32
-}
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
@@ -79,35 +37,19 @@ fn main() {
 	
 	let args = Args::parse();
 
-	let chosen_palette = colors::palette(args.palette.as_str());
-
-  let mut red = colors::set_palette(&chosen_palette, Red);
-  let mut green = colors::set_palette(&chosen_palette, Green);
-  let mut blue = colors::set_palette(&chosen_palette, Blue);
-
-	if args.invert {
-	  red.reverse();
-	  green.reverse();
-	  blue.reverse();
-	}
-	
-	let colors: Vec<image::Rgb<u8>> = (0..red.len()).into_iter().map(|i| image::Rgb([red[i], green[i], blue[i]])).collect();
+	let colors: Vec<image::Rgb<u8>> = colors::select_palette(args.palette.as_str(), args.invert);
 	
 	let mut img = ImageBuffer::from_fn(4096, 4096, |_x, _y| {
-    if args.reverse {
-      image::Rgb([255, 255, 255])
-    } else {
-      image::Rgb([0, 0, 0])
-    }
+    if args.reverse { white } else { black }
   });
 	
-	if let Ok(lines) = read_lines(args.filename) {
+	if let Ok(lines) = utils::read_lines(args.filename) {
 		
 		for line in lines {
 			
 			if let Ok(ip) = line {
 				
-				let (x, y) = hil_xy_from_s(ip_to_numeric(ip), 12);
+				let (x, y) = utils::hil_xy_from_s(utils::ip_to_numeric(ip), 12);
 				
 				let pixel = *img.get_pixel(x, y);
 				
