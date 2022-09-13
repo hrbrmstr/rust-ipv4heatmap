@@ -6,7 +6,7 @@ use hex_color::HexColor;
 use image::{ImageBuffer, Rgba, Pixel};
 use imageproc::definitions::{Clamp};
 use imageproc::drawing::{Canvas, text_size};
-use imageproc::pixelops::weighted_sum;
+use imageproc::pixelops::{weighted_sum};
 
 use conv::ValueInto;
 use std::cmp::max;

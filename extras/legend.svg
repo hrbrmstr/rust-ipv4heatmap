@@ -1,5 +1,5 @@
 
-	<svg class="hilbert-legend" width="340" height="60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<svg class="hilbert-legend" width="340" height="70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<defs>
 					<style>
 					svg.hilbert-legend { padding-top: 10pt; }

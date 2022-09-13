@@ -15,7 +15,7 @@ pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Pa
   if invert { cols.reverse() };
 
  let res = format!(r#"
-	<svg class="hilbert-legend" width="340" height="60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<svg class="hilbert-legend" width="340" height="70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<defs>
 					<style>
 					svg.hilbert-legend {{ padding-top: 10pt; }}

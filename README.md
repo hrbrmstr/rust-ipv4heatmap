@@ -23,4 +23,6 @@ OPTIONS:
     -V, --version                      Print version information
 ```
 
+![legend](extras/legend.svg)
+
 ![map](map.png)

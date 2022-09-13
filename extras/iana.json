@@ -1,7 +1,7 @@
 [
 {
     "cidr": "0.0.0.0/8",
-    "label-color": "#FFFFFF11",
+    "label-color": "#FFFFFFFF",
     "label": "Reserved",
     "border-color": "#FFFFFFFF"
 },
@@ -19,7 +19,7 @@
 },
 {
     "cidr": "3.0.0.0/8",
-    "label-color": "#FFFFFF11",
+    "label-color": "#FFFFFFFF",
     "label": "GE",
     "label-font": "extras/Lato-Black.ttf",
     "border-color": "#FFFFFFFF"
