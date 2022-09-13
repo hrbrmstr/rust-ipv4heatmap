@@ -375,6 +375,7 @@ version = "0.1.0"
 dependencies = [
  "cidr",
  "clap",
+ "conv",
  "hex_color",
  "image",
  "imageproc",
