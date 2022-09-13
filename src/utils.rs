@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use std::cmp::{min, max};
 use std::str::FromStr;
 use std::net::Ipv4Addr;
@@ -30,7 +28,7 @@ pub fn hil_xy_from_s(ip_as_int: u32, order: i16) -> (u32, u32) {
 	
 	i = 2 * order - 2;
 	
-	let s = ip_as_int >> 8;
+	let s = ip_as_int >> 8; // we're only supporting full maps
 	
 	while i >= 0 {
 		
@@ -72,7 +70,7 @@ fn bbox(first: u32, slash: u8) -> BoundingBox {
 		
 		let (xmin, ymin) = hil_xy_from_s(first, 12);
 		
-		BoundingBox{ xmin, xmax:xmin, ymin, ymax:ymin }
+		BoundingBox{ xmin, xmax: xmin, ymin, ymax: ymin }
 		
 	} else if 0 == (slash & 1) { // square
 		
@@ -109,7 +107,6 @@ pub fn bbox_from_cidr(cidr: String) -> BoundingBox {
 	if let Ok(parsed_cidr) = Ipv4Cidr::from_str(cidr.as_str()) {
 		
 		let first: u32 = parsed_cidr.first_address().into();
-		let _last: u32 = parsed_cidr.last_address().into();
 		let slash: u8 = parsed_cidr.network_length();
 		
 		return bbox(first, slash)
@@ -141,4 +138,12 @@ fn test_read_lines() {
 	} else {
 		assert!(false);
 	}
+}
+
+#[test]
+fn test_bbox_from_cidr() {
+	let result = self::bbox_from_cidr(String::from("218.0.0.0/7"));
+	assert_eq!(result, BoundingBox { xmin: 2048, xmax: 2559, ymin: 1024, ymax: 1279 });
+	let result = self::bbox_from_cidr(String::from("217.0.0.0/8"));
+	assert_eq!(result, BoundingBox { xmin: 2048, xmax: 2303, ymin: 1280, ymax: 1535 });
 }

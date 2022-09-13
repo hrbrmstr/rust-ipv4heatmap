@@ -46,7 +46,7 @@ struct Args {
   #[clap(short, long)]//, requires = "font", requires_all = &["font", "annotations"])]
 	annotations: Option<String>,
 
-		/// annotation font
+		/// annotation font (NOT IMPLEMENTED YET)
   #[clap(long)]//, requires = "annotations", requires_all = &["font", "annotations"])]
 	font: Option<String>,
 
@@ -62,6 +62,8 @@ fn main() {
     if args.reverse { white } else { black }
   }); 
 	
+	// draw /24 pixels
+
 	if let Ok(lines) = utils::read_lines(args.filename) {
 		
 		for line in lines {
