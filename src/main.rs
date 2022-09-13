@@ -1,8 +1,10 @@
+mod annotations;
 mod utils;
 mod outlines;
 mod shades;
-mod annotate;
+mod labels;
 mod colors;
+use annotations::AnnotationCollection;
 use colors::{white, black};
 
 use clap::Parser;
@@ -34,21 +36,9 @@ struct Args {
 	#[clap(short, long, default_value_t = String::from("map.png"))]
   output: String,
 
-	/// shades file
-  #[clap(short, long)]
-	shades: Option<String>,
-
-	/// outlines file
-  #[clap(long)]
-	outlines: Option<String>,
-
 	/// annotations file
-  #[clap(short, long)]//, requires = "font", requires_all = &["font", "annotations"])]
+  #[clap(short, long)]
 	annotations: Option<String>,
-
-		/// annotation font (NOT IMPLEMENTED YET)
-  #[clap(long)]//, requires = "annotations", requires_all = &["font", "annotations"])]
-	font: Option<String>,
 
 }
 
@@ -88,16 +78,26 @@ fn main() {
 		}
 	}
 
-	if let Some(shades_file) = args.shades {
-    shades::shade_cidrs(&mut img, shades_file.as_str());
-	}
+  if let Some(annotations) = args.annotations {
 
-	if let Some(outlines_file) = args.outlines {
-    outlines::outline_cidrs(&mut img, outlines_file.as_str());
-	}
+    let ann: AnnotationCollection = annotations::load_config(annotations);
 
-	if let Some(annotations_file) = args.annotations {
-    annotate::annotate_cidrs(&mut img, annotations_file.as_str(), args.font);		
+		// println!("{:?}", ann.outlines);
+		// println!("{:?}", ann.shades);
+		// println!("{:?}", ann.labels);
+
+		if let Some(shades) = ann.shades {
+		  shades::shade_cidrs(&mut img, shades);
+		}
+
+		if let Some(outlines) = ann.outlines {
+		  outlines::outline_cidrs(&mut img, outlines);
+		}
+
+		if let Some(labels) = ann.labels {
+		  labels::annotate_cidrs(&mut img, labels);		
+		}
+
 	}
 
  	img.save(args.output).expect("Error saving file.");

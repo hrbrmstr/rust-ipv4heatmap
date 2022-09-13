@@ -1,4 +1,5 @@
-use crate::utils::{ read_lines, bbox_from_cidr };
+use crate::utils::bbox_from_cidr;
+use crate::annotations::Shade;
 
 use hex_color::HexColor;
 
@@ -27,32 +28,19 @@ pub fn draw_blended_rect_mut<I>(image: &mut I, rect: Rect, color: I::Pixel)
 
 }
 
-pub fn shade_cidrs(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, shades_file: &str) {
+pub fn shade_cidrs(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, shades: Vec<Shade>) {
 	
-	if let Ok(lines) = read_lines(shades_file) {
-		for line in lines {
-			
-			if let Ok(record) = line {
-				
-				let fields: Vec<&str> = record.split("\t").collect();
-				
-				if fields.len() == 2 {
+		for shade in shades {
+
+			let bbox = bbox_from_cidr(shade.cidr);
+			let fill = HexColor::parse_rgba(shade.fill.as_str()).expect("Invalid hex color in shade file.");
 					
-					let bbox = bbox_from_cidr(fields[0].to_string());
-					let fill = HexColor::parse_rgba(fields[1]).expect("Invalid hex color in shade file.");
-					
-					draw_blended_rect_mut(
-						img, 
-						Rect::at(bbox.x(), bbox.y()).of_size(bbox.width(), bbox.height()),
-						Rgba([fill.r, fill.g, fill.b, fill.a])
-					);
-					
-				}
-				
-			}
-			
+			draw_blended_rect_mut(
+				img, 
+				Rect::at(bbox.x(), bbox.y()).of_size(bbox.width(), bbox.height()),
+				Rgba([fill.r, fill.g, fill.b, fill.a])
+			);
+								
 		}
-		
-	}
 	
 }

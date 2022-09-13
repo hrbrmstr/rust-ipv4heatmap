@@ -1,5 +1,4 @@
 #![allow(non_upper_case_globals)]
-#![allow(dead_code)]
 
 /* GENERATED AUTOMATICALLY [2022-09-12 12:50:14] DO NOT EDIT BY HAND */
 /* SEE extras/colorgen.r for details */
