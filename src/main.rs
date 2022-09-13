@@ -15,29 +15,33 @@ use image::RgbaImage;
 #[clap(author, version, about, long_about = None)]
 struct Args {
 
-	/// color palette; one of (viridis magma inferno plasma cividis rocket mako turbo brbg puor rdbu rdgy rdylbu spectral bupu reds ylgnbu ylorbr ylorrd)
+	/// color palette to use; one of (viridis magma inferno plasma cividis rocket mako turbo brbg puor rdbu rdgy rdylbu spectral bupu reds ylgnbu ylorbr ylorrd)
   #[clap(short, long, default_value_t = String::from("cividis"))]
 	palette: String,
 
-	/// invert color palette
+	/// invert the chosen color palette
 	#[clap(short, long)]
 	invert: bool,
 
-	/// reverse (white background, black text)
+	/// reverse the heatmap base (i.e. white background, black text)
 	#[clap(short, long)]
 	reverse: bool,
 
-	/// file of IPs
+	/// input file of IPs
 	#[clap(short, long, default_value_t = String::from("ips.txt"))]
   filename: String,
 
-	/// map output file
+	/// heatmap output file; extenstion determines format
 	#[clap(short, long, default_value_t = String::from("map.png"))]
   output: String,
 
-	/// annotations file
+	/// file containing JSON CIDR annotations
   #[clap(short, long)]
 	annotations: Option<String>,
+
+	/// output an SVG colourbar legend to this file
+	#[clap(short, long)]
+	legend_file: Option<String>,
 
 }
 
@@ -45,9 +49,7 @@ fn main() {
 	
 	let args = Args::parse();
 
-	println!("args.palette: {}", args.palette);
-	let colors: Vec<image::Rgba<u8>> = colors::select_palette(args.palette, args.invert);
-  println!("After colors");
+	let colors: Vec<image::Rgba<u8>> = colors::select_palette(args.palette.to_owned(), args.invert);
 
 	let mut img = RgbaImage::from_fn(4096, 4096, |_x, _y| {
     if args.reverse { white } else { black }
@@ -98,5 +100,10 @@ fn main() {
 	}
 
  	img.save(args.output).expect("Error saving file.");
+
+  if let Some(f) = args.legend_file {
+    utils::output_legend(f, args.palette, args.invert)
+	}
+
 		
 }

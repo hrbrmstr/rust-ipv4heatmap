@@ -1,11 +1,61 @@
+use crate::colors::legend_cols;
 use std::cmp::{min, max};
 use std::str::FromStr;
 use std::net::Ipv4Addr;
 use cidr::Ipv4Cidr;
+use std::io::{Write};
 
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
+
+pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Path>, S: Into<String>, {
+
+	let mut cols = legend_cols(name);
+  if invert { cols.reverse() };
+
+ let res = format!(r#"
+	<svg class="hilbert-legend" width="340" height="60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<defs>
+					<style>
+					svg.hilbert-legend {{ padding-top: 10pt; }}
+					.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: black; opacity: 1; }} 
+					.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
+					.hilbert-legend-axis-text {{ fill: black; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
+					.hilbert-legend-title {{font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: black; font-weight: 700; }}
+					</style>
+					<linearGradient id="hilbert-legend-bar">
+							<stop offset="0" stop-color="{}" />
+							<stop offset="0.125" stop-color="{}" />
+							<stop offset="0.25" stop-color="{}" />
+							<stop offset="0.375" stop-color="{}" />
+							<stop offset="0.5" stop-color="{}" />
+							<stop offset="0.625" stop-color="{}" />
+							<stop offset="0.75" stop-color="{}" />
+							<stop offset="0.875" stop-color="{}" />
+							<stop offset="1" stop-color="{}" />
+					</linearGradient>
+			</defs>
+			<g><text class="hilbert-legend-title" x="10" y="10" style="fill: black">Addresses per-pixel</text></g>
+			<g>
+					<rect width="300" height="20" transform="translate(10,16)" style="fill: url(&quot;#hilbert-legend-bar&quot;);" />
+			</g>
+			<g class="hilbert-legend-axis" transform="translate(10,40)">
+					<path class="hilbert-legend-domain"  d="M0,6V0H300V6" />
+					<g class="hilbert-legend-tick" transform="translate(0,0)">
+							<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">1</text></g>
+					<g class="hilbert-legend-tick" opacity="1" transform="translate(150.58823529411765,0)">
+							<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">128</text></g>
+					<g class="hilbert-legend-tick" opacity="1" transform="translate(300,0)">
+							<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">255</text></g>
+			</g>
+	</svg>
+	"#, cols[0], cols[1], cols[2], cols[3], cols[4], cols[5], cols[6], cols[7], cols[8]);
+
+	let mut output = File::create(filename).expect("Error opening legend file for writing.");
+  write!(output, "{}", res).expect("Error writing legend file.");
+
+}
 
 pub fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> where P: AsRef<Path>, {
 	let file = File::open(filename)?;

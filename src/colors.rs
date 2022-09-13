@@ -203,6 +203,34 @@ fn palette<S>(name: S) -> ColorPalette where S: Into<String>, {
   }
 }
 
+pub fn legend_cols<S>(name: S) -> [&'static str; 9] where S: Into<String>, {
+
+  let chosen_palette = palette(name);
+
+  match chosen_palette {
+    viridis => viridis_legend,
+    magma => magma_legend,
+    inferno => inferno_legend,
+    plasma => plasma_legend,
+    cividis => cividis_legend,
+    rocket => rocket_legend,
+    mako => mako_legend,
+    turbo => turbo_legend,
+    brbg => brbg_legend,
+    puor => puor_legend,
+    rdbu => rdbu_legend,
+    rdgy => rdgy_legend,
+    rdylbu => rdylbu_legend,
+    spectral => spectral_legend,
+    bupu => bupu_legend,
+    reds => reds_legend,
+    ylgnbu => ylgnbu_legend,
+    ylorbr => ylorbr_legend,
+    ylorrd => ylorrd_legend,
+  }
+
+}
+
 fn set_palette(palette: &ColorPalette, channel: ColorChannel) -> [u8; 256] {
   
   match palette {
