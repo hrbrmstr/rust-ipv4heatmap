@@ -6,19 +6,7 @@ suppressWarnings(suppressPackageStartupMessages({
   library(purrr)
 }))
 
-# get 256 viridis colors
-
-v <- col2rgb(gsub("FF$", "", viridis(256)))
-
-# but that creates duplicate entries which is a problem since that will
-# cause the gd code in ipv4heatmap.c to not increment past them; so,
-# we locate the dups and tweak them a bit
-
-v <- data.frame(t(v))
-dups <- which(duplicated(v))
-v[dups, ] <- v[dups, ] - 1
-
-# and generate colors.rs
+# generate colors.rs
 
 color_fil <- "colors.rs"
 
@@ -34,16 +22,50 @@ cat(
   file = color_fil
 )
 
-cat(
-  sprintf(
-    "\npub const viridis_red: [u8; 256] = [ %s ];\npub const viridis_green: [u8; 256] = [ %s ];\npub const viridis_blue: [u8; 256] = [ %s ];\n",
-    paste0(v$red, collapse = ", "),
-    paste0(v$green, collapse = ", "),
-    paste0(v$blue, collapse = ", ")
-  ),
-  file = color_fil,
-  append = TRUE
-)
+viridis_maps <- c("viridis", "magma", "inferno", "plasma", "cividis", "rocket", "mako", "turbo")
+
+walk(viridis_maps, \(x) {
+
+  # get 256 viridis colors
+
+  v <- col2rgb(gsub("FF$", "", viridis(256, option = x)))
+
+  # but that creates duplicate entries which is a problem since that will
+  # cause the gd code in ipv4heatmap.c to not increment past them; so,
+  # we locate the dups and tweak them a bit
+
+  v <- data.frame(t(v))
+  dups <- which(duplicated(v))
+  v[dups, ] <- v[dups, ] - 1
+  v$red[v$red < 0] <- 0
+  v$green[v$blue < 0] <- 0
+  v$blue[v$blue < 0] <- 0
+
+  cat(
+    sprintf(
+      "\npub const %s_red: [u8; 256] = [ %s ];\npub const %s_green: [u8; 256] = [ %s ];\npub const %s_blue: [u8; 256] = [ %s ];\n",
+      x, 
+      paste0(v$red, collapse = ", "),
+      x,
+      paste0(v$green, collapse = ", "),
+      x,
+      paste0(v$blue, collapse = ", ")
+    ),
+    file = color_fil,
+    append = TRUE
+  )
+
+  cat(
+    "pub const ", x, "_legend: [&str; 9] = [ ",
+    paste0(sprintf('"%s"', gsub("FF$", "", viridis(9))), collapse = ", "),
+    " ];\n\n",
+    sep = "",
+    file = color_fil,
+    append = TRUE
+  )
+
+})
+
 
 # give some more choices
 
@@ -72,6 +94,16 @@ walk(diverg, \(x) {
     file = color_fil,
     append = TRUE
   )
+
+  cat(
+    "pub const ", tolower(x), "_legend: [&str; 9] = [ ",
+    paste0(sprintf('"%s"', colorRampPalette(brewer.pal(11, x))(9)), collapse = ", "),
+    " ];\n\n",
+    sep = "",
+    file = color_fil,
+    append = TRUE
+  )
+
 })
 
 sequent <- c("BuPu", "Reds", "YlGnBu", "YlOrBr", "YlOrRd")
@@ -100,6 +132,16 @@ walk(sequent, \(x) {
     file = color_fil,
     append = TRUE
   )
+
+  cat(
+    "pub const ", tolower(x), "_legend: [&str; 9] = [ ",
+    paste0(sprintf('"%s"', colorRampPalette(brewer.pal(9, x))(9)), collapse = ", "),
+    " ];\n\n",
+    sep = "",
+    file = color_fil,
+    append = TRUE
+  )
+  
 })
 
 cat(
@@ -120,6 +162,13 @@ use self::ColorChannel::{Red, Green, Blue};
 #[derive(Debug, PartialEq)]
  enum ColorPalette {
   viridis,
+	magma,
+	inferno,
+	plasma,
+	cividis,
+	rocket,
+	mako,
+	turbo,
   brbg,
   puor,
   rdbu,
@@ -135,6 +184,13 @@ use self::ColorChannel::{Red, Green, Blue};
 
 use self::ColorPalette::{
   viridis,
+	magma,
+	inferno,
+	plasma,
+	cividis,
+	rocket,
+	mako,
+	turbo,
   brbg,
   puor,
   rdbu,
@@ -148,9 +204,16 @@ use self::ColorPalette::{
   ylorrd
 };
 
-fn palette(name: &str) -> ColorPalette {
-  match name {
+fn palette<S>(name: S) -> ColorPalette where S: Into<String>, {
+  match name.into().as_str() {
     "viridis" => viridis,
+    "magma" => magma,
+    "inferno" => inferno,
+    "plasma" => plasma,
+    "cividis" => cividis,
+    "rocket" => rocket,
+    "mako" => mako,
+    "turbo" => turbo,
     "brbg" => brbg,
     "puor" => puor,
     "rdbu" => rdbu,
@@ -176,6 +239,63 @@ fn set_palette(palette: &ColorPalette, channel: ColorChannel) -> [u8; 256] {
         Blue => viridis_blue,
       }	
     },
+
+    magma => {
+      match channel {
+        Red => magma_red,
+        Green => magma_green,
+        Blue => magma_blue,
+      }
+    },
+
+    inferno => {
+      match channel {
+        Red => inferno_red,
+        Green => inferno_green,
+        Blue => inferno_blue,
+      }
+    },
+
+    plasma => {
+      match channel {
+        Red => plasma_red,
+        Green => plasma_green,
+        Blue => plasma_blue,
+      }
+    },
+
+    cividis => {
+      match channel {
+        Red => cividis_red,
+        Green => cividis_green,
+        Blue => cividis_blue,
+      }
+    },
+
+    rocket => {
+      match channel {
+        Red => rocket_red,
+        Green => rocket_green,
+        Blue => rocket_blue,
+      }
+    },
+
+    mako => {
+      match channel {
+        Red => mako_red,
+        Green => mako_green,
+        Blue => mako_blue,
+      }
+    },
+
+    turbo => {
+      match channel {
+        Red => turbo_red,
+        Green => turbo_green,
+        Blue => turbo_blue,
+      }
+    },
+
     
     brbg => {
       match channel {
@@ -269,7 +389,7 @@ fn set_palette(palette: &ColorPalette, channel: ColorChannel) -> [u8; 256] {
   
 }
 
-pub fn select_palette(name: &str, invert: bool) -> Vec<image::Rgba<u8>> {
+pub fn select_palette<S>(name: S, invert: bool) -> Vec<image::Rgba<u8>> where S: Into<String>, {
 
 	let chosen_palette = palette(name);
 

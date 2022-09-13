@@ -9,15 +9,14 @@ use colors::{white, black};
 
 use clap::Parser;
 
-// use image::ImageBuffer;
 use image::RgbaImage;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
 
-	/// color palette; one of (viridis brbg puor rdbu rdgy rdylbu spectral bupu reds ylgnbu ylorbr ylorrd)
-  #[clap(short, long, default_value_t = String::from("viridis"))]
+	/// color palette; one of (viridis magma inferno plasma cividis rocket mako turbo brbg puor rdbu rdgy rdylbu spectral bupu reds ylgnbu ylorbr ylorrd)
+  #[clap(short, long, default_value_t = String::from("cividis"))]
 	palette: String,
 
 	/// invert color palette
@@ -46,7 +45,9 @@ fn main() {
 	
 	let args = Args::parse();
 
-	let colors: Vec<image::Rgba<u8>> = colors::select_palette(args.palette.as_str(), args.invert);
+	println!("args.palette: {}", args.palette);
+	let colors: Vec<image::Rgba<u8>> = colors::select_palette(args.palette, args.invert);
+  println!("After colors");
 
 	let mut img = RgbaImage::from_fn(4096, 4096, |_x, _y| {
     if args.reverse { white } else { black }
@@ -82,10 +83,6 @@ fn main() {
 
     let ann: AnnotationCollection = annotations::load_config(annotations);
 
-		// println!("{:?}", ann.outlines);
-		// println!("{:?}", ann.shades);
-		// println!("{:?}", ann.labels);
-
 		if let Some(shades) = ann.shades {
 		  shades::shade_cidrs(&mut img, shades);
 		}
@@ -101,6 +98,5 @@ fn main() {
 	}
 
  	img.save(args.output).expect("Error saving file.");
-	
-	
+		
 }

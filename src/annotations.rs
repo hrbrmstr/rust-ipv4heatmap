@@ -26,9 +26,6 @@ pub struct Annotation {
 	#[serde(rename = "label-font")]
 	label_font: Option<String>,
 	
-	#[serde(rename = "font-size")]
-	font_size: Option<f32>,
-	
 	#[serde(rename = "display-prefix")]
 	display_prefix: Option<bool>,
 }
@@ -49,7 +46,6 @@ pub struct Label {
 	pub cidr: String,
 	pub label: String,
 	pub color: String,
-	pub size: Option<f32>,
 	pub font: Option<String>
 }
 
@@ -86,14 +82,13 @@ pub fn load_config<P: AsRef<Path>>(path: P) -> AnnotationCollection {
     .collect();
 
 	let labels: Vec<Label> = ann.iter()
-	  .filter(|x| x.label.is_some() && x.label_color.is_some() && x.font_size.is_some())
+	  .filter(|x| x.label.is_some() && x.label_color.is_some())
     .map(|x| 
 		Label { 
 			cidr: x.cidr.to_owned(), 
 			label: x.label.to_owned().unwrap(),
-			color: x.label_color.to_owned().unwrap() ,
-			size: Some(x.font_size.unwrap()),
-			font: None
+			color: x.label_color.to_owned().unwrap(),
+			font: x.label_font.to_owned(),
 		})
     .collect();
 

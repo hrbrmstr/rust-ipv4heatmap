@@ -12,8 +12,8 @@ pub fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> 
 	Ok(io::BufReader::new(file).lines())
 }
 
-pub fn ip_to_numeric(ip: String) -> u32 {
-	let addr = Ipv4Addr::from_str(&ip).expect("Invalid IPv4");
+pub fn ip_to_numeric<S>(ip: S) -> u32 where S: Into<String>, {
+	let addr = Ipv4Addr::from_str(&ip.into()).expect("Invalid IPv4");
 	let addr_u32: u32 = addr.into();
 	addr_u32
 }
@@ -102,9 +102,9 @@ fn bbox(first: u32, slash: u8) -> BoundingBox {
 	
 }
 
-pub fn bbox_from_cidr(cidr: String) -> BoundingBox {
+pub fn bbox_from_cidr<S>(cidr: S) -> BoundingBox where S: Into<String>, {
 	
-	if let Ok(parsed_cidr) = Ipv4Cidr::from_str(cidr.as_str()) {
+	if let Ok(parsed_cidr) = Ipv4Cidr::from_str(&cidr.into()) {
 		
 		let first: u32 = parsed_cidr.first_address().into();
 		let slash: u8 = parsed_cidr.network_length();
@@ -127,7 +127,7 @@ fn test_hil_xy_from_s() {
 
 #[test]
 fn test_ip_to_numeric() {
-	let result = self::ip_to_numeric(String::from("192.168.1.1"));
+	let result = self::ip_to_numeric("192.168.1.1");
 	assert_eq!(result, 3232235777);
 }
 
@@ -142,8 +142,8 @@ fn test_read_lines() {
 
 #[test]
 fn test_bbox_from_cidr() {
-	let result = self::bbox_from_cidr(String::from("218.0.0.0/7"));
+	let result = self::bbox_from_cidr("218.0.0.0/7");
 	assert_eq!(result, BoundingBox { xmin: 2048, xmax: 2559, ymin: 1024, ymax: 1279 });
-	let result = self::bbox_from_cidr(String::from("217.0.0.0/8"));
+	let result = self::bbox_from_cidr("217.0.0.0/8");
 	assert_eq!(result, BoundingBox { xmin: 2048, xmax: 2303, ymin: 1280, ymax: 1535 });
 }
