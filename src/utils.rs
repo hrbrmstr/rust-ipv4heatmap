@@ -9,15 +9,6 @@ use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 
-use hex_color::HexColor;
-
-use image::{ImageBuffer, Rgba, GenericImage, Pixel};
-
-use imageproc::rect::Rect;
-use imageproc::drawing::draw_hollow_rect_mut;
-use imageproc::drawing::{draw_text_mut, text_size};
-use rusttype::{Font, Scale};
-
 pub fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> where P: AsRef<Path>, {
 	let file = File::open(filename)?;
 	Ok(io::BufReader::new(file).lines())
@@ -106,7 +97,7 @@ fn bbox(first: u32, slash: u8) -> BoundingBox {
 			xmin: min(bbox1.xmin, bbox2.xmin), 
 			xmax: max(bbox1.xmax, bbox2.xmax), 
 			ymin: min(bbox1.ymin, bbox2.ymin), 
-			ymax: max(bbox1.ymax, bbox2.xmax), 
+			ymax: max(bbox1.ymax, bbox2.ymax), 
 		}
 		
 	}
@@ -127,132 +118,6 @@ pub fn bbox_from_cidr(cidr: String) -> BoundingBox {
 	
 	BoundingBox{ xmin:0, xmax:0, ymin:0, ymax:0 }
 	
-}
-
-pub fn draw_blended_rect_mut<I>(image: &mut I, rect: Rect, color: I::Pixel) 
-  where I: GenericImage, I::Pixel: 'static, {
-
-	let image_bounds = Rect::at(0, 0).of_size(image.width(), image.height());
-
-	if let Some(intersection) = image_bounds.intersect(rect) {
-		for dy in 0..intersection.height() {
-			for dx in 0..intersection.width() {
-				let x = intersection.left() as u32 + dx;
-				let y = intersection.top() as u32 + dy;
-				let mut pixel = image.get_pixel(x, y); 
-				pixel.blend(&color);
-				unsafe {
-					image.unsafe_put_pixel(x, y, pixel);
-				}
-			}
-		}
-	}
-
-}
-
-pub fn outline_cidrs(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, outlines_file: &str) {
-	
-	if let Ok(lines) = read_lines(outlines_file) {
-		for line in lines {
-			
-			if let Ok(record) = line {
-				
-				let fields: Vec<&str> = record.split("\t").collect();
-				
-				if fields.len() == 2 {
-					
-					let bbox = bbox_from_cidr(fields[0].to_string());
-					let fill = HexColor::parse_rgba(fields[1]).expect("Invalid hex color in shade file.");
-					
-					draw_hollow_rect_mut(
-						img, 
-						Rect::at(bbox.x(), bbox.y()).of_size(bbox.width(), bbox.height()),
-						Rgba([fill.r, fill.g, fill.b, fill.a])
-					);
-					
-				}
-				
-			}
-			
-		}
-		
-	}
-	
-}
-
-pub fn shade_cidrs(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, shades_file: &str) {
-	
-	if let Ok(lines) = read_lines(shades_file) {
-		for line in lines {
-			
-			if let Ok(record) = line {
-				
-				let fields: Vec<&str> = record.split("\t").collect();
-				
-				if fields.len() == 2 {
-					
-					let bbox = bbox_from_cidr(fields[0].to_string());
-					let fill = HexColor::parse_rgba(fields[1]).expect("Invalid hex color in shade file.");
-					
-					draw_blended_rect_mut(
-						img, 
-						Rect::at(bbox.x(), bbox.y()).of_size(bbox.width(), bbox.height()),
-						Rgba([fill.r, fill.g, fill.b, fill.a])
-					);
-					
-				}
-				
-			}
-			
-		}
-		
-	}
-	
-}
-
-pub fn annotate_cidrs(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, annotations_file: &str, _font: Option<String>) {
-
-	let font = Vec::from(include_bytes!("Inconsolata-CondensedRegular.ttf") as &[u8]);
-  let font = Font::try_from_vec(font).unwrap();
-
-	if let Ok(lines) = read_lines(annotations_file) {
-		for line in lines {
-			
-			if let Ok(record) = line {
-				
-				let fields: Vec<&str> = record.split("\t").collect();
-				
-				if fields.len() == 4 {
-					
-					let bbox = bbox_from_cidr(fields[0].to_string());
-					let color = HexColor::parse_rgba(fields[1]).expect("Invalid hex color in shade file.");
-					let fsize = fields[2].parse::<f32>().expect("Error parsing font size");
-					let text = fields[3];
-
-					let scale = Scale {
-						x: fsize,
-						y: fsize,
-					};
-
-  				let (w, h) = text_size(scale, &font, text);
-  				println!("Text size: {}x{}", w, h);
-
-				  draw_text_mut(
-						img, 
-						Rgba([color.r, color.g, color.b, color.a]),
-						((bbox.xmin + (bbox.width()/2))-((w/2) as u32)) as i32, 
-						((bbox.ymin + (bbox.height()/2))-((h/2) as u32)) as i32, 
-						scale, 
-						&font, 
-						text
-					);
-
-				}
-			}
-		}
-	}
-
-
 }
 
 #[cfg(test)]
