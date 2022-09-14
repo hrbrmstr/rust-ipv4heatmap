@@ -18,17 +18,18 @@ pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Pa
 	<svg class="hilbert-legend" width="340" height="70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<defs>
 					<style>
-					@media (prefers-color-scheme: dark) {{
-					.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: white; opacity: 1; }} 
-					.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
-					.hilbert-legend-axis-text {{ fill: white; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
-					.hilbert-legend-title {{font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: white; font-weight: 700; }}
-          }}
 					svg.hilbert-legend {{ padding-top: 10pt; }}
-					.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: black; opacity: 1; }} 
+					.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: black; opacity: 1; }}
 					.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
 					.hilbert-legend-axis-text {{ fill: black; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
-					.hilbert-legend-title {{font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: black; font-weight: 700; }}
+					.hilbert-legend-title {{ font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: black; font-weight: 700; }}
+					@media (prefers-color-scheme: dark) {{
+						svg {{ background-color: black; }}
+						.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: white; opacity: 1; }}
+						.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
+						.hilbert-legend-axis-text {{ fill: white; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
+						.hilbert-legend-title {{ font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: white; font-weight: 700; }}
+					}}
 					</style>
 					<linearGradient id="hilbert-legend-bar">
 							<stop offset="0" stop-color="{}" />
@@ -42,7 +43,7 @@ pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Pa
 							<stop offset="1" stop-color="{}" />
 					</linearGradient>
 			</defs>
-			<g><text class="hilbert-legend-title" x="10" y="10" style="fill: black">Addresses per-pixel</text></g>
+			<g><text class="hilbert-legend-title" x="10" y="10">Addresses per-pixel</text></g>
 			<g>
 					<rect width="300" height="20" transform="translate(10,16)" style="fill: url(&quot;#hilbert-legend-bar&quot;);" />
 			</g>
