@@ -105,5 +105,4 @@ fn main() {
     utils::output_legend(f, args.palette, args.invert)
 	}
 
-		
 }

@@ -8,6 +8,7 @@ use image::{ImageBuffer, Rgba};
 use imageproc::rect::Rect;
 use imageproc::drawing::draw_hollow_rect_mut;
 
+/// Given a vector of CIDRs, draw a border around them.
 pub fn outline_cidrs(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, outlines: Vec<Outline>) {
 	
 	for outline in outlines {

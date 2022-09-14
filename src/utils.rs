@@ -9,6 +9,8 @@ use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 
+/// Given a filename or path and palette name (+ whether the palette should be inverted) 
+/// write an SVG legend out to the specified file.
 pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Path>, S: Into<String>, {
 
 	let mut cols = legend_cols(name);
@@ -64,17 +66,22 @@ pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Pa
 
 }
 
+/// Given a filename or `Path`, open the text file for reading and send back buffered lines
 pub fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> where P: AsRef<Path>, {
 	let file = File::open(filename)?;
 	Ok(io::BufReader::new(file).lines())
 }
 
+/// Convert an characrter IPv4 address into an integer.
+/// 
+/// Panics on invalid address since it's in a CLI.
 pub fn ip_to_numeric<S>(ip: S) -> u32 where S: Into<String>, {
 	let addr = Ipv4Addr::from_str(&ip.into()).expect("Invalid IPv4");
 	let addr_u32: u32 = addr.into();
 	addr_u32
 }
 
+/// Convert an IPv4 address (in integer form) to a 12th order Hilbert x/y point
 pub fn hil_xy_from_s(ip_as_int: u32, order: i16) -> (u32, u32) {
 	
 	let mut i: i16;
@@ -102,6 +109,7 @@ pub fn hil_xy_from_s(ip_as_int: u32, order: i16) -> (u32, u32) {
 	
 }
 
+/// CIDRs in Hilbert space can represent a bounding box
 #[derive(Debug, PartialEq)]
 pub struct BoundingBox {
 	pub xmin: u32,
@@ -119,6 +127,9 @@ impl BoundingBox {
 	
 }
 
+/// Given the first (numeric) IP address in a CIDR block and the size of
+/// the CIDR block, return the bounding box. This handles the single point,
+/// square, and rectangle cases.
 fn bbox(first: u32, slash: u8) -> BoundingBox {
 	
 	let mut diag: u32 = 0xAAAAAAAA;
@@ -159,6 +170,7 @@ fn bbox(first: u32, slash: u8) -> BoundingBox {
 	
 }
 
+/// Given a CIDR in `IP/##` form, return the bounding box.
 pub fn bbox_from_cidr<S>(cidr: S) -> BoundingBox where S: Into<String>, {
 	
 	if let Ok(parsed_cidr) = Ipv4Cidr::from_str(&cidr.into()) {

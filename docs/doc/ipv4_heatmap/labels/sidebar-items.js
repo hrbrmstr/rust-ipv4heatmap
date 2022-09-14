@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["annotate_cidrs","Given a vector of label annotations, draw the labels."],["draw_blended_text_mut","This is here for the eventual transparency solution"],["layout_glyphs","This is here for the eventual transparency solution"]]};

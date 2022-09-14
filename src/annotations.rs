@@ -50,12 +50,15 @@ pub struct Label {
 }
 
 #[derive(Debug, PartialEq)]
+/// Annotations on top of the heatmap can be outlines, shades, or labels.
+/// This holds all of them (if any).
 pub struct AnnotationCollection {
 	pub outlines: Option<Vec<Outline>>,
 	pub shades: Option<Vec<Shade>>,
 	pub labels: Option<Vec<Label>>
 }
 
+/// Open and read the spefified annotations JSON file.
 pub fn load_config<P: AsRef<Path>>(path: P) -> AnnotationCollection {
 
 	let file = File::open(path).expect("Error opening annotations file.");

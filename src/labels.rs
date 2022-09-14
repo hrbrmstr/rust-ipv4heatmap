@@ -12,6 +12,7 @@ use conv::ValueInto;
 use std::cmp::max;
 use rusttype::{point, PositionedGlyph, Rect, Font, Scale};
 
+/// This is here for the eventual transparency solution
 fn layout_glyphs(
 	scale: Scale,
 	font: &Font,
@@ -33,6 +34,7 @@ fn layout_glyphs(
 	(w, h)
 }
 
+/// This is here for the eventual transparency solution
 pub fn draw_blended_text_mut<'a, C>(
 	canvas: &'a mut C,
 	color: C::Pixel,
@@ -67,6 +69,9 @@ C: Canvas,
 	});
 }
 
+/// Given a vector of label annotations, draw the labels.
+/// 
+/// NOTE: Transparency is still an issue.
 pub fn annotate_cidrs(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, labels: Vec<Label>) {
 	
 	let builtin_font = Vec::from(include_bytes!("Inconsolata-CondensedRegular.ttf") as &[u8]);

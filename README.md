@@ -1,11 +1,11 @@
 # Rustified IPv4 Heatmap
 
-This is a pure Rust version of the C [ipv4-heatmap](https://github.com/hrbrmstr/ipv4-heatmap) utility originally published by The Measurement Factory.
+This is a pure Rust version of the C [ipv4-heatmap][def] utility originally published by The Measurement Factory.
 
 Differences between this and the C version:
 
 - Only supports Hilbert curves (deliberate design decision)
-- Only supports 4096x4096 full IPv4 address space heatmaps (deliberate design decision)
+- Only supports 4096 x 4096 full IPv4 address space heatmaps (deliberate design decision)
 - SVG separate legend file generation (see #5)
 - Annotations are all in one JSON file (see below)
 - Color values in annotations _require_ the RGBa transparency value; so instead of `#FFFFFF` for white, you'd use `#FFFFFFFF` (deliberate design decision)
@@ -88,6 +88,14 @@ OPTIONS:
     -V, --version                      Print version information
 ```
 
+```bash
+$ ipv4heatmap --annotations extras/iana.json --invert --legend-file extras/legend.svg
+# or
+# $ cargo run --release -- --annotations extras/iana.json --invert --legend-file extras/legend.svg
+```
+
 ![legend](extras/legend.svg)
 
 ![map](map.png)
+
+[def]: https://github.com/hrbrmstr/ipv4-heatmap

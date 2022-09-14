@@ -7,6 +7,7 @@ use image::{ImageBuffer, Rgba, GenericImage, Pixel};
 
 use imageproc::rect::Rect;
 
+/// This is a hack to do what the default `draw_rect_mut` won't do: blend transparency.
 pub fn draw_blended_rect_mut<I>(image: &mut I, rect: Rect, color: I::Pixel) 
   where I: GenericImage, I::Pixel: 'static, {
 
@@ -28,6 +29,7 @@ pub fn draw_blended_rect_mut<I>(image: &mut I, rect: Rect, color: I::Pixel)
 
 }
 
+/// Given a vector of CIDRs, shade them in.
 pub fn shade_cidrs(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, shades: Vec<Shade>) {
 	
 		for shade in shades {

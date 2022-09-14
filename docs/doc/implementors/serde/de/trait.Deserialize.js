@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["ipv4_heatmap"] = [{"text":"impl&lt;'de&gt; <a class=\"trait\" href=\"https://docs.rs/serde/1.0.144/serde/de/trait.Deserialize.html\" title=\"trait serde::de::Deserialize\">Deserialize</a>&lt;'de&gt; for <a class=\"struct\" href=\"ipv4_heatmap/annotations/struct.Annotation.html\" title=\"struct ipv4_heatmap::annotations::Annotation\">Annotation</a>","synthetic":false,"types":["ipv4_heatmap::annotations::Annotation"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
