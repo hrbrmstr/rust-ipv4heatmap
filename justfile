@@ -15,6 +15,10 @@ codesign:
 # linux:
 # 	TARGET_CC=x86_64-unknown-linux-gnu cargo build --target=x86_64-unknown-linux-gnu --release
 
+deps:
+	cargo deps | dot -Tpng > graph.png
+	cargo cyclonedx
+	
 test:
 	cargo test --release
 

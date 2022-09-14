@@ -98,4 +98,8 @@ $ ipv4heatmap --annotations extras/iana.json --invert --legend-file extras/legen
 
 ![map](map.png)
 
+## Dependencies
+
+![deps](graph.png)
+
 [def]: https://github.com/hrbrmstr/ipv4-heatmap
