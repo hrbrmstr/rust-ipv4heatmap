@@ -1,54 +1,47 @@
+mod annotations;
 mod utils;
 mod outlines;
 mod shades;
-mod annotate;
+mod labels;
 mod colors;
+use annotations::AnnotationCollection;
 use colors::{white, black};
 
 use clap::Parser;
 
-// use image::ImageBuffer;
 use image::RgbaImage;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
 
-	/// color palette; one of (viridis brbg puor rdbu rdgy rdylbu spectral bupu reds ylgnbu ylorbr ylorrd)
-  #[clap(short, long, default_value_t = String::from("viridis"))]
+	/// color palette to use; one of (viridis magma inferno plasma cividis rocket mako turbo brbg puor rdbu rdgy rdylbu spectral bupu reds ylgnbu ylorbr ylorrd)
+  #[clap(short, long, default_value_t = String::from("cividis"))]
 	palette: String,
 
-	/// invert color palette
+	/// invert the chosen color palette
 	#[clap(short, long)]
 	invert: bool,
 
-	/// reverse (white background, black text)
+	/// reverse the heatmap base (i.e. white background, black text)
 	#[clap(short, long)]
 	reverse: bool,
 
-	/// file of IPs
+	/// input file of IPs
 	#[clap(short, long, default_value_t = String::from("ips.txt"))]
   filename: String,
 
-	/// map output file
+	/// heatmap output file; extenstion determines format
 	#[clap(short, long, default_value_t = String::from("map.png"))]
   output: String,
 
-	/// shades file
+	/// file containing JSON CIDR annotations
   #[clap(short, long)]
-	shades: Option<String>,
-
-	/// outlines file
-  #[clap(long)]
-	outlines: Option<String>,
-
-	/// annotations file
-  #[clap(short, long)]//, requires = "font", requires_all = &["font", "annotations"])]
 	annotations: Option<String>,
 
-		/// annotation font (NOT IMPLEMENTED YET)
-  #[clap(long)]//, requires = "annotations", requires_all = &["font", "annotations"])]
-	font: Option<String>,
+	/// output an SVG colourbar legend to this file
+	#[clap(short, long)]
+	legend_file: Option<String>,
 
 }
 
@@ -56,7 +49,7 @@ fn main() {
 	
 	let args = Args::parse();
 
-	let colors: Vec<image::Rgba<u8>> = colors::select_palette(args.palette.as_str(), args.invert);
+	let colors: Vec<image::Rgba<u8>> = colors::select_palette(args.palette.to_owned(), args.invert);
 
 	let mut img = RgbaImage::from_fn(4096, 4096, |_x, _y| {
     if args.reverse { white } else { black }
@@ -88,19 +81,29 @@ fn main() {
 		}
 	}
 
-	if let Some(shades_file) = args.shades {
-    shades::shade_cidrs(&mut img, shades_file.as_str());
-	}
+  if let Some(annotations) = args.annotations {
 
-	if let Some(outlines_file) = args.outlines {
-    outlines::outline_cidrs(&mut img, outlines_file.as_str());
-	}
+    let ann: AnnotationCollection = annotations::load_config(annotations);
 
-	if let Some(annotations_file) = args.annotations {
-    annotate::annotate_cidrs(&mut img, annotations_file.as_str(), args.font);		
+		if let Some(shades) = ann.shades {
+		  shades::shade_cidrs(&mut img, shades);
+		}
+
+		if let Some(outlines) = ann.outlines {
+		  outlines::outline_cidrs(&mut img, outlines);
+		}
+
+		if let Some(labels) = ann.labels {
+		  labels::annotate_cidrs(&mut img, labels);		
+		}
+
 	}
 
  	img.save(args.output).expect("Error saving file.");
-	
-	
+
+  if let Some(f) = args.legend_file {
+    utils::output_legend(f, args.palette, args.invert)
+	}
+
+		
 }

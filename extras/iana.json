@@ -1,0 +1,764 @@
+[
+{
+    "cidr": "0.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Reserved",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "1.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "2.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "3.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "GE",
+    "label-font": "extras/Lato-Black.ttf",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "4.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Level3",
+    "label-font": "extras/Lato-Black.ttf",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "5.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "6.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "US Army",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "7.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "8.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Level3",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "9.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "IBM",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "10.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Reserved",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "11.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "DoD Intel Information Systems",
+    "label-font": "extras/Lato-Black.ttf",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "12.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "AT&T",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "13.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Xerox",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "14.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "15.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "HP",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "16.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "DEC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "17.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Apple",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "18.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "MIT",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "19.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Ford Motor Company",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "20.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Computer Sciences Corporation",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "21.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "DDN-RVN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "22.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "DISA",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "23.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "24.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "label-font": "extras/Lato-Black.ttf",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "25.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "UK Ministry of Defence",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "26.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "DISA",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "27.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "28.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "DSI-North",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "29.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "DISA",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "30.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "DISA",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "31.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "32.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "AT&T",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "33.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "DLA Systems Automation Center",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "34.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Halliburton",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "35.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Merit",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "36.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "37.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "38.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "PSINet, Inc.",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "39.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "40.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Eli Lily",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "41.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "AfriNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "42.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "43.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "44.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Amateur Radio Digital Communications",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "45.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "46.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "47.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Bell-Northern Research",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "48.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Prudential",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "49.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "50.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "51.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "UK Government Department for Work and Pensions",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "52.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "E.I. duPont de Nemours and Co., Inc.",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "53.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Cap Debis CCS",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "54.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Merck and Co., Inc.",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "55.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "DoD NIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "56.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "USPS",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "57.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "SITA",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "58.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "60.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "62.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "63.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "64.0.0.0/5",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "72.0.0.0/6",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "76.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "77.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "78.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "80.0.0.0/4",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "96.0.0.0/6",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "100.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "101.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "102.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "AfriNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "103.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "104.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "105.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "AfriNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "106.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "107.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "108.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "109.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "110.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "112.0.0.0/5",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "120.0.0.0/6",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "124.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "126.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "127.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label-font": "extras/Lato-Black.ttf",
+    "label": "Reserved",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "128.0.0.0/3",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "160.0.0.0/5",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "168.0.0.0/6",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "172.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "173.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "174.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "175.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "176.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "177.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "LACNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "178.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "179.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "LACNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "180.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "181.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "LACNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "182.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "184.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "185.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "186.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "LACNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "188.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "189.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "LACNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "190.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "LACNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "191.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "192.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "193.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "194.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "196.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "197.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "AfriNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "198.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Various Registries",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "199.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "200.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "LACNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "202.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "204.0.0.0/6",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "208.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "210.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "212.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "214.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "US-DOD",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "216.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "ARIN",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "217.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "RIPE",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "218.0.0.0/7",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "220.0.0.0/6",
+    "label-color": "#FFFFFFFF",
+    "label": "APNIC",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "224.0.0.0/4",
+    "label-color": "#FFFFFFFF",
+    "label": "Multicast",
+    "label-font": "extras/Lato-Black.ttf",
+    "border-color": "#FFFFFFFF"
+},
+{
+    "cidr": "240.0.0.0/4",
+    "label-color": "#00FF00FF",
+    "label": "Reserved",
+    "label-font": "extras/Lato-Black.ttf",
+    "border-color": "#FFFFFFFF"
+}]
