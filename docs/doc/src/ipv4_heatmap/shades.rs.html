@@ -32,73 +32,33 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
-<span id="29">29</span>
-<span id="30">30</span>
-<span id="31">31</span>
-<span id="32">32</span>
-<span id="33">33</span>
-<span id="34">34</span>
-<span id="35">35</span>
-<span id="36">36</span>
-<span id="37">37</span>
-<span id="38">38</span>
-<span id="39">39</span>
-<span id="40">40</span>
-<span id="41">41</span>
-<span id="42">42</span>
-<span id="43">43</span>
-<span id="44">44</span>
-<span id="45">45</span>
-<span id="46">46</span>
-<span id="47">47</span>
-<span id="48">48</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::utils::bbox_from_cidr</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::annotations::Shade</span>;
 
 <span class="kw">use</span> <span class="ident">hex_color::HexColor</span>;
 
-<span class="kw">use</span> <span class="ident">image</span>::{<span class="ident">ImageBuffer</span>, <span class="ident">Rgba</span>, <span class="ident">GenericImage</span>, <span class="ident">Pixel</span>};
-
-<span class="kw">use</span> <span class="ident">imageproc::rect::Rect</span>;
-
-<span class="doccomment">/// This is a hack to do what the default `draw_rect_mut` won&#39;t do: blend transparency.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">draw_blended_rect_mut</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">image</span>: <span class="kw-2">&amp;mut</span> <span class="ident">I</span>, <span class="ident">rect</span>: <span class="ident">Rect</span>, <span class="ident">color</span>: <span class="ident">I::Pixel</span>) 
-  <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">GenericImage</span>, <span class="ident">I::Pixel</span>: <span class="lifetime">&#39;static</span>, {
-
-	<span class="kw">let</span> <span class="ident">image_bounds</span> <span class="op">=</span> <span class="ident">Rect::at</span>(<span class="number">0</span>, <span class="number">0</span>).<span class="ident">of_size</span>(<span class="ident">image</span>.<span class="ident">width</span>(), <span class="ident">image</span>.<span class="ident">height</span>());
-
-	<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">intersection</span>) <span class="op">=</span> <span class="ident">image_bounds</span>.<span class="ident">intersect</span>(<span class="ident">rect</span>) {
-		<span class="kw">for</span> <span class="ident">dy</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">intersection</span>.<span class="ident">height</span>() {
-			<span class="kw">for</span> <span class="ident">dx</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">intersection</span>.<span class="ident">width</span>() {
-				<span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">intersection</span>.<span class="ident">left</span>() <span class="kw">as</span> <span class="ident">u32</span> <span class="op">+</span> <span class="ident">dx</span>;
-				<span class="kw">let</span> <span class="ident">y</span> <span class="op">=</span> <span class="ident">intersection</span>.<span class="ident">top</span>() <span class="kw">as</span> <span class="ident">u32</span> <span class="op">+</span> <span class="ident">dy</span>;
-				<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pixel</span> <span class="op">=</span> <span class="ident">image</span>.<span class="ident">get_pixel</span>(<span class="ident">x</span>, <span class="ident">y</span>); 
-				<span class="ident">pixel</span>.<span class="ident">blend</span>(<span class="kw-2">&amp;</span><span class="ident">color</span>);
-				<span class="kw">unsafe</span> {
-					<span class="ident">image</span>.<span class="ident">unsafe_put_pixel</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">pixel</span>);
-				}
-			}
-		}
-	}
-
-}
+<span class="kw">use</span> <span class="ident">ril::prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">ril</span>::{<span class="ident">Rectangle</span>, <span class="ident">Rgba</span>};
 
 <span class="doccomment">/// Given a vector of CIDRs, shade them in.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shade_cidrs</span>(<span class="ident">img</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ImageBuffer</span><span class="op">&lt;</span><span class="ident">Rgba</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">shades</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Shade</span><span class="op">&gt;</span>) {
-	
-		<span class="kw">for</span> <span class="ident">shade</span> <span class="kw">in</span> <span class="ident">shades</span> {
-
-			<span class="kw">let</span> <span class="ident">bbox</span> <span class="op">=</span> <span class="ident">bbox_from_cidr</span>(<span class="ident">shade</span>.<span class="ident">cidr</span>);
-			<span class="kw">let</span> <span class="ident">fill</span> <span class="op">=</span> <span class="ident">HexColor::parse_rgba</span>(<span class="ident">shade</span>.<span class="ident">fill</span>.<span class="ident">as_str</span>()).<span class="ident">expect</span>(<span class="string">&quot;Invalid hex color in shade file.&quot;</span>);
-					
-			<span class="ident">draw_blended_rect_mut</span>(
-				<span class="ident">img</span>, 
-				<span class="ident">Rect::at</span>(<span class="ident">bbox</span>.<span class="ident">x</span>(), <span class="ident">bbox</span>.<span class="ident">y</span>()).<span class="ident">of_size</span>(<span class="ident">bbox</span>.<span class="ident">width</span>(), <span class="ident">bbox</span>.<span class="ident">height</span>()),
-				<span class="ident">Rgba</span>([<span class="ident">fill</span>.<span class="ident">r</span>, <span class="ident">fill</span>.<span class="ident">g</span>, <span class="ident">fill</span>.<span class="ident">b</span>, <span class="ident">fill</span>.<span class="ident">a</span>])
-			);
-								
-		}
-	
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shade_cidrs</span>(<span class="ident">img</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Image</span><span class="op">&lt;</span><span class="ident">Rgba</span><span class="op">&gt;</span>, <span class="ident">shades</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Shade</span><span class="op">&gt;</span>) {
+  
+  <span class="kw">for</span> <span class="ident">shade</span> <span class="kw">in</span> <span class="ident">shades</span> {
+    
+    <span class="kw">let</span> <span class="ident">bbox</span> <span class="op">=</span> <span class="ident">bbox_from_cidr</span>(<span class="ident">shade</span>.<span class="ident">cidr</span>);
+    <span class="kw">let</span> <span class="ident">fill</span> <span class="op">=</span> <span class="ident">HexColor::parse_rgba</span>(<span class="ident">shade</span>.<span class="ident">fill</span>.<span class="ident">as_str</span>()).<span class="ident">expect</span>(<span class="string">&quot;Invalid hex color in shade file.&quot;</span>);
+    
+    <span class="kw">let</span> <span class="ident">shade</span> <span class="op">=</span> <span class="ident">Rgba</span>{<span class="ident">r</span>:<span class="ident">fill</span>.<span class="ident">r</span>, <span class="ident">g</span>:<span class="ident">fill</span>.<span class="ident">g</span>, <span class="ident">b</span>:<span class="ident">fill</span>.<span class="ident">b</span>, <span class="ident">a</span>:<span class="ident">fill</span>.<span class="ident">a</span>};
+    <span class="kw">let</span> <span class="ident">rect</span>  <span class="op">=</span> <span class="ident">Rectangle::new</span>()
+    .<span class="ident">with_position</span>(<span class="ident">bbox</span>.<span class="ident">x</span>() <span class="kw">as</span> <span class="ident">u32</span>, <span class="ident">bbox</span>.<span class="ident">y</span>() <span class="kw">as</span> <span class="ident">u32</span>)
+    .<span class="ident">with_size</span>(<span class="ident">bbox</span>.<span class="ident">width</span>() <span class="kw">as</span> <span class="ident">u32</span>, <span class="ident">bbox</span>.<span class="ident">height</span>() <span class="kw">as</span> <span class="ident">u32</span>)
+    .<span class="ident">with_fill</span>(<span class="ident">shade</span>)
+    .<span class="ident">with_overlay_mode</span>(<span class="ident">OverlayMode::Merge</span>);
+    
+    <span class="ident">img</span>.<span class="ident">draw</span>(<span class="kw-2">&amp;</span><span class="ident">rect</span>);
+    
+  }
+  
 }</code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ipv4_heatmap" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-beta.5 (93ef0cd7f 2022-07-10)" ></div>
 </body></html>
