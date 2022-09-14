@@ -59,6 +59,12 @@ Insonsolata was created by Raph Levien and licensed under the Open Font License.
 
 The extra Lato font (used in the example JSON) was created by Łukasz Dziedzic and licensed under the Open Font License.
 
+## Installation
+
+```bash
+$ cargo install --git https://github.com/hrbrmstr/rust-ipv4heatmap
+```
+
 ```bash
 $ ipv4-heatmap 0.1.0
 boB Rudis (@hrbrmstr)
