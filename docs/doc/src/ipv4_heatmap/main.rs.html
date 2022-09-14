@@ -109,9 +109,6 @@
 <span id="103">103</span>
 <span id="104">104</span>
 <span id="105">105</span>
-<span id="106">106</span>
-<span id="107">107</span>
-<span id="108">108</span>
 </pre><pre class="rust"><code><span class="kw">mod</span> <span class="ident">annotations</span>;
 <span class="kw">mod</span> <span class="ident">utils</span>;
 <span class="kw">mod</span> <span class="ident">outlines</span>;
@@ -123,7 +120,7 @@
 
 <span class="kw">use</span> <span class="ident">clap::Parser</span>;
 
-<span class="kw">use</span> <span class="ident">image::RgbaImage</span>;
+<span class="kw">use</span> <span class="ident">ril::prelude</span>::<span class="kw-2">*</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Parser</span>, <span class="ident">Debug</span>)]</span>
 <span class="attribute">#[<span class="ident">clap</span>(<span class="ident">author</span>, <span class="ident">version</span>, <span class="ident">about</span>, <span class="ident">long_about</span> <span class="op">=</span> <span class="prelude-val">None</span>)]</span>
@@ -163,12 +160,9 @@
 	
 	<span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="ident">Args::parse</span>();
 
-	<span class="kw">let</span> <span class="ident">colors</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">image::Rgba</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">colors::select_palette</span>(<span class="ident">args</span>.<span class="ident">palette</span>.<span class="ident">to_owned</span>(), <span class="ident">args</span>.<span class="ident">invert</span>);
+	<span class="kw">let</span> <span class="ident">colors</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ril::Rgba</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">colors::select_palette</span>(<span class="ident">args</span>.<span class="ident">palette</span>.<span class="ident">to_owned</span>(), <span class="ident">args</span>.<span class="ident">invert</span>);
 
-	<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">img</span> <span class="op">=</span> <span class="ident">RgbaImage::from_fn</span>(<span class="number">4096</span>, <span class="number">4096</span>, <span class="op">|</span><span class="ident">_x</span>, <span class="ident">_y</span><span class="op">|</span> {
-    <span class="kw">if</span> <span class="ident">args</span>.<span class="ident">reverse</span> { <span class="ident">white</span> } <span class="kw">else</span> { <span class="ident">black</span> }
-  }); 
-	
+	<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">img</span> <span class="op">=</span> <span class="ident">Image::new</span>(<span class="number">4096</span>, <span class="number">4096</span>, <span class="kw">if</span> <span class="ident">args</span>.<span class="ident">reverse</span> { <span class="ident">white</span> } <span class="kw">else</span> { <span class="ident">black</span> });
 	<span class="comment">// draw /24 pixels</span>
 
 	<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">lines</span>) <span class="op">=</span> <span class="ident">utils::read_lines</span>(<span class="ident">args</span>.<span class="ident">filename</span>) {
@@ -179,16 +173,16 @@
 				
 				<span class="kw">let</span> (<span class="ident">x</span>, <span class="ident">y</span>) <span class="op">=</span> <span class="ident">utils::hil_xy_from_s</span>(<span class="ident">utils::ip_to_numeric</span>(<span class="ident">ip</span>), <span class="number">12</span>);
 
-				<span class="kw">let</span> <span class="ident">pixel</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">img</span>.<span class="ident">get_pixel</span>(<span class="ident">x</span>, <span class="ident">y</span>);
+				<span class="kw">let</span> <span class="ident">pixel</span> <span class="op">=</span> <span class="ident">img</span>.<span class="ident">get_pixel</span>(<span class="ident">x</span>, <span class="ident">y</span>).<span class="ident">unwrap</span>();
 				
-				<span class="kw">let</span> <span class="ident">k</span> <span class="op">=</span> <span class="ident">colors</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span> <span class="op">==</span> <span class="kw-2">&amp;</span><span class="ident">pixel</span>);
+				<span class="kw">let</span> <span class="ident">k</span> <span class="op">=</span> <span class="ident">colors</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span> <span class="op">==</span> <span class="ident">pixel</span>);
 				
 				<span class="kw">match</span> <span class="ident">k</span> {
 					<span class="prelude-val">Some</span>(<span class="ident">pos</span>) =&gt; 
 						<span class="kw">if</span> <span class="ident">pos</span> <span class="op">&lt;</span> <span class="ident">colors</span>.<span class="ident">len</span>()<span class="op">-</span><span class="number">1</span> { 
-							<span class="ident">img</span>.<span class="ident">put_pixel</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">colors</span>[<span class="ident">pos</span><span class="op">+</span><span class="number">1</span>])
+							<span class="ident">img</span>.<span class="ident">set_pixel</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">colors</span>[<span class="ident">pos</span><span class="op">+</span><span class="number">1</span>])
 					  }
-					<span class="prelude-val">None</span> =&gt; <span class="ident">img</span>.<span class="ident">put_pixel</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">colors</span>[<span class="number">0</span>])
+					<span class="prelude-val">None</span> =&gt; <span class="ident">img</span>.<span class="ident">set_pixel</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">colors</span>[<span class="number">0</span>])
 				}
 				
 			}
@@ -213,7 +207,7 @@
 
 	}
 
- 	<span class="ident">img</span>.<span class="ident">save</span>(<span class="ident">args</span>.<span class="ident">output</span>).<span class="ident">expect</span>(<span class="string">&quot;Error saving file.&quot;</span>);
+ 	<span class="ident">img</span>.<span class="ident">save_inferred</span>(<span class="ident">args</span>.<span class="ident">output</span>).<span class="ident">expect</span>(<span class="string">&quot;Error saving file.&quot;</span>);
 
   <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">f</span>) <span class="op">=</span> <span class="ident">args</span>.<span class="ident">legend_file</span> {
     <span class="ident">utils::output_legend</span>(<span class="ident">f</span>, <span class="ident">args</span>.<span class="ident">palette</span>, <span class="ident">args</span>.<span class="ident">invert</span>)

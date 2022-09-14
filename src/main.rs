@@ -9,7 +9,7 @@ use colors::{white, black};
 
 use clap::Parser;
 
-use image::RgbaImage;
+use ril::prelude::*;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
@@ -49,12 +49,9 @@ fn main() {
 	
 	let args = Args::parse();
 
-	let colors: Vec<image::Rgba<u8>> = colors::select_palette(args.palette.to_owned(), args.invert);
+	let colors: Vec<ril::Rgba> = colors::select_palette(args.palette.to_owned(), args.invert);
 
-	let mut img = RgbaImage::from_fn(4096, 4096, |_x, _y| {
-    if args.reverse { white } else { black }
-  }); 
-	
+	let mut img = Image::new(4096, 4096, if args.reverse { white } else { black });
 	// draw /24 pixels
 
 	if let Ok(lines) = utils::read_lines(args.filename) {
@@ -65,16 +62,16 @@ fn main() {
 				
 				let (x, y) = utils::hil_xy_from_s(utils::ip_to_numeric(ip), 12);
 
-				let pixel = *img.get_pixel(x, y);
+				let pixel = img.get_pixel(x, y).unwrap();
 				
-				let k = colors.iter().position(|x| x == &pixel);
+				let k = colors.iter().position(|x| x == pixel);
 				
 				match k {
 					Some(pos) => 
 						if pos < colors.len()-1 { 
-							img.put_pixel(x, y, colors[pos+1])
+							img.set_pixel(x, y, colors[pos+1])
 					  }
-					None => img.put_pixel(x, y, colors[0])
+					None => img.set_pixel(x, y, colors[0])
 				}
 				
 			}
@@ -99,7 +96,7 @@ fn main() {
 
 	}
 
- 	img.save(args.output).expect("Error saving file.");
+ 	img.save_inferred(args.output).expect("Error saving file.");
 
   if let Some(f) = args.legend_file {
     utils::output_legend(f, args.palette, args.invert)

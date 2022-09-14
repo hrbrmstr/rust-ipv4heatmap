@@ -16,7 +16,6 @@ Differences between this and the C version:
 - No animated gif support, which means no timestamps in the IPv4 input (deliberate design decision)
 - No support for embedding a color in the IPv4 input (deliberate design decision)
 - No support for log fill (see #4)
-- No support for text transparency (see #3)
 
 ## One JSON vs Multiple TSVs
 
@@ -66,7 +65,7 @@ $ cargo install --git https://github.com/hrbrmstr/rust-ipv4heatmap
 ```
 
 ```bash
-$ ipv4-heatmap 0.1.0
+$ ipv4-heatmap 0.2.0
 boB Rudis (@hrbrmstr)
 Generate an IPv4 12th order Hilbert Heatmap from a file of IPv4 addresses.
 

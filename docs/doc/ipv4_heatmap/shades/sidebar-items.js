@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["draw_blended_rect_mut","This is a hack to do what the default `draw_rect_mut` won’t do: blend transparency."],["shade_cidrs","Given a vector of CIDRs, shade them in."]]};
+window.SIDEBAR_ITEMS = {"fn":[["shade_cidrs","Given a vector of CIDRs, shade them in."]]};

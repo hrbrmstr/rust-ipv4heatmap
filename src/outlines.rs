@@ -3,26 +3,26 @@ use crate::annotations::Outline;
 
 use hex_color::HexColor;
 
-use image::{ImageBuffer, Rgba};
-
-use imageproc::rect::Rect;
-use imageproc::drawing::draw_hollow_rect_mut;
+use ril::prelude::*;
+use ril::{Border, Rectangle, Rgba};
 
 /// Given a vector of CIDRs, draw a border around them.
-pub fn outline_cidrs(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, outlines: Vec<Outline>) {
+pub fn outline_cidrs(img: &mut Image<Rgba>, outlines: Vec<Outline>) {
 	
 	for outline in outlines {
 
 		let bbox = bbox_from_cidr(outline.cidr);
-		let fill = HexColor::parse_rgba(&outline.color.as_str()).expect("Invalid hex color in shade file.");
+		let stroke = HexColor::parse_rgba(&outline.color.as_str()).expect("Invalid hex color in shade file.");
 					
 		// println!("cidr: {:?} bbox: {:?}", fields[0], bbox);
 
-		draw_hollow_rect_mut(
-			img, 
-			Rect::at(bbox.x(), bbox.y()).of_size(bbox.width(), bbox.height()),
-			Rgba([fill.r, fill.g, fill.b, fill.a])
-		);
+    let border = Border::new(Rgba{r:stroke.r, g:stroke.g, b:stroke.b, a:stroke.a}, 1);
+    let rect  = Rectangle::new()
+        .with_position(bbox.x() as u32, bbox.y() as u32)
+        .with_size(bbox.width() as u32, bbox.height() as u32)
+        .with_border(border);
+    
+    img.draw(&rect);
 		
 	}
 	
