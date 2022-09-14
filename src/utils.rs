@@ -1,13 +1,13 @@
 use crate::colors::legend_cols;
+
 use std::cmp::{min, max};
 use std::str::FromStr;
 use std::net::Ipv4Addr;
-use cidr::Ipv4Cidr;
-use std::io::{Write};
-
 use std::fs::File;
-use std::io::{self, BufRead};
+use std::io::{self, BufRead, Write};
 use std::path::Path;
+
+use cidr::Ipv4Cidr;
 
 /// Given a filename or path and palette name (+ whether the palette should be inverted) 
 /// write an SVG legend out to the specified file.
@@ -18,46 +18,46 @@ pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Pa
 
  let res = format!(r#"
 	<svg class="hilbert-legend" width="340" height="70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-			<defs>
-					<style>
-					svg.hilbert-legend {{ padding-top: 10pt; }}
-					.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: black; opacity: 1; }}
-					.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
-					.hilbert-legend-axis-text {{ fill: black; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
-					.hilbert-legend-title {{ font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: black; font-weight: 700; }}
-					@media (prefers-color-scheme: dark) {{
-						svg {{ background-color: black; }}
-						.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: white; opacity: 1; }}
-						.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
-						.hilbert-legend-axis-text {{ fill: white; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
-						.hilbert-legend-title {{ font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: white; font-weight: 700; }}
-					}}
-					</style>
-					<linearGradient id="hilbert-legend-bar">
-							<stop offset="0" stop-color="{}" />
-							<stop offset="0.125" stop-color="{}" />
-							<stop offset="0.25" stop-color="{}" />
-							<stop offset="0.375" stop-color="{}" />
-							<stop offset="0.5" stop-color="{}" />
-							<stop offset="0.625" stop-color="{}" />
-							<stop offset="0.75" stop-color="{}" />
-							<stop offset="0.875" stop-color="{}" />
-							<stop offset="1" stop-color="{}" />
-					</linearGradient>
-			</defs>
-			<g><text class="hilbert-legend-title" x="20" y="10">Addresses per-pixel</text></g>
-			<g>
-					<rect width="300" height="20" transform="translate(20,16)" style="fill: url(&quot;#hilbert-legend-bar&quot;);" />
-			</g>
-			<g class="hilbert-legend-axis" transform="translate(20,40)">
-					<path class="hilbert-legend-domain"  d="M0,6V0H300V6" />
-					<g class="hilbert-legend-tick" transform="translate(0,0)">
-							<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">1</text></g>
-					<g class="hilbert-legend-tick" opacity="1" transform="translate(150.58823529411765,0)">
-							<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">128</text></g>
-					<g class="hilbert-legend-tick" opacity="1" transform="translate(300,0)">
-							<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">255</text></g>
-			</g>
+		<defs>
+			<style>
+			svg.hilbert-legend {{ padding-top: 10pt; }}
+			.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: black; opacity: 1; }}
+			.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
+			.hilbert-legend-axis-text {{ fill: black; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
+			.hilbert-legend-title {{ font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: black; font-weight: 700; }}
+			@media (prefers-color-scheme: dark) {{
+				svg {{ background-color: black; }}
+				.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: white; opacity: 1; }}
+				.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
+				.hilbert-legend-axis-text {{ fill: white; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
+				.hilbert-legend-title {{ font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: white; font-weight: 700; }}
+			}}
+			</style>
+			<linearGradient id="hilbert-legend-bar">
+				<stop offset="0" stop-color="{}" />
+				<stop offset="0.125" stop-color="{}" />
+				<stop offset="0.25" stop-color="{}" />
+				<stop offset="0.375" stop-color="{}" />
+				<stop offset="0.5" stop-color="{}" />
+				<stop offset="0.625" stop-color="{}" />
+				<stop offset="0.75" stop-color="{}" />
+				<stop offset="0.875" stop-color="{}" />
+				<stop offset="1" stop-color="{}" />
+			</linearGradient>
+		</defs>
+		<g><text class="hilbert-legend-title" x="20" y="10">Addresses per-pixel</text></g>
+		<g>
+			<rect width="300" height="20" transform="translate(20,16)" style="fill: url(&quot;#hilbert-legend-bar&quot;);" />
+		</g>
+		<g class="hilbert-legend-axis" transform="translate(20,40)">
+			<path class="hilbert-legend-domain"  d="M0,6V0H300V6" />
+			<g class="hilbert-legend-tick" transform="translate(0,0)">
+				<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">1</text></g>
+			<g class="hilbert-legend-tick" opacity="1" transform="translate(150.58823529411765,0)">
+				<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">128</text></g>
+			<g class="hilbert-legend-tick" opacity="1" transform="translate(300,0)">
+				<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">255</text></g>
+		</g>
 	</svg>
 	"#, cols[0], cols[1], cols[2], cols[3], cols[4], cols[5], cols[6], cols[7], cols[8]);
 
@@ -68,7 +68,7 @@ pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Pa
 
 /// Given a filename or `Path`, open the text file for reading and send back buffered lines
 pub fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> where P: AsRef<Path>, {
-	let file = File::open(filename)?;
+	let file = File::open(filename).expect("Cannot find file containing IPv4s.");
 	Ok(io::BufReader::new(file).lines())
 }
 
@@ -82,6 +82,74 @@ pub fn ip_to_numeric<S>(ip: S) -> u32 where S: Into<String>, {
 }
 
 /// Convert an IPv4 address (in integer form) to a 12th order Hilbert x/y point
+/// 
+/// This is a funky state-transition table made (in)famous? in 
+/// "[The Hacker's Delight](https://en.wikipedia.org/wiki/Hacker's_Delight)".
+/// 
+/// The [license](https://web.archive.org/web/20060108180340/http://www.hackersdelight.org/permissions.htm)
+/// is quite generous, if not adorable by today's standards. Do not try to visit the
+/// site today as spammers nabbed the domain.
+/// 
+/// In any Hilbert curve, only four of eight possible U-shapes occur:
+/// 
+/// - (A) left-to-right arrow downward facing
+/// - (B) bottom-to-top arrow leftward facing
+/// - (C) right-to-left arrow upward facing
+/// - (D) top-to-bottom arrow rightward facing
+/// 
+/// In this program, the current `state` is represented by an integer from 0 to 3 for 
+/// the above states A through D, respectively. In the assignment to `row`, the current 
+/// state is concatenated with the next two bits of `s`, giving an integer from 0 to 15, 
+/// which is the applicable row number in the state table (below). `row` is used to 
+/// access integers (expressed in hexadecimal) that are used as bit strings to represent 
+/// the rightmost two columns of the state table (that is, these accesses are in-register 
+/// table lookups). Left-to-right in the hexadecimal values corresponds to bottom-to-top in
+/// the state table.
+/// 
+/// |If the  |and the next |then    |and  |
+/// |current |(to right) 2 |append  |enter|
+/// |state is|bits of s are|to (x,y)|state|
+/// |:-------|:------------|:- -----|:----|
+/// |   A    |      00     | (0,0)  |  B  |
+/// |   A    |      01     | (0,1)  |  A  |
+/// |   A    |      10     | (1,1)  |  A  |
+/// |   A    |      11     | (1,0)  |  D  |
+/// |   B    |      00     | (0,0)  |  A  |
+/// |   B    |      01     | (0,1)  |  B  |
+/// |   B    |      10     | (1,1)  |  B  |
+/// |   B    |      11     | (1,0)  |  C  |
+/// |   C    |      00     | (0,0)  |  D  |
+/// |   C    |      01     | (0,1)  |  C  |
+/// |   C    |      10     | (1,1)  |  C  |
+/// |   C    |      11     | (1,0)  |  B  |
+/// |   D    |      00     | (0,0)  |  C  |
+/// |   D    |      01     | (0,1)  |  D  |
+/// |   D    |      10     | (1,1)  |  D  |
+/// |   D    |      11     | (1,0)  |  A  |
+/// 
+/// Original C code:
+/// 
+/// ```c
+/// void hil_xy_from_s(unsigned s, int n, unsigned *xp, unsigned *yp) {
+///   int i;
+///   unsigned state, x, y, row;
+///   state = 0; // Initialize state
+///   x = y = 0;
+/// 
+///   for (i = 2*n - 2; i >= 0; i -= 2) {  // Do n times.
+///     row = 4*state | (s>>i) & 3;        // Row in table. 
+///     x = (x << 1) | (0x936C >> row) & 1;
+///     y = (y << 1) | (0x39C6 >> row) & 1;
+///     state = (0x3E6B94C1 >> 2*row) & 3; // New state.
+///   }
+/// 
+///   \*xp = x; // pass results back
+///   \*yp = y;
+/// }
+/// ```
+/// 
+/// Grab the book for a few more alternative implementations.
+/// 
 pub fn hil_xy_from_s(ip_as_int: u32, order: i16) -> (u32, u32) {
 	
 	let mut i: i16;
@@ -92,7 +160,7 @@ pub fn hil_xy_from_s(ip_as_int: u32, order: i16) -> (u32, u32) {
 	
 	i = 2 * order - 2;
 	
-	let s = ip_as_int >> 8; // we're only supporting full maps
+	let s = ip_as_int >> 8; // we're only supporting full internet maps
 	
 	while i >= 0 {
 		

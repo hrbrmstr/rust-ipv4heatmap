@@ -3,7 +3,7 @@ use crate::annotations::Label;
 
 use hex_color::HexColor;
 
-use ril::prelude::*;
+use ril::{Font, Image, Rgba, TextSegment, TextLayout, OverlayMode};
 
 /// Given a vector of label annotations, draw the labels.
 pub fn annotate_cidrs(img: &mut Image<Rgba>, labels: Vec<Label>) {

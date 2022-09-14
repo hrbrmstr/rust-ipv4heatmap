@@ -50,12 +50,18 @@ pub struct Label {
 }
 
 #[derive(Debug, PartialEq)]
+pub struct Prefix {
+	pub cidr: String
+}
+
+#[derive(Debug, PartialEq)]
 /// Annotations on top of the heatmap can be outlines, shades, or labels.
 /// This holds all of them (if any).
 pub struct AnnotationCollection {
 	pub outlines: Option<Vec<Outline>>,
 	pub shades: Option<Vec<Shade>>,
-	pub labels: Option<Vec<Label>>
+	pub labels: Option<Vec<Label>>,
+	pub prefixes: Option<Vec<Prefix>>,
 }
 
 /// Open and read the spefified annotations JSON file.
@@ -95,12 +101,21 @@ pub fn load_config<P: AsRef<Path>>(path: P) -> AnnotationCollection {
 		})
     .collect();
 
-  let v = AnnotationCollection {
+	let prefixes: Vec<Prefix> = ann.iter()
+	  .filter(|x| x.display_prefix.is_some() && x.display_prefix.unwrap())
+    .map(|x| 
+		Prefix { 
+			cidr: x.cidr.to_owned(), 
+		})
+    .collect();
+
+  let annotation_collection = AnnotationCollection {
 		outlines: Some(outlines),
 		shades: Some(shades),
-		labels: Some(labels)
+		labels: Some(labels),
+		prefixes: Some(prefixes)
 	};
 
-	return v
+  annotation_collection
 
 }

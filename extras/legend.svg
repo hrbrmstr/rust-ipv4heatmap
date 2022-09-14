@@ -1,44 +1,44 @@
 
 	<svg class="hilbert-legend" width="340" height="70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-			<defs>
-					<style>
-					svg.hilbert-legend { padding-top: 10pt; }
-					.hilbert-legend-domain, .hilbert-legend-tick, line { stroke: black; opacity: 1; }
-					.hilbert-legend-axis { fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }
-					.hilbert-legend-axis-text { fill: black; font-family: sans-serif; font-size: 8pt; font-weight: 300; }
-					.hilbert-legend-title { font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: black; font-weight: 700; }
-					@media (prefers-color-scheme: dark) {
-						svg { background-color: black; }
-						.hilbert-legend-domain, .hilbert-legend-tick, line { stroke: white; opacity: 1; }
-						.hilbert-legend-axis { fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }
-						.hilbert-legend-axis-text { fill: white; font-family: sans-serif; font-size: 8pt; font-weight: 300; }
-						.hilbert-legend-title { font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: white; font-weight: 700; }
-					}
-					</style>
-					<linearGradient id="hilbert-legend-bar">
-							<stop offset="0" stop-color="#FDE725" />
-							<stop offset="0.125" stop-color="#AADC32" />
-							<stop offset="0.25" stop-color="#5DC863" />
-							<stop offset="0.375" stop-color="#27AD81" />
-							<stop offset="0.5" stop-color="#21908C" />
-							<stop offset="0.625" stop-color="#2C728E" />
-							<stop offset="0.75" stop-color="#3B528B" />
-							<stop offset="0.875" stop-color="#472D7B" />
-							<stop offset="1" stop-color="#440154" />
-					</linearGradient>
-			</defs>
-			<g><text class="hilbert-legend-title" x="20" y="10">Addresses per-pixel</text></g>
-			<g>
-					<rect width="300" height="20" transform="translate(20,16)" style="fill: url(&quot;#hilbert-legend-bar&quot;);" />
-			</g>
-			<g class="hilbert-legend-axis" transform="translate(20,40)">
-					<path class="hilbert-legend-domain"  d="M0,6V0H300V6" />
-					<g class="hilbert-legend-tick" transform="translate(0,0)">
-							<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">1</text></g>
-					<g class="hilbert-legend-tick" opacity="1" transform="translate(150.58823529411765,0)">
-							<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">128</text></g>
-					<g class="hilbert-legend-tick" opacity="1" transform="translate(300,0)">
-							<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">255</text></g>
-			</g>
+		<defs>
+			<style>
+			svg.hilbert-legend { padding-top: 10pt; }
+			.hilbert-legend-domain, .hilbert-legend-tick, line { stroke: black; opacity: 1; }
+			.hilbert-legend-axis { fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }
+			.hilbert-legend-axis-text { fill: black; font-family: sans-serif; font-size: 8pt; font-weight: 300; }
+			.hilbert-legend-title { font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: black; font-weight: 700; }
+			@media (prefers-color-scheme: dark) {
+				svg { background-color: black; }
+				.hilbert-legend-domain, .hilbert-legend-tick, line { stroke: white; opacity: 1; }
+				.hilbert-legend-axis { fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }
+				.hilbert-legend-axis-text { fill: white; font-family: sans-serif; font-size: 8pt; font-weight: 300; }
+				.hilbert-legend-title { font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: white; font-weight: 700; }
+			}
+			</style>
+			<linearGradient id="hilbert-legend-bar">
+				<stop offset="0" stop-color="#FDE725" />
+				<stop offset="0.125" stop-color="#AADC32" />
+				<stop offset="0.25" stop-color="#5DC863" />
+				<stop offset="0.375" stop-color="#27AD81" />
+				<stop offset="0.5" stop-color="#21908C" />
+				<stop offset="0.625" stop-color="#2C728E" />
+				<stop offset="0.75" stop-color="#3B528B" />
+				<stop offset="0.875" stop-color="#472D7B" />
+				<stop offset="1" stop-color="#440154" />
+			</linearGradient>
+		</defs>
+		<g><text class="hilbert-legend-title" x="20" y="10">Addresses per-pixel</text></g>
+		<g>
+			<rect width="300" height="20" transform="translate(20,16)" style="fill: url(&quot;#hilbert-legend-bar&quot;);" />
+		</g>
+		<g class="hilbert-legend-axis" transform="translate(20,40)">
+			<path class="hilbert-legend-domain"  d="M0,6V0H300V6" />
+			<g class="hilbert-legend-tick" transform="translate(0,0)">
+				<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">1</text></g>
+			<g class="hilbert-legend-tick" opacity="1" transform="translate(150.58823529411765,0)">
+				<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">128</text></g>
+			<g class="hilbert-legend-tick" opacity="1" transform="translate(300,0)">
+				<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">255</text></g>
+		</g>
 	</svg>
 	

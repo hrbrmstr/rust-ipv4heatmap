@@ -3,8 +3,7 @@ use crate::annotations::Shade;
 
 use hex_color::HexColor;
 
-use ril::prelude::*;
-use ril::{Rectangle, Rgba};
+use ril::{Rectangle, Rgba, OverlayMode, Image};
 
 /// Given a vector of CIDRs, shade them in.
 pub fn shade_cidrs(img: &mut Image<Rgba>, shades: Vec<Shade>) {

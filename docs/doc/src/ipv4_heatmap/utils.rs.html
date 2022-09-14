@@ -222,16 +222,84 @@
 <span id="216">216</span>
 <span id="217">217</span>
 <span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::colors::legend_cols</span>;
+
 <span class="kw">use</span> <span class="ident">std::cmp</span>::{<span class="ident">min</span>, <span class="ident">max</span>};
 <span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
 <span class="kw">use</span> <span class="ident">std::net::Ipv4Addr</span>;
-<span class="kw">use</span> <span class="ident">cidr::Ipv4Cidr</span>;
-<span class="kw">use</span> <span class="ident">std::io</span>::{<span class="ident">Write</span>};
-
 <span class="kw">use</span> <span class="ident">std::fs::File</span>;
-<span class="kw">use</span> <span class="ident">std::io</span>::{<span class="self">self</span>, <span class="ident">BufRead</span>};
+<span class="kw">use</span> <span class="ident">std::io</span>::{<span class="self">self</span>, <span class="ident">BufRead</span>, <span class="ident">Write</span>};
 <span class="kw">use</span> <span class="ident">std::path::Path</span>;
+
+<span class="kw">use</span> <span class="ident">cidr::Ipv4Cidr</span>;
 
 <span class="doccomment">/// Given a filename or path and palette name (+ whether the palette should be inverted) </span>
 <span class="doccomment">/// write an SVG legend out to the specified file.</span>
@@ -242,46 +310,46 @@
 
  <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;
 	&lt;svg class=&quot;hilbert-legend&quot; width=&quot;340&quot; height=&quot;70&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;
-			&lt;defs&gt;
-					&lt;style&gt;
-					svg.hilbert-legend {{ padding-top: 10pt; }}
-					.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: black; opacity: 1; }}
-					.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
-					.hilbert-legend-axis-text {{ fill: black; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
-					.hilbert-legend-title {{ font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: black; font-weight: 700; }}
-					@media (prefers-color-scheme: dark) {{
-						svg {{ background-color: black; }}
-						.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: white; opacity: 1; }}
-						.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
-						.hilbert-legend-axis-text {{ fill: white; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
-						.hilbert-legend-title {{ font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: white; font-weight: 700; }}
-					}}
-					&lt;/style&gt;
-					&lt;linearGradient id=&quot;hilbert-legend-bar&quot;&gt;
-							&lt;stop offset=&quot;0&quot; stop-color=&quot;{}&quot; /&gt;
-							&lt;stop offset=&quot;0.125&quot; stop-color=&quot;{}&quot; /&gt;
-							&lt;stop offset=&quot;0.25&quot; stop-color=&quot;{}&quot; /&gt;
-							&lt;stop offset=&quot;0.375&quot; stop-color=&quot;{}&quot; /&gt;
-							&lt;stop offset=&quot;0.5&quot; stop-color=&quot;{}&quot; /&gt;
-							&lt;stop offset=&quot;0.625&quot; stop-color=&quot;{}&quot; /&gt;
-							&lt;stop offset=&quot;0.75&quot; stop-color=&quot;{}&quot; /&gt;
-							&lt;stop offset=&quot;0.875&quot; stop-color=&quot;{}&quot; /&gt;
-							&lt;stop offset=&quot;1&quot; stop-color=&quot;{}&quot; /&gt;
-					&lt;/linearGradient&gt;
-			&lt;/defs&gt;
-			&lt;g&gt;&lt;text class=&quot;hilbert-legend-title&quot; x=&quot;20&quot; y=&quot;10&quot;&gt;Addresses per-pixel&lt;/text&gt;&lt;/g&gt;
-			&lt;g&gt;
-					&lt;rect width=&quot;300&quot; height=&quot;20&quot; transform=&quot;translate(20,16)&quot; style=&quot;fill: url(&amp;quot;#hilbert-legend-bar&amp;quot;);&quot; /&gt;
-			&lt;/g&gt;
-			&lt;g class=&quot;hilbert-legend-axis&quot; transform=&quot;translate(20,40)&quot;&gt;
-					&lt;path class=&quot;hilbert-legend-domain&quot;  d=&quot;M0,6V0H300V6&quot; /&gt;
-					&lt;g class=&quot;hilbert-legend-tick&quot; transform=&quot;translate(0,0)&quot;&gt;
-							&lt;line y2=&quot;6&quot; /&gt;&lt;text class=&quot;hilbert-legend-axis-text&quot; y=&quot;9&quot; dy=&quot;0.71em&quot;&gt;1&lt;/text&gt;&lt;/g&gt;
-					&lt;g class=&quot;hilbert-legend-tick&quot; opacity=&quot;1&quot; transform=&quot;translate(150.58823529411765,0)&quot;&gt;
-							&lt;line y2=&quot;6&quot; /&gt;&lt;text class=&quot;hilbert-legend-axis-text&quot; y=&quot;9&quot; dy=&quot;0.71em&quot;&gt;128&lt;/text&gt;&lt;/g&gt;
-					&lt;g class=&quot;hilbert-legend-tick&quot; opacity=&quot;1&quot; transform=&quot;translate(300,0)&quot;&gt;
-							&lt;line y2=&quot;6&quot; /&gt;&lt;text class=&quot;hilbert-legend-axis-text&quot; y=&quot;9&quot; dy=&quot;0.71em&quot;&gt;255&lt;/text&gt;&lt;/g&gt;
-			&lt;/g&gt;
+		&lt;defs&gt;
+			&lt;style&gt;
+			svg.hilbert-legend {{ padding-top: 10pt; }}
+			.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: black; opacity: 1; }}
+			.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
+			.hilbert-legend-axis-text {{ fill: black; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
+			.hilbert-legend-title {{ font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: black; font-weight: 700; }}
+			@media (prefers-color-scheme: dark) {{
+				svg {{ background-color: black; }}
+				.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: white; opacity: 1; }}
+				.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
+				.hilbert-legend-axis-text {{ fill: white; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
+				.hilbert-legend-title {{ font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: white; font-weight: 700; }}
+			}}
+			&lt;/style&gt;
+			&lt;linearGradient id=&quot;hilbert-legend-bar&quot;&gt;
+				&lt;stop offset=&quot;0&quot; stop-color=&quot;{}&quot; /&gt;
+				&lt;stop offset=&quot;0.125&quot; stop-color=&quot;{}&quot; /&gt;
+				&lt;stop offset=&quot;0.25&quot; stop-color=&quot;{}&quot; /&gt;
+				&lt;stop offset=&quot;0.375&quot; stop-color=&quot;{}&quot; /&gt;
+				&lt;stop offset=&quot;0.5&quot; stop-color=&quot;{}&quot; /&gt;
+				&lt;stop offset=&quot;0.625&quot; stop-color=&quot;{}&quot; /&gt;
+				&lt;stop offset=&quot;0.75&quot; stop-color=&quot;{}&quot; /&gt;
+				&lt;stop offset=&quot;0.875&quot; stop-color=&quot;{}&quot; /&gt;
+				&lt;stop offset=&quot;1&quot; stop-color=&quot;{}&quot; /&gt;
+			&lt;/linearGradient&gt;
+		&lt;/defs&gt;
+		&lt;g&gt;&lt;text class=&quot;hilbert-legend-title&quot; x=&quot;20&quot; y=&quot;10&quot;&gt;Addresses per-pixel&lt;/text&gt;&lt;/g&gt;
+		&lt;g&gt;
+			&lt;rect width=&quot;300&quot; height=&quot;20&quot; transform=&quot;translate(20,16)&quot; style=&quot;fill: url(&amp;quot;#hilbert-legend-bar&amp;quot;);&quot; /&gt;
+		&lt;/g&gt;
+		&lt;g class=&quot;hilbert-legend-axis&quot; transform=&quot;translate(20,40)&quot;&gt;
+			&lt;path class=&quot;hilbert-legend-domain&quot;  d=&quot;M0,6V0H300V6&quot; /&gt;
+			&lt;g class=&quot;hilbert-legend-tick&quot; transform=&quot;translate(0,0)&quot;&gt;
+				&lt;line y2=&quot;6&quot; /&gt;&lt;text class=&quot;hilbert-legend-axis-text&quot; y=&quot;9&quot; dy=&quot;0.71em&quot;&gt;1&lt;/text&gt;&lt;/g&gt;
+			&lt;g class=&quot;hilbert-legend-tick&quot; opacity=&quot;1&quot; transform=&quot;translate(150.58823529411765,0)&quot;&gt;
+				&lt;line y2=&quot;6&quot; /&gt;&lt;text class=&quot;hilbert-legend-axis-text&quot; y=&quot;9&quot; dy=&quot;0.71em&quot;&gt;128&lt;/text&gt;&lt;/g&gt;
+			&lt;g class=&quot;hilbert-legend-tick&quot; opacity=&quot;1&quot; transform=&quot;translate(300,0)&quot;&gt;
+				&lt;line y2=&quot;6&quot; /&gt;&lt;text class=&quot;hilbert-legend-axis-text&quot; y=&quot;9&quot; dy=&quot;0.71em&quot;&gt;255&lt;/text&gt;&lt;/g&gt;
+		&lt;/g&gt;
 	&lt;/svg&gt;
 	&quot;#</span>, <span class="ident">cols</span>[<span class="number">0</span>], <span class="ident">cols</span>[<span class="number">1</span>], <span class="ident">cols</span>[<span class="number">2</span>], <span class="ident">cols</span>[<span class="number">3</span>], <span class="ident">cols</span>[<span class="number">4</span>], <span class="ident">cols</span>[<span class="number">5</span>], <span class="ident">cols</span>[<span class="number">6</span>], <span class="ident">cols</span>[<span class="number">7</span>], <span class="ident">cols</span>[<span class="number">8</span>]);
 
@@ -292,7 +360,7 @@
 
 <span class="doccomment">/// Given a filename or `Path`, open the text file for reading and send back buffered lines</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_lines</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="ident">filename</span>: <span class="ident">P</span>) -&gt; <span class="ident">io::Result</span><span class="op">&lt;</span><span class="ident">io::Lines</span><span class="op">&lt;</span><span class="ident">io::BufReader</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>, {
-	<span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File::open</span>(<span class="ident">filename</span>)<span class="question-mark">?</span>;
+	<span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File::open</span>(<span class="ident">filename</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot find file containing IPv4s.&quot;</span>);
 	<span class="prelude-val">Ok</span>(<span class="ident">io::BufReader::new</span>(<span class="ident">file</span>).<span class="ident">lines</span>())
 }
 
@@ -306,6 +374,74 @@
 }
 
 <span class="doccomment">/// Convert an IPv4 address (in integer form) to a 12th order Hilbert x/y point</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// This is a funky state-transition table made (in)famous? in </span>
+<span class="doccomment">/// &quot;[The Hacker&#39;s Delight](https://en.wikipedia.org/wiki/Hacker&#39;s_Delight)&quot;.</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// The [license](https://web.archive.org/web/20060108180340/http://www.hackersdelight.org/permissions.htm)</span>
+<span class="doccomment">/// is quite generous, if not adorable by today&#39;s standards. Do not try to visit the</span>
+<span class="doccomment">/// site today as spammers nabbed the domain.</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// In any Hilbert curve, only four of eight possible U-shapes occur:</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// - (A) left-to-right arrow downward facing</span>
+<span class="doccomment">/// - (B) bottom-to-top arrow leftward facing</span>
+<span class="doccomment">/// - (C) right-to-left arrow upward facing</span>
+<span class="doccomment">/// - (D) top-to-bottom arrow rightward facing</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// In this program, the current `state` is represented by an integer from 0 to 3 for </span>
+<span class="doccomment">/// the above states A through D, respectively. In the assignment to `row`, the current </span>
+<span class="doccomment">/// state is concatenated with the next two bits of `s`, giving an integer from 0 to 15, </span>
+<span class="doccomment">/// which is the applicable row number in the state table (below). `row` is used to </span>
+<span class="doccomment">/// access integers (expressed in hexadecimal) that are used as bit strings to represent </span>
+<span class="doccomment">/// the rightmost two columns of the state table (that is, these accesses are in-register </span>
+<span class="doccomment">/// table lookups). Left-to-right in the hexadecimal values corresponds to bottom-to-top in</span>
+<span class="doccomment">/// the state table.</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// |If the  |and the next |then    |and  |</span>
+<span class="doccomment">/// |current |(to right) 2 |append  |enter|</span>
+<span class="doccomment">/// |state is|bits of s are|to (x,y)|state|</span>
+<span class="doccomment">/// |:-------|:------------|:- -----|:----|</span>
+<span class="doccomment">/// |   A    |      00     | (0,0)  |  B  |</span>
+<span class="doccomment">/// |   A    |      01     | (0,1)  |  A  |</span>
+<span class="doccomment">/// |   A    |      10     | (1,1)  |  A  |</span>
+<span class="doccomment">/// |   A    |      11     | (1,0)  |  D  |</span>
+<span class="doccomment">/// |   B    |      00     | (0,0)  |  A  |</span>
+<span class="doccomment">/// |   B    |      01     | (0,1)  |  B  |</span>
+<span class="doccomment">/// |   B    |      10     | (1,1)  |  B  |</span>
+<span class="doccomment">/// |   B    |      11     | (1,0)  |  C  |</span>
+<span class="doccomment">/// |   C    |      00     | (0,0)  |  D  |</span>
+<span class="doccomment">/// |   C    |      01     | (0,1)  |  C  |</span>
+<span class="doccomment">/// |   C    |      10     | (1,1)  |  C  |</span>
+<span class="doccomment">/// |   C    |      11     | (1,0)  |  B  |</span>
+<span class="doccomment">/// |   D    |      00     | (0,0)  |  C  |</span>
+<span class="doccomment">/// |   D    |      01     | (0,1)  |  D  |</span>
+<span class="doccomment">/// |   D    |      10     | (1,1)  |  D  |</span>
+<span class="doccomment">/// |   D    |      11     | (1,0)  |  A  |</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// Original C code:</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// ```c</span>
+<span class="doccomment">/// void hil_xy_from_s(unsigned s, int n, unsigned *xp, unsigned *yp) {</span>
+<span class="doccomment">///   int i;</span>
+<span class="doccomment">///   unsigned state, x, y, row;</span>
+<span class="doccomment">///   state = 0; // Initialize state</span>
+<span class="doccomment">///   x = y = 0;</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">///   for (i = 2*n - 2; i &gt;= 0; i -= 2) {  // Do n times.</span>
+<span class="doccomment">///     row = 4*state | (s&gt;&gt;i) &amp; 3;        // Row in table. </span>
+<span class="doccomment">///     x = (x &lt;&lt; 1) | (0x936C &gt;&gt; row) &amp; 1;</span>
+<span class="doccomment">///     y = (y &lt;&lt; 1) | (0x39C6 &gt;&gt; row) &amp; 1;</span>
+<span class="doccomment">///     state = (0x3E6B94C1 &gt;&gt; 2*row) &amp; 3; // New state.</span>
+<span class="doccomment">///   }</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">///   \*xp = x; // pass results back</span>
+<span class="doccomment">///   \*yp = y;</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// Grab the book for a few more alternative implementations.</span>
+<span class="doccomment">/// </span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hil_xy_from_s</span>(<span class="ident">ip_as_int</span>: <span class="ident">u32</span>, <span class="ident">order</span>: <span class="ident">i16</span>) -&gt; (<span class="ident">u32</span>, <span class="ident">u32</span>) {
 	
 	<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span>: <span class="ident">i16</span>;
@@ -316,7 +452,7 @@
 	
 	<span class="ident">i</span> <span class="op">=</span> <span class="number">2</span> <span class="op">*</span> <span class="ident">order</span> <span class="op">-</span> <span class="number">2</span>;
 	
-	<span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">ip_as_int</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">8</span>; <span class="comment">// we&#39;re only supporting full maps</span>
+	<span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">ip_as_int</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">8</span>; <span class="comment">// we&#39;re only supporting full internet maps</span>
 	
 	<span class="kw">while</span> <span class="ident">i</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span> {
 		

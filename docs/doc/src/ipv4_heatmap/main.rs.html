@@ -109,18 +109,29 @@
 <span id="103">103</span>
 <span id="104">104</span>
 <span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
 </pre><pre class="rust"><code><span class="kw">mod</span> <span class="ident">annotations</span>;
-<span class="kw">mod</span> <span class="ident">utils</span>;
-<span class="kw">mod</span> <span class="ident">outlines</span>;
-<span class="kw">mod</span> <span class="ident">shades</span>;
-<span class="kw">mod</span> <span class="ident">labels</span>;
-<span class="kw">mod</span> <span class="ident">colors</span>;
 <span class="kw">use</span> <span class="ident">annotations::AnnotationCollection</span>;
+
+<span class="kw">mod</span> <span class="ident">utils</span>;
+
+<span class="kw">mod</span> <span class="ident">colors</span>;
 <span class="kw">use</span> <span class="ident">colors</span>::{<span class="ident">white</span>, <span class="ident">black</span>};
+
+<span class="kw">mod</span> <span class="ident">shades</span>;
+<span class="kw">mod</span> <span class="ident">outlines</span>;
+<span class="kw">mod</span> <span class="ident">labels</span>;
+<span class="kw">mod</span> <span class="ident">prefixes</span>;
 
 <span class="kw">use</span> <span class="ident">clap::Parser</span>;
 
-<span class="kw">use</span> <span class="ident">ril::prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">ril</span>::{<span class="ident">Image</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Parser</span>, <span class="ident">Debug</span>)]</span>
 <span class="attribute">#[<span class="ident">clap</span>(<span class="ident">author</span>, <span class="ident">version</span>, <span class="ident">about</span>, <span class="ident">long_about</span> <span class="op">=</span> <span class="prelude-val">None</span>)]</span>
@@ -163,7 +174,6 @@
 	<span class="kw">let</span> <span class="ident">colors</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ril::Rgba</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">colors::select_palette</span>(<span class="ident">args</span>.<span class="ident">palette</span>.<span class="ident">to_owned</span>(), <span class="ident">args</span>.<span class="ident">invert</span>);
 
 	<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">img</span> <span class="op">=</span> <span class="ident">Image::new</span>(<span class="number">4096</span>, <span class="number">4096</span>, <span class="kw">if</span> <span class="ident">args</span>.<span class="ident">reverse</span> { <span class="ident">white</span> } <span class="kw">else</span> { <span class="ident">black</span> });
-	<span class="comment">// draw /24 pixels</span>
 
 	<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">lines</span>) <span class="op">=</span> <span class="ident">utils::read_lines</span>(<span class="ident">args</span>.<span class="ident">filename</span>) {
 		
@@ -203,6 +213,10 @@
 
 		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">labels</span>) <span class="op">=</span> <span class="ident">ann</span>.<span class="ident">labels</span> {
 		  <span class="ident">labels::annotate_cidrs</span>(<span class="kw-2">&amp;mut</span> <span class="ident">img</span>, <span class="ident">labels</span>);		
+		}
+
+		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">prefixes</span>) <span class="op">=</span> <span class="ident">ann</span>.<span class="ident">prefixes</span> {
+		  <span class="ident">prefixes::annotate_prefixes</span>(<span class="kw-2">&amp;mut</span> <span class="ident">img</span>, <span class="ident">prefixes</span>);		
 		}
 
 	}

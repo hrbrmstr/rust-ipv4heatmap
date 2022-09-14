@@ -32,14 +32,12 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
-<span id="29">29</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::utils::bbox_from_cidr</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::annotations::Outline</span>;
 
 <span class="kw">use</span> <span class="ident">hex_color::HexColor</span>;
 
-<span class="kw">use</span> <span class="ident">ril::prelude</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">ril</span>::{<span class="ident">Border</span>, <span class="ident">Rectangle</span>, <span class="ident">Rgba</span>};
+<span class="kw">use</span> <span class="ident">ril</span>::{<span class="ident">Border</span>, <span class="ident">Rectangle</span>, <span class="ident">Rgba</span>, <span class="ident">Image</span>};
 
 <span class="doccomment">/// Given a vector of CIDRs, draw a border around them.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outline_cidrs</span>(<span class="ident">img</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Image</span><span class="op">&lt;</span><span class="ident">Rgba</span><span class="op">&gt;</span>, <span class="ident">outlines</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Outline</span><span class="op">&gt;</span>) {

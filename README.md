@@ -5,16 +5,16 @@ This is a pure Rust version of the C [ipv4-heatmap][def] utility originally publ
 Differences between this and the C version:
 
 - Only supports Hilbert curves (deliberate design decision)
-- Only supports 4096 x 4096 full IPv4 address space heatmaps (deliberate design decision)
+- Only supports 4096 ✖️ 4096 full IPv4 address space heatmaps (deliberate design decision)
 - SVG separate legend file generation (see #5)
 - Annotations are all in one JSON file (see below)
 - Color values in annotations _require_ the RGBa transparency value; so instead of `#FFFFFF` for white, you'd use `#FFFFFFFF` (deliberate design decision)
 - [Inconsolata Condensed](https://fonts.google.com/specimen/Inconsolata) is embedded in the binary, but there is support for using more fonts (see JSON explanation below)
-- No CIDR prefix display (see #6)
+- CIDR prefix display is at CIDR center-bottom w/fixed size and white-with-alpha (deliberate design decision)
 - Supports all Viridis palettes as well as all ColorBrewer palettes
 - No support for a side/bottom "legend" and blathering area
 - No animated gif support, which means no timestamps in the IPv4 input (deliberate design decision)
-- No support for embedding a color in the IPv4 input (deliberate design decision)
+- No support for specifying/embedding a color in the IPv4 input (deliberate design decision)
 - No support for log fill (see #4)
 
 ## One JSON vs Multiple TSVs
@@ -29,7 +29,8 @@ The original `ipv4-heatmap` program had each annotation "layer" in separate TSVs
     "label": "Level3",
     "label-font": "extras/Lato-Black.ttf",
     "border-color": "#FFFFFFFF",
-    "fill_color": "#FF00FF22"
+    "fill-color": "#FF00FF22",
+    "display-prefix": true
 },
 …
 ```
@@ -39,6 +40,7 @@ Not all fields are required, but if present:
 - `fill-color` will overlay the specified color on the CIDR region
 - `border-color` will draw a border around the specified color on the CIDR region
 - `label`, `label-color`, and `label-font` (which is optional) will draw the specified label text to fit the CIDR region
+- `display-prefix` will display the CIDR in Inconsolata at the CIDR bottom center w/alpha'd white (if present and `true`).
 
 in that order.
 
@@ -52,7 +54,7 @@ R code to generate the Rust palette code is included.
 
 ## Licenses
 
-The heatmap code is MIT licensed.
+The heatmap code is MIT licensed. Credit would be nice but not necessary.
 
 Insonsolata was created by Raph Levien and licensed under the Open Font License.
 
@@ -65,7 +67,8 @@ $ cargo install --git https://github.com/hrbrmstr/rust-ipv4heatmap
 ```
 
 ```bash
-$ ipv4-heatmap 0.2.0
+$ ipv4-heatmap
+ipv4-heatmap 0.2.0
 boB Rudis (@hrbrmstr)
 Generate an IPv4 12th order Hilbert Heatmap from a file of IPv4 addresses.
 
@@ -88,7 +91,7 @@ OPTIONS:
 ```
 
 ```bash
-$ ipv4heatmap --annotations extras/iana.json --invert --legend-file extras/legend.svg
+$ ipv4-heatmap --annotations extras/iana.json --invert --legend-file extras/legend.svg
 # or
 # $ cargo run --release -- --annotations extras/iana.json --invert --legend-file extras/legend.svg
 ```

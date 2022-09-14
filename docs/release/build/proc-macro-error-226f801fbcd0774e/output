@@ -1,0 +1,2 @@
+cargo:rustc-cfg=use_fallback
+cargo:rustc-cfg=skip_ui_tests

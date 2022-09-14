@@ -1,15 +1,19 @@
 mod annotations;
-mod utils;
-mod outlines;
-mod shades;
-mod labels;
-mod colors;
 use annotations::AnnotationCollection;
+
+mod utils;
+
+mod colors;
 use colors::{white, black};
+
+mod shades;
+mod outlines;
+mod labels;
+mod prefixes;
 
 use clap::Parser;
 
-use ril::prelude::*;
+use ril::{Image};
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
@@ -52,7 +56,6 @@ fn main() {
 	let colors: Vec<ril::Rgba> = colors::select_palette(args.palette.to_owned(), args.invert);
 
 	let mut img = Image::new(4096, 4096, if args.reverse { white } else { black });
-	// draw /24 pixels
 
 	if let Ok(lines) = utils::read_lines(args.filename) {
 		
@@ -92,6 +95,10 @@ fn main() {
 
 		if let Some(labels) = ann.labels {
 		  labels::annotate_cidrs(&mut img, labels);		
+		}
+
+		if let Some(prefixes) = ann.prefixes {
+		  prefixes::annotate_prefixes(&mut img, prefixes);		
 		}
 
 	}

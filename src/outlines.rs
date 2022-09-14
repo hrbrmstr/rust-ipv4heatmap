@@ -3,8 +3,7 @@ use crate::annotations::Outline;
 
 use hex_color::HexColor;
 
-use ril::prelude::*;
-use ril::{Border, Rectangle, Rgba};
+use ril::{Border, Rectangle, Rgba, Image};
 
 /// Given a vector of CIDRs, draw a border around them.
 pub fn outline_cidrs(img: &mut Image<Rgba>, outlines: Vec<Outline>) {

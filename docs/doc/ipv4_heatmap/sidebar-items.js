@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["main",""]],"mod":[["annotations",""],["colors",""],["labels",""],["outlines",""],["shades",""],["utils",""]],"struct":[["Args",""]]};
+window.SIDEBAR_ITEMS = {"fn":[["main",""]],"mod":[["annotations",""],["colors",""],["labels",""],["outlines",""],["prefixes",""],["shades",""],["utils",""]],"struct":[["Args",""]]};

@@ -23,3 +23,6 @@ conv = "0.3.3"
 ril = { version = "0.4.0", features = ["all"] }
 #nsvg = "0.5.1"
 #https://github.com/nickbrowne/nsvg
+
+[profile.release]
+opt-level = 3

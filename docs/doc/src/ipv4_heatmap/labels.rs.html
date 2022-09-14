@@ -76,7 +76,7 @@
 
 <span class="kw">use</span> <span class="ident">hex_color::HexColor</span>;
 
-<span class="kw">use</span> <span class="ident">ril::prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">ril</span>::{<span class="ident">Font</span>, <span class="ident">Image</span>, <span class="ident">Rgba</span>, <span class="ident">TextSegment</span>, <span class="ident">TextLayout</span>, <span class="ident">OverlayMode</span>};
 
 <span class="doccomment">/// Given a vector of label annotations, draw the labels.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">annotate_cidrs</span>(<span class="ident">img</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Image</span><span class="op">&lt;</span><span class="ident">Rgba</span><span class="op">&gt;</span>, <span class="ident">labels</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Label</span><span class="op">&gt;</span>) {
