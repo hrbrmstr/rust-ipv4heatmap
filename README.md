@@ -1,5 +1,64 @@
 # Rustified IPv4 Heatmap
 
+This is a pure Rust version of the C [ipv4-heatmap](https://github.com/hrbrmstr/ipv4-heatmap) utility originally published by The Measurement Factory.
+
+Differences between this and the C version:
+
+- Only supports Hilbert curves (deliberate design decision)
+- Only supports 4096x4096 full IPv4 address space heatmaps (deliberate design decision)
+- SVG separate legend file generation (see #5)
+- Annotations are all in one JSON file (see below)
+- Color values in annotations _require_ the RGBa transparency value; so instead of `#FFFFFF` for white, you'd use `#FFFFFFFF` (deliberate design decision)
+- [Inconsolata Condensed](https://fonts.google.com/specimen/Inconsolata) is embedded in the binary, but there is support for using more fonts (see JSON explanation below)
+- No CIDR prefix display (see #6)
+- Supports all Viridis palettes as well as all ColorBrewer palettes
+- No support for a side/bottom "legend" and blathering area
+- No animated gif support, which means no timestamps in the IPv4 input (deliberate design decision)
+- No support for embedding a color in the IPv4 input (deliberate design decision)
+- No support for log fill (see #4)
+- No support for text transparency (see #3)
+
+## One JSON vs Multiple TSVs
+
+The original `ipv4-heatmap` program had each annotation "layer" in separate TSVs. This Rust version uses a single JSON file that is an array of records that look like this:
+
+```json
+…
+{
+    "cidr": "4.0.0.0/8",
+    "label-color": "#FFFFFFFF",
+    "label": "Level3",
+    "label-font": "extras/Lato-Black.ttf",
+    "border-color": "#FFFFFFFF",
+    "fill_color": "#FF00FF22"
+},
+…
+```
+
+Not all fields are required, but if present:
+
+- `fill-color` will overlay the specified color on the CIDR region
+- `border-color` will draw a border around the specified color on the CIDR region
+- `label`, `label-color`, and `label-font` (which is optional) will draw the specified label text to fit the CIDR region
+
+in that order.
+
+## Other Things Inside The Tin
+
+Example heatmap & legend output are included in the repo (and displayed below). The SVG has built-in CSS that enables support (where honored) for light/dark mode.
+
+Example JSON annotations files are included in `extras/`.
+
+R code to generate the Rust palette code is included.
+
+## Licenses
+
+The heatmap code is MIT licensed.
+
+Insonsolata was created by Raph Levien and licensed under the Open Font License.
+
+The extra Lato font (used in the example JSON) was created by Łukasz Dziedzic and licensed under the Open Font License.
+
 ```bash
 $ ipv4-heatmap 0.1.0
 boB Rudis (@hrbrmstr)

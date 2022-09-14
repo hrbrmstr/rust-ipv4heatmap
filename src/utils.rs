@@ -18,6 +18,12 @@ pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Pa
 	<svg class="hilbert-legend" width="340" height="70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<defs>
 					<style>
+					@media (prefers-color-scheme: dark) {{
+					.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: white; opacity: 1; }} 
+					.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
+					.hilbert-legend-axis-text {{ fill: white; font-family: sans-serif; font-size: 8pt; font-weight: 300; }}
+					.hilbert-legend-title {{font-family: sans-serif; text-anchor: start; font-size: 10pt; fill: white; font-weight: 700; }}
+          }}
 					svg.hilbert-legend {{ padding-top: 10pt; }}
 					.hilbert-legend-domain, .hilbert-legend-tick, line {{ stroke: black; opacity: 1; }} 
 					.hilbert-legend-axis {{ fill: none; font-size: 8pt; font-family: sans-serif; text-anchor: middle; }}
