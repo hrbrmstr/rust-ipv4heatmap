@@ -4,7 +4,7 @@ build:
 	cargo build --release
 
 doc:
-	cargo doc --release --no-deps --target-dir docs/
+	cargo doc --no-deps --target-dir docs/
 
 codesign:
 	cargo build --target=aarch64-apple-darwin --release && \

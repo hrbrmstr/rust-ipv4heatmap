@@ -290,6 +290,8 @@
 <span id="284">284</span>
 <span id="285">285</span>
 <span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::colors::legend_cols</span>;
 
 <span class="kw">use</span> <span class="ident">std::cmp</span>::{<span class="ident">min</span>, <span class="ident">max</span>};
@@ -398,6 +400,7 @@
 <span class="doccomment">/// table lookups). Left-to-right in the hexadecimal values corresponds to bottom-to-top in</span>
 <span class="doccomment">/// the state table.</span>
 <span class="doccomment">/// </span>
+<span class="doccomment">/// ```plain</span>
 <span class="doccomment">/// |If the  |and the next |then    |and  |</span>
 <span class="doccomment">/// |current |(to right) 2 |append  |enter|</span>
 <span class="doccomment">/// |state is|bits of s are|to (x,y)|state|</span>
@@ -418,6 +421,7 @@
 <span class="doccomment">/// |   D    |      01     | (0,1)  |  D  |</span>
 <span class="doccomment">/// |   D    |      10     | (1,1)  |  D  |</span>
 <span class="doccomment">/// |   D    |      11     | (1,0)  |  A  |</span>
+<span class="doccomment">/// ```</span>
 <span class="doccomment">/// </span>
 <span class="doccomment">/// Original C code:</span>
 <span class="doccomment">/// </span>
@@ -435,8 +439,8 @@
 <span class="doccomment">///     state = (0x3E6B94C1 &gt;&gt; 2*row) &amp; 3; // New state.</span>
 <span class="doccomment">///   }</span>
 <span class="doccomment">/// </span>
-<span class="doccomment">///   \*xp = x; // pass results back</span>
-<span class="doccomment">///   \*yp = y;</span>
+<span class="doccomment">///   *xp = x; // pass results back</span>
+<span class="doccomment">///   *yp = y;</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// </span>

@@ -106,6 +106,7 @@ pub fn ip_to_numeric<S>(ip: S) -> u32 where S: Into<String>, {
 /// table lookups). Left-to-right in the hexadecimal values corresponds to bottom-to-top in
 /// the state table.
 /// 
+/// ```plain
 /// |If the  |and the next |then    |and  |
 /// |current |(to right) 2 |append  |enter|
 /// |state is|bits of s are|to (x,y)|state|
@@ -126,6 +127,7 @@ pub fn ip_to_numeric<S>(ip: S) -> u32 where S: Into<String>, {
 /// |   D    |      01     | (0,1)  |  D  |
 /// |   D    |      10     | (1,1)  |  D  |
 /// |   D    |      11     | (1,0)  |  A  |
+/// ```
 /// 
 /// Original C code:
 /// 
@@ -143,8 +145,8 @@ pub fn ip_to_numeric<S>(ip: S) -> u32 where S: Into<String>, {
 ///     state = (0x3E6B94C1 >> 2*row) & 3; // New state.
 ///   }
 /// 
-///   \*xp = x; // pass results back
-///   \*yp = y;
+///   *xp = x; // pass results back
+///   *yp = y;
 /// }
 /// ```
 /// 
