@@ -67,6 +67,8 @@ pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Pa
 }
 
 /// Given a filename or `Path`, open the text file for reading and send back buffered lines
+/// 
+/// Panics on file not found since it's in a CLI.
 pub fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> where P: AsRef<Path>, {
 	let file = File::open(filename).expect("Cannot find file containing IPv4s.");
 	Ok(io::BufReader::new(file).lines())
