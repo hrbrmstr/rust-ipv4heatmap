@@ -288,10 +288,6 @@
 <span id="282">282</span>
 <span id="283">283</span>
 <span id="284">284</span>
-<span id="285">285</span>
-<span id="286">286</span>
-<span id="287">287</span>
-<span id="288">288</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::colors::legend_cols</span>;
 
 <span class="kw">use</span> <span class="ident">std::cmp</span>::{<span class="ident">min</span>, <span class="ident">max</span>};
@@ -400,28 +396,24 @@
 <span class="doccomment">/// table lookups). Left-to-right in the hexadecimal values corresponds to bottom-to-top in</span>
 <span class="doccomment">/// the state table.</span>
 <span class="doccomment">/// </span>
-<span class="doccomment">/// ```plain</span>
-<span class="doccomment">/// |If the  |and the next |then    |and  |</span>
-<span class="doccomment">/// |current |(to right) 2 |append  |enter|</span>
-<span class="doccomment">/// |state is|bits of s are|to (x,y)|state|</span>
-<span class="doccomment">/// |:-------|:------------|:- -----|:----|</span>
-<span class="doccomment">/// |   A    |      00     | (0,0)  |  B  |</span>
-<span class="doccomment">/// |   A    |      01     | (0,1)  |  A  |</span>
-<span class="doccomment">/// |   A    |      10     | (1,1)  |  A  |</span>
-<span class="doccomment">/// |   A    |      11     | (1,0)  |  D  |</span>
-<span class="doccomment">/// |   B    |      00     | (0,0)  |  A  |</span>
-<span class="doccomment">/// |   B    |      01     | (0,1)  |  B  |</span>
-<span class="doccomment">/// |   B    |      10     | (1,1)  |  B  |</span>
-<span class="doccomment">/// |   B    |      11     | (1,0)  |  C  |</span>
-<span class="doccomment">/// |   C    |      00     | (0,0)  |  D  |</span>
-<span class="doccomment">/// |   C    |      01     | (0,1)  |  C  |</span>
-<span class="doccomment">/// |   C    |      10     | (1,1)  |  C  |</span>
-<span class="doccomment">/// |   C    |      11     | (1,0)  |  B  |</span>
-<span class="doccomment">/// |   D    |      00     | (0,0)  |  C  |</span>
-<span class="doccomment">/// |   D    |      01     | (0,1)  |  D  |</span>
-<span class="doccomment">/// |   D    |      10     | (1,1)  |  D  |</span>
-<span class="doccomment">/// |   D    |      11     | (1,0)  |  A  |</span>
-<span class="doccomment">/// ```</span>
+<span class="doccomment">/// |If the&lt;br/&gt;current&lt;br/&gt;state is|and the&lt;br/&gt;next (to right)&lt;br/&gt;2 bits of s are|then&lt;br/&gt;append&lt;br/&gt;to (x,y)|and&lt;br/&gt;enter&lt;br/&gt;state|</span>
+<span class="doccomment">/// |:----:|:---:|:-------:|:---:|</span>
+<span class="doccomment">/// | `A` | `00` | `(0,0)` | `B` |</span>
+<span class="doccomment">/// | `A` | `01` | `(0,1)` | `A` |</span>
+<span class="doccomment">/// | `A` | `10` | `(1,1)` | `A` |</span>
+<span class="doccomment">/// | `A` | `11` | `(1,0)` | `D` |</span>
+<span class="doccomment">/// | `B` | `00` | `(0,0)` | `A` |</span>
+<span class="doccomment">/// | `B` | `01` | `(0,1)` | `B` |</span>
+<span class="doccomment">/// | `B` | `10` | `(1,1)` | `B` |</span>
+<span class="doccomment">/// | `B` | `11` | `(1,0)` | `C` |</span>
+<span class="doccomment">/// | `C` | `00` | `(0,0)` | `D` |</span>
+<span class="doccomment">/// | `C` | `01` | `(0,1)` | `C` |</span>
+<span class="doccomment">/// | `C` | `10` | `(1,1)` | `C` |</span>
+<span class="doccomment">/// | `C` | `11` | `(1,0)` | `B` |</span>
+<span class="doccomment">/// | `D` | `00` | `(0,0)` | `C` |</span>
+<span class="doccomment">/// | `D` | `01` | `(0,1)` | `D` |</span>
+<span class="doccomment">/// | `D` | `10` | `(1,1)` | `D` |</span>
+<span class="doccomment">/// | `D` | `11` | `(1,0)` | `A` |</span>
 <span class="doccomment">/// </span>
 <span class="doccomment">/// Original C code:</span>
 <span class="doccomment">/// </span>
