@@ -43,11 +43,11 @@ pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Pa
 							<stop offset="1" stop-color="{}" />
 					</linearGradient>
 			</defs>
-			<g><text class="hilbert-legend-title" x="10" y="10">Addresses per-pixel</text></g>
+			<g><text class="hilbert-legend-title" x="20" y="10">Addresses per-pixel</text></g>
 			<g>
-					<rect width="300" height="20" transform="translate(10,16)" style="fill: url(&quot;#hilbert-legend-bar&quot;);" />
+					<rect width="300" height="20" transform="translate(20,16)" style="fill: url(&quot;#hilbert-legend-bar&quot;);" />
 			</g>
-			<g class="hilbert-legend-axis" transform="translate(10,40)">
+			<g class="hilbert-legend-axis" transform="translate(20,40)">
 					<path class="hilbert-legend-domain"  d="M0,6V0H300V6" />
 					<g class="hilbert-legend-tick" transform="translate(0,0)">
 							<line y2="6" /><text class="hilbert-legend-axis-text" y="9" dy="0.71em">1</text></g>
