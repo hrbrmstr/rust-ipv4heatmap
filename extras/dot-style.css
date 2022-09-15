@@ -1,0 +1,72 @@
+svg {
+  color: black;
+  background-color: white;
+}
+
+.graph>polygon {
+  fill: white;
+  stroke: none;
+}
+
+.node>ellipse {
+  fill: none;
+  stroke: black;
+}
+
+.node>polygon {
+  fill: black;
+  stroke: black;
+}
+
+.node>text {
+  color: black;
+  font-family: sans-serif;
+}
+
+.edge>polygon {
+  fill: black;
+  stroke: black;
+}
+
+.edge>path {
+  fill: none;
+  stroke: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  svg {
+    color: white;
+    background-color: black;
+  }
+
+  .graph>polygon {
+    fill: white;
+    stroke: none;
+  }
+
+  .node>ellipse {
+    fill: none;
+    stroke: white;
+  }
+
+  .node>polygon {
+    fill: white;
+    stroke: white;
+  }
+
+  .node>text {
+    color: white;
+    font-family: sans-serif;
+  }
+
+  .edge>path {
+    fill: none;
+    stroke: white;
+  }
+
+  .edge>polygon {
+    fill: white;
+    stroke: white;
+  }
+
+}
