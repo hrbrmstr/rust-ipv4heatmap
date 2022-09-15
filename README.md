@@ -63,7 +63,7 @@ The extra Lato font (used in the example JSON) was created by Łukasz Dziedzic a
 ## Installation
 
 ```bash
-$ cargo install --git https://github.com/hrbrmstr/rust-ipv4heatmap
+cargo install --git https://github.com/hrbrmstr/rust-ipv4heatmap --branch batman
 ```
 
 ```bash

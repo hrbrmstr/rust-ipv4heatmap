@@ -26,4 +26,3 @@ ril = { version = "0.4.0", features = ["all"] }
 
 [profile.release]
 opt-level = 3
-strip = true
