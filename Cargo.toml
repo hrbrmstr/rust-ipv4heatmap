@@ -4,7 +4,7 @@ authors = [ "boB Rudis (@hrbrmstr)" ]
 description = "Generate an IPv4 12th order Hilbert Heatmap from a file of IPv4 addresses."
 readme = "README.md"
 license = "MIT"
-categories = ["data-visualization", "command-line-interface"]
+categories = ["data-visualization", "command-line-utilities"]
 keywords = ["cli", "ipaddress", "ipv4", "datavis", "hilbert"]
 homepage = "https://github.com/hrbrmstr/rust-ipv4-heatmap"
 repository = "https://github.com/hrbrmstr/rust-ipv4-heatmap"
@@ -26,3 +26,4 @@ ril = { version = "0.4.0", features = ["all"] }
 
 [profile.release]
 opt-level = 3
+strip = true

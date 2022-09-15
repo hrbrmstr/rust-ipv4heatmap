@@ -1,3 +1,5 @@
+//! # CIDR block prefix annotation
+
 use crate::utils::bbox_from_cidr;
 use crate::annotations::Prefix;
 

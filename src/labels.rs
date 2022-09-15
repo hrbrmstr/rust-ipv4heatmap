@@ -1,3 +1,5 @@
+//! # CIDR block text label annotation
+
 use crate::utils::bbox_from_cidr;
 use crate::annotations::Label;
 

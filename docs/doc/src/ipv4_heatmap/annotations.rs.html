@@ -125,7 +125,77 @@
 <span id="119">119</span>
 <span id="120">120</span>
 <span id="121">121</span>
-</pre><pre class="rust"><code><span class="attribute">#![<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+</pre><pre class="rust"><code><span class="doccomment">//! # CIDR block annotations</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! There are four types of annotations supported:</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! - shade: fill a CIDR block with a specified color</span>
+<span class="doccomment">//! - border: outline a CIDR block with a specified color</span>
+<span class="doccomment">//! - label: fit a text label into a CIDR block</span>
+<span class="doccomment">//! - prefix: add CIDR prefix text to a CIDR block</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! Annotations are stored in a single JSON file that is</span>
+<span class="doccomment">//! an array of annotation objects with the following </span>
+<span class="doccomment">//! structure:</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! ```json</span>
+<span class="doccomment">//! {</span>
+<span class="doccomment">//!   &quot;cidr&quot;: &quot;4.0.0.0/8&quot;,</span>
+<span class="doccomment">//!   &quot;label-color&quot;: &quot;#FFFFFFFF&quot;,</span>
+<span class="doccomment">//!   &quot;label&quot;: &quot;Level3&quot;,</span>
+<span class="doccomment">//!   &quot;label-font&quot;: &quot;extras/Lato-Black.ttf&quot;,</span>
+<span class="doccomment">//!   &quot;border-color&quot;: &quot;#FFFFFFFF&quot;,</span>
+<span class="doccomment">//!   &quot;fill-color&quot;: &quot;#FF00FF22&quot;,</span>
+<span class="doccomment">//!   &quot;display-prefix&quot;: true</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! Not all fields are required, but if present:</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! - `fill-color` will overlay the specified color on the CIDR region</span>
+<span class="doccomment">//! - `border-color` will draw a border around the specified color on the CIDR region</span>
+<span class="doccomment">//! - `label`, `label-color`, and `label-font` (which is optional) will draw the specified label text to fit the CIDR region</span>
+<span class="doccomment">//! - `display-prefix` will display the CIDR in Inconsolata at the CIDR bottom center w/alpha&#39;d white (if present and `true`).</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! in that order.</span>
+
 <span class="kw">use</span> <span class="ident">serde_derive::Deserialize</span>;
 <span class="kw">use</span> <span class="ident">std::fs::File</span>;
 <span class="kw">use</span> <span class="ident">std::io::BufReader</span>;
@@ -133,6 +203,7 @@
 
 <span class="kw">use</span> <span class="ident">serde_json</span>;
 
+<span class="doccomment">/// Deserialization structure for the annotation JSON object</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Annotation</span> {
 	<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;cidr&quot;</span>)]</span>
@@ -157,17 +228,21 @@
 	<span class="ident">display_prefix</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
 }
 
+<span class="doccomment">/// An annotation describing the CIDR outline style</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Outline</span> {
 	<span class="kw">pub</span> <span class="ident">cidr</span>: <span class="ident">String</span>,
 	<span class="kw">pub</span> <span class="ident">color</span>: <span class="ident">String</span>,
 }
+
+<span class="doccomment">/// An annotation describing the CIDR fill style</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Shade</span> {
 	<span class="kw">pub</span> <span class="ident">cidr</span>: <span class="ident">String</span>,
 	<span class="kw">pub</span> <span class="ident">fill</span>: <span class="ident">String</span>,
 }
 
+<span class="doccomment">/// An annotation describing the CIDR label text &amp; style</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Label</span> {
 	<span class="kw">pub</span> <span class="ident">cidr</span>: <span class="ident">String</span>,
@@ -176,14 +251,15 @@
 	<span class="kw">pub</span> <span class="ident">font</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>
 }
 
+<span class="doccomment">/// An annotation that says to tag each CIDR block with the CIDR text</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Prefix</span> {
 	<span class="kw">pub</span> <span class="ident">cidr</span>: <span class="ident">String</span>
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
-<span class="doccomment">/// Annotations on top of the heatmap can be outlines, shades, or labels.</span>
-<span class="doccomment">/// This holds all of them (if any).</span>
+<span class="doccomment">/// Annotations on top of the heatmap can be outlines, shades, labels, or the CIDR text.</span>
+<span class="doccomment">/// This structure holds all specified annotations.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AnnotationCollection</span> {
 	<span class="kw">pub</span> <span class="ident">outlines</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Outline</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 	<span class="kw">pub</span> <span class="ident">shades</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Shade</span><span class="op">&gt;</span><span class="op">&gt;</span>,

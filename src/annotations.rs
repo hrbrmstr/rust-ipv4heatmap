@@ -1,4 +1,36 @@
-#![allow(dead_code)]
+//! # CIDR block annotations
+//! 
+//! There are four types of annotations supported:
+//! 
+//! - shade: fill a CIDR block with a specified color
+//! - border: outline a CIDR block with a specified color
+//! - label: fit a text label into a CIDR block
+//! - prefix: add CIDR prefix text to a CIDR block
+//! 
+//! Annotations are stored in a single JSON file that is
+//! an array of annotation objects with the following 
+//! structure:
+//! 
+//! ```json
+//! {
+//!   "cidr": "4.0.0.0/8",
+//!   "label-color": "#FFFFFFFF",
+//!   "label": "Level3",
+//!   "label-font": "extras/Lato-Black.ttf",
+//!   "border-color": "#FFFFFFFF",
+//!   "fill-color": "#FF00FF22",
+//!   "display-prefix": true
+//! }
+//! ```
+//! Not all fields are required, but if present:
+//! 
+//! - `fill-color` will overlay the specified color on the CIDR region
+//! - `border-color` will draw a border around the specified color on the CIDR region
+//! - `label`, `label-color`, and `label-font` (which is optional) will draw the specified label text to fit the CIDR region
+//! - `display-prefix` will display the CIDR in Inconsolata at the CIDR bottom center w/alpha'd white (if present and `true`).
+//! 
+//! in that order.
+
 use serde_derive::Deserialize;
 use std::fs::File;
 use std::io::BufReader;
@@ -6,6 +38,7 @@ use std::path::Path;
 
 use serde_json;
 
+/// Deserialization structure for the annotation JSON object
 #[derive(Deserialize)]
 pub struct Annotation {
 	#[serde(rename = "cidr")]
@@ -30,17 +63,21 @@ pub struct Annotation {
 	display_prefix: Option<bool>,
 }
 
+/// An annotation describing the CIDR outline style
 #[derive(Debug, PartialEq)]
 pub struct Outline {
 	pub cidr: String,
 	pub color: String,
 }
+
+/// An annotation describing the CIDR fill style
 #[derive(Debug, PartialEq)]
 pub struct Shade {
 	pub cidr: String,
 	pub fill: String,
 }
 
+/// An annotation describing the CIDR label text & style
 #[derive(Debug, PartialEq)]
 pub struct Label {
 	pub cidr: String,
@@ -49,14 +86,15 @@ pub struct Label {
 	pub font: Option<String>
 }
 
+/// An annotation that says to tag each CIDR block with the CIDR text
 #[derive(Debug, PartialEq)]
 pub struct Prefix {
 	pub cidr: String
 }
 
 #[derive(Debug, PartialEq)]
-/// Annotations on top of the heatmap can be outlines, shades, or labels.
-/// This holds all of them (if any).
+/// Annotations on top of the heatmap can be outlines, shades, labels, or the CIDR text.
+/// This structure holds all specified annotations.
 pub struct AnnotationCollection {
 	pub outlines: Option<Vec<Outline>>,
 	pub shades: Option<Vec<Shade>>,

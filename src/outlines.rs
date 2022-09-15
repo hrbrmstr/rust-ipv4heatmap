@@ -1,3 +1,5 @@
+//! # CIDR block outlne annotation
+
 use crate::utils::bbox_from_cidr;
 use crate::annotations::Outline;
 

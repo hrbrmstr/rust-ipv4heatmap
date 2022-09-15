@@ -1,3 +1,5 @@
+//! # Utility functions used by across the crate
+
 use crate::colors::legend_cols;
 
 use std::cmp::{min, max};
@@ -77,6 +79,11 @@ pub fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> 
 /// Convert an characrter IPv4 address into an integer.
 /// 
 /// Panics on invalid address since it's in a CLI.
+/// 
+/// ```rust
+/// let res = ip_to_numeric("192.168.1.1");
+/// ## 3232235777
+/// ```
 pub fn ip_to_numeric<S>(ip: S) -> u32 where S: Into<String>, {
 	let addr = Ipv4Addr::from_str(&ip.into()).expect("Invalid IPv4");
 	let addr_u32: u32 = addr.into();
@@ -239,6 +246,13 @@ fn bbox(first: u32, slash: u8) -> BoundingBox {
 }
 
 /// Given a CIDR in `IP/##` form, return the bounding box.
+/// 
+/// # Examples
+/// 
+/// ```rust
+/// let result = bbox_from_cidr("218.0.0.0/7");
+/// ## BoundingBox { xmin: 2048, xmax: 2559, ymin: 1024, ymax: 1279 })
+/// ```
 pub fn bbox_from_cidr<S>(cidr: S) -> BoundingBox where S: Into<String>, {
 	
 	if let Ok(parsed_cidr) = Ipv4Cidr::from_str(&cidr.into()) {

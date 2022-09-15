@@ -11,6 +11,7 @@ suppressWarnings(suppressPackageStartupMessages({
 color_fil <- "colors.rs"
 
 cat(
+  "//! # Color palettes and color utilities used by annotations\n",
   "#![allow(non_upper_case_globals)]",
   "#![allow(dead_code)]\n",
   sprintf(

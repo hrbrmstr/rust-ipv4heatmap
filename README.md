@@ -92,16 +92,16 @@ OPTIONS:
 
 ```bash
 $ ipv4-heatmap --annotations extras/iana.json --invert --legend-file extras/legend.svg
-# or
-# $ cargo run --release -- --annotations extras/iana.json --invert --legend-file extras/legend.svg
 ```
 
-![legend](extras/legend.svg)
+![legend](assets/legend.svg)
 
-![map](map.png)
+![map](assets/map.png)
 
 ## Dependencies
 
-![deps](graph.svg)
+SBOM: [sbom](bom.xml)
+
+![deps](assets/graph.svg)
 
 [def]: https://github.com/hrbrmstr/ipv4-heatmap

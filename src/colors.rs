@@ -1,5 +1,6 @@
+//! # Color palettes and color utilities used by annotations
+
 #![allow(non_upper_case_globals)]
-#![allow(dead_code)]
 
 /* GENERATED AUTOMATICALLY [2022-09-13 13:38:16] DO NOT EDIT BY HAND */
 /* SEE extras/colorgen.r for details */

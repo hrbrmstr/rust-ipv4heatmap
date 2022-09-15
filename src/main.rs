@@ -1,15 +1,24 @@
+//! # ipv4-heatmap
+//! 
+//! This crate builds a binary that can be used to create 
+//! [IPv4 Hilbert heatmaps](https://www.caida.org/archive/arin-heatmaps/).
+//! 
+//! <div>
+//! <img src="https://rud.is/dl/map.png"/>
+//! </div>
+//! 
+//! You can find design decisions and more information [in this repository](https://github.com/hrbrmstr/rust-ipv4heatmap).
+
 mod annotations;
-use annotations::AnnotationCollection;
-
-mod utils;
-
+pub mod utils;
 mod colors;
-use colors::{white, black};
-
 mod shades;
 mod outlines;
 mod labels;
 mod prefixes;
+
+use crate::annotations::AnnotationCollection;
+use crate::colors::{white, black};
 
 use clap::Parser;
 

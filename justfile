@@ -4,7 +4,10 @@ build:
 	cargo build --release
 
 doc:
-	cargo doc --no-deps --target-dir docs/
+	cargo doc --open --no-deps --target-dir docs/
+
+docs:
+	cargo doc --open --no-deps --target-dir docs/
 
 codesign:
 	cargo build --target=aarch64-apple-darwin --release && \
@@ -24,16 +27,16 @@ test:
 	cargo test --release
 
 ge:
-	cargo run --release -- --annotations extras/ge.json --invert --legend-file extras/legend.svg
-	/usr/bin/open map.png
+	cargo run --release -- --filename extras/ips.txt --output assets/map.png --annotations extras/ge.json --invert --legend-file assets/legend.svg
+	/usr/bin/open assets/map.png
 
 invert:
-	cargo run --release -- --annotations extras/iana.json --invert --legend-file extras/legend.svg
-	/usr/bin/open map.png
+	cargo run --release -- --filename extras/ips.txt --output assets/map.png --annotations extras/iana.json --invert --legend-file assets/legend.svg
+	/usr/bin/open assets/map.png
 
 example:
-	cargo run --release -- --annotations extras/iana.json --legend-file extras/legend.svg
-	/usr/bin/open map.png
+	cargo run --release -- --filename extras/ips.txt --output assets/map.png --annotations extras/iana.json --legend-file extras/assets.svg
+	/usr/bin/open assets/map.png
 
 legend: example
-	/usr/bin/open extras/legend.svg
+	/usr/bin/open assets/legend.svg
