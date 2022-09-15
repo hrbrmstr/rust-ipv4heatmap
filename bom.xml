@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<bom serialNumber="urn:uuid:089e2cf2-fdec-4486-b2a3-2bd42681d8d6" version="1" xmlns="http://cyclonedx.org/schema/bom/1.3">
+<bom serialNumber="urn:uuid:b6b098cf-cbdb-4d7c-bc78-d4408d9335d6" version="1" xmlns="http://cyclonedx.org/schema/bom/1.3">
   <metadata>
-    <timestamp>2022-09-15T08:36:17.21072Z</timestamp>
+    <timestamp>2022-09-15T09:07:48.132588Z</timestamp>
     <authors>
       <author>
         <name>boB Rudis (@hrbrmstr)</name></author></authors>

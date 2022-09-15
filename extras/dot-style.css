@@ -3,34 +3,30 @@ svg {
   background-color: white;
 }
 
-.graph>polygon {
+g.graph>polygon {
   fill: white;
+  stroke: none
+}
+
+text {
   stroke: none;
-}
-
-.node>ellipse {
-  fill: none;
-  stroke: black;
-}
-
-.node>polygon {
   fill: black;
-  stroke: black;
-}
-
-.node>text {
-  color: black;
   font-family: sans-serif;
 }
 
-.edge>polygon {
-  fill: black;
+g.node>ellipse {
+  fill: none;
   stroke: black;
 }
 
-.edge>path {
+g.edge>path {
   fill: none;
   stroke: black;
+}
+
+g.edge>polygon {
+  fill: black;
+  stroke: white;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,34 +35,28 @@ svg {
     background-color: black;
   }
 
-  .graph>polygon {
-    fill: white;
+  g.graph>polygon {
+    fill: black;
+    stroke: none
+  }
+
+  text {
     stroke: none;
+    fill: white;
   }
 
-  .node>ellipse {
+  g.node>ellipse {
     fill: none;
     stroke: white;
   }
 
-  .node>polygon {
-    fill: white;
-    stroke: white;
-  }
-
-  .node>text {
-    color: white;
-    font-family: sans-serif;
-  }
-
-  .edge>path {
+  g.edge>path {
     fill: none;
     stroke: white;
   }
 
-  .edge>polygon {
+  g.edge>polygon {
     fill: white;
     stroke: white;
   }
-
 }
