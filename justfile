@@ -19,7 +19,7 @@ codesign:
 # 	TARGET_CC=x86_64-unknown-linux-gnu cargo build --target=x86_64-unknown-linux-gnu --release
 
 deps:
-	cargo deps | dot -Tsvg > graph.svg
+	cargo deps | dot -Tsvg > assets/graph.svg
 	extras/dot-embed-stylesheet.R
 	cargo cyclonedx
 	

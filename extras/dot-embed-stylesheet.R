@@ -1,6 +1,6 @@
 #!/usr/local/bin/Rscript --vanilla
 
-l <- readLines("graph.svg")
+l <- readLines("assets/graph.svg")
 css  <- readLines("extras/dot-style.css")
 
 svg <- which(grepl("^<svg", l))
@@ -13,4 +13,4 @@ post <- gsub('fill="[^"]+"', "", post)
 post <- gsub('stroke="[^"]+"', "", post)
 post <- gsub('font-family="[^"]+"', "", post)
 
-writeLines(c(l[svg:(svg + 1)], "<defs>", "<style>", css, "</style>", "</defs>", post), "graph.svg")
+writeLines(c(l[svg:(svg + 1)], "<defs>", "<style>", css, "</style>", "</defs>", post), "assets/graph.svg")

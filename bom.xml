@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<bom serialNumber="urn:uuid:b6b098cf-cbdb-4d7c-bc78-d4408d9335d6" version="1" xmlns="http://cyclonedx.org/schema/bom/1.3">
+<bom serialNumber="urn:uuid:b07573bf-be1f-465e-8aa0-db28b5da5c42" version="1" xmlns="http://cyclonedx.org/schema/bom/1.3">
   <metadata>
-    <timestamp>2022-09-15T09:07:48.132588Z</timestamp>
+    <timestamp>2022-09-16T14:33:46.489342Z</timestamp>
     <authors>
       <author>
         <name>boB Rudis (@hrbrmstr)</name></author></authors>
     <component type="application">
       <name>ipv4-heatmap</name>
-      <version>0.2.0</version>
+      <version>0.3.0</version>
       <description><![CDATA[Generate an IPv4 12th order Hilbert Heatmap from a file of IPv4 addresses.]]></description>
-      <purl>pkg:cargo/ipv4-heatmap@0.2.0</purl>
+      <purl>pkg:cargo/ipv4-heatmap@0.3.0</purl>
       <licenses>
         <license>
           <expression>MIT</expression></license></licenses>
@@ -48,6 +48,20 @@
         <reference type="vcs">
           <url>https://github.com/clap-rs/clap</url></reference></externalReferences></component>
     <component type="library">
+      <name>colorgrad</name>
+      <version>0.6.1</version>
+      <description><![CDATA[Color scales library for data visualization, charts, games, generative art and others.]]></description>
+      <purl>pkg:cargo/colorgrad@0.6.1</purl>
+      <scope>required</scope>
+      <licenses>
+        <license>
+          <expression>MIT OR Apache-2.0</expression></license></licenses>
+      <externalReferences>
+        <reference type="documentation">
+          <url>https://docs.rs/colorgrad/</url></reference>
+        <reference type="vcs">
+          <url>https://github.com/mazznoer/colorgrad-rs</url></reference></externalReferences></component>
+    <component type="library">
       <name>conv</name>
       <version>0.3.3</version>
       <description><![CDATA[This crate provides a number of conversion traits with more specific semantics than those provided by 'as' or 'From'/'Into'.]]></description>
@@ -73,6 +87,20 @@
       <externalReferences>
         <reference type="vcs">
           <url>https://github.com/seancroach/hex_color</url></reference></externalReferences></component>
+    <component type="library">
+      <name>lazy_static</name>
+      <version>1.4.0</version>
+      <description><![CDATA[A macro for declaring lazily evaluated statics in Rust.]]></description>
+      <purl>pkg:cargo/lazy_static@1.4.0</purl>
+      <scope>required</scope>
+      <licenses>
+        <license>
+          <expression>MIT/Apache-2.0</expression></license></licenses>
+      <externalReferences>
+        <reference type="documentation">
+          <url>https://docs.rs/lazy_static</url></reference>
+        <reference type="vcs">
+          <url>https://github.com/rust-lang-nursery/lazy-static.rs</url></reference></externalReferences></component>
     <component type="library">
       <name>ril</name>
       <version>0.4.0</version>
