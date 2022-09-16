@@ -66,7 +66,7 @@ cargo install --git https://github.com/hrbrmstr/rust-ipv4heatmap --branch batman
 
 ```bash
 $ ipv4-heatmap
-ipv4-heatmap 0.2.0
+ipv4-heatmap 0.3.0
 boB Rudis (@hrbrmstr)
 Generate an IPv4 12th order Hilbert Heatmap from a file of IPv4 addresses.
 
@@ -75,15 +75,19 @@ USAGE:
 
 OPTIONS:
     -a, --annotations <ANNOTATIONS>    file containing JSON CIDR annotations
+    -c, --crop <CROP>                  [PRESENTLY BROKEN]
     -f, --filename <FILENAME>          input file of IPs [default: ips.txt]
     -h, --help                         Print help information
     -i, --invert                       invert the chosen color palette
     -l, --legend-file <LEGEND_FILE>    output an SVG colourbar legend to this file
     -o, --output <OUTPUT>              heatmap output file; extenstion determines format [default:
                                        map.png]
-    -p, --palette <PALETTE>            color palette to use; one of (viridis magma inferno plasma
-                                       cividis rocket mako turbo brbg puor rdbu rdgy rdylbu spectral
-                                       bupu reds ylgnbu ylorbr ylorrd) [default: cividis]
+    -p, --palette <PALETTE>            color palette to use; one of (blues br_bg bu_gn bu_pu cividis
+                                       cool gn_bu greens greys inferno magma or_rd oranges pi_yg
+                                       plasma pr_gn pu_bu pu_bu_gn pu_or pu_rd purples rainbow rd_bu
+                                       rd_gy rd_pu rd_yl_bu rd_yl_gn reds sinebow spectral turbo
+                                       viridis warm yl_gn yl_gn_bu yl_or_br yl_or_rd) [default:
+                                       cividis]
     -r, --reverse                      reverse the heatmap base (i.e. white background, black text)
     -V, --version                      Print version information
 ```

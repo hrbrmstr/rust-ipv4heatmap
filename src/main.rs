@@ -58,7 +58,7 @@ struct Args {
 	#[clap(short, long)]
 	legend_file: Option<String>,
 
-	// crop output to area represented by these CIDRs (comma separated CIDR list) [BROKEN]
+	// crop output to area represented by these CIDRs (comma separated CIDR list)
 	#[clap(short, long)]
 	crop: Option<String>
 
