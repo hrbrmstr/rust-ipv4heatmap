@@ -16,15 +16,15 @@
 			}
 			</style>
 			<linearGradient id="hilbert-legend-bar">
-				<stop offset="0" stop-color="#FDE725" />
-				<stop offset="0.125" stop-color="#AADC32" />
-				<stop offset="0.25" stop-color="#5DC863" />
-				<stop offset="0.375" stop-color="#27AD81" />
-				<stop offset="0.5" stop-color="#21908C" />
-				<stop offset="0.625" stop-color="#2C728E" />
-				<stop offset="0.75" stop-color="#3B528B" />
-				<stop offset="0.875" stop-color="#472D7B" />
-				<stop offset="1" stop-color="#440154" />
+				<stop offset="0" stop-color="#fdea45" />
+				<stop offset="0.125" stop-color="#e2cb5c" />
+				<stop offset="0.25" stop-color="#bbaf71" />
+				<stop offset="0.375" stop-color="#9a9478" />
+				<stop offset="0.5" stop-color="#7f7c75" />
+				<stop offset="0.625" stop-color="#62646f" />
+				<stop offset="0.75" stop-color="#3c4d6e" />
+				<stop offset="0.875" stop-color="#11366c" />
+				<stop offset="1" stop-color="#002051" />
 			</linearGradient>
 		</defs>
 		<g><text class="hilbert-legend-title" x="20" y="10">Addresses per-pixel</text></g>

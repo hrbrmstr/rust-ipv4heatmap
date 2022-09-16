@@ -13,10 +13,9 @@ use cidr::Ipv4Cidr;
 
 /// Given a filename or path and palette name (+ whether the palette should be inverted) 
 /// write an SVG legend out to the specified file.
-pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Path>, S: Into<String>, {
+pub fn output_legend<P>(filename: P, name: &str, invert: bool) where P: AsRef<Path>, {
 
-	let mut cols = legend_cols(name);
-  if invert { cols.reverse() };
+	let cols = legend_cols(&name, invert);
 
  let res = format!(r#"
 	<svg class="hilbert-legend" width="340" height="70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -74,6 +73,20 @@ pub fn output_legend<P, S>(filename: P, name: S, invert: bool) where P: AsRef<Pa
 pub fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> where P: AsRef<Path>, {
 	let file = File::open(filename).expect("Cannot find file containing IPv4s.");
 	Ok(io::BufReader::new(file).lines())
+}
+
+/// Find the maximum value in iterable
+pub fn find_max<I>(iter: I) -> Option<I::Item> where I: Iterator, I::Item: Ord, {
+  iter.reduce(|accum, item| {
+    if accum >= item { accum } else { item }
+  })
+}
+
+/// Find the minimum value in iterable
+pub fn find_min<I>(iter: I) -> Option<I::Item> where I: Iterator, I::Item: Ord, {
+  iter.reduce(|accum, item| {
+    if accum <= item { accum } else { item }
+  })
 }
 
 /// Convert an characrter IPv4 address into an integer.
@@ -185,7 +198,7 @@ pub fn hil_xy_from_s(ip_as_int: u32, order: i16) -> (u32, u32) {
 }
 
 /// CIDRs in Hilbert space can represent a bounding box
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Copy, Clone)]
 pub struct BoundingBox {
 	pub xmin: u32,
 	pub xmax: u32,
@@ -251,7 +264,7 @@ fn bbox(first: u32, slash: u8) -> BoundingBox {
 /// 
 /// ```rust
 /// let result = bbox_from_cidr("218.0.0.0/7");
-/// ## BoundingBox { xmin: 2048, xmax: 2559, ymin: 1024, ymax: 1279 })
+/// // BoundingBox { xmin: 2048, xmax: 2559, ymin: 1024, ymax: 1279 }
 /// ```
 pub fn bbox_from_cidr<S>(cidr: S) -> BoundingBox where S: Into<String>, {
 	

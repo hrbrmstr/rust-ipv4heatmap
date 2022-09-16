@@ -16,19 +16,21 @@ mod shades;
 mod outlines;
 mod labels;
 mod prefixes;
+mod crop;
 
 use crate::annotations::AnnotationCollection;
-use crate::colors::{white, black};
+use crate::colors::{WHITE, BLACK};
 
 use clap::Parser;
 
 use ril::{Image};
 
+/// Supported CLI args
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
 
-	/// color palette to use; one of (viridis magma inferno plasma cividis rocket mako turbo brbg puor rdbu rdgy rdylbu spectral bupu reds ylgnbu ylorbr ylorrd)
+	/// color palette to use; one of (blues br_bg bu_gn bu_pu cividis cool gn_bu greens greys inferno magma or_rd oranges pi_yg plasma pr_gn pu_bu pu_bu_gn pu_or pu_rd purples rainbow rd_bu rd_gy rd_pu rd_yl_bu rd_yl_gn reds sinebow spectral turbo viridis warm yl_gn yl_gn_bu yl_or_br yl_or_rd)
   #[clap(short, long, default_value_t = String::from("cividis"))]
 	palette: String,
 
@@ -56,15 +58,20 @@ struct Args {
 	#[clap(short, long)]
 	legend_file: Option<String>,
 
+	// crop output to area represented by these CIDRs (comma separated CIDR list) [BROKEN]
+	#[clap(short, long)]
+	crop: Option<String>
+
 }
 
+/// main!
 fn main() {
 	
 	let args = Args::parse();
 
-	let colors: Vec<ril::Rgba> = colors::select_palette(args.palette.to_owned(), args.invert);
+	let colors: Vec<ril::Rgba> = colors::select_palette(&args.palette, args.invert);
 
-	let mut img = Image::new(4096, 4096, if args.reverse { white } else { black });
+	let mut img = Image::new(4096, 4096, if args.reverse { WHITE } else { BLACK });
 
 	if let Ok(lines) = utils::read_lines(args.filename) {
 		
@@ -112,10 +119,14 @@ fn main() {
 
 	}
 
+  if let Some(crops) = args.crop {
+		crop::crop_cidrs(&mut img, crops);
+	}
+
  	img.save_inferred(args.output).expect("Error saving file.");
 
   if let Some(f) = args.legend_file {
-    utils::output_legend(f, args.palette, args.invert)
+    utils::output_legend(f, &args.palette, args.invert)
 	}
 
 }
