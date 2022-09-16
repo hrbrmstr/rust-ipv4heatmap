@@ -8,7 +8,7 @@ categories = ["data-visualization", "command-line-utilities"]
 keywords = ["cli", "ipaddress", "ipv4", "datavis", "hilbert"]
 homepage = "https://github.com/hrbrmstr/rust-ipv4-heatmap"
 repository = "https://github.com/hrbrmstr/rust-ipv4-heatmap"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 
 [dependencies]
@@ -21,6 +21,8 @@ serde_derive = "1.0.144"
 serde_json = "1.0.85"
 conv = "0.3.3"
 ril = { version = "0.4.0", features = ["all"] }
+colorgrad = "0.6.1"
+lazy_static = "1.4.0"
 #nsvg = "0.5.1"
 #https://github.com/nickbrowne/nsvg
 

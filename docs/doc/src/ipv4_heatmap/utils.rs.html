@@ -304,6 +304,19 @@
 <span id="298">298</span>
 <span id="299">299</span>
 <span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Utility functions used by across the crate</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::colors::legend_cols</span>;
@@ -319,10 +332,9 @@
 
 <span class="doccomment">/// Given a filename or path and palette name (+ whether the palette should be inverted) </span>
 <span class="doccomment">/// write an SVG legend out to the specified file.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_legend</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">filename</span>: <span class="ident">P</span>, <span class="ident">name</span>: <span class="ident">S</span>, <span class="ident">invert</span>: <span class="ident">bool</span>) <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>, <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_legend</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="ident">filename</span>: <span class="ident">P</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">invert</span>: <span class="ident">bool</span>) <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>, {
 
-	<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cols</span> <span class="op">=</span> <span class="ident">legend_cols</span>(<span class="ident">name</span>);
-  <span class="kw">if</span> <span class="ident">invert</span> { <span class="ident">cols</span>.<span class="ident">reverse</span>() };
+	<span class="kw">let</span> <span class="ident">cols</span> <span class="op">=</span> <span class="ident">legend_cols</span>(<span class="kw-2">&amp;</span><span class="ident">name</span>, <span class="ident">invert</span>);
 
  <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;
 	&lt;svg class=&quot;hilbert-legend&quot; width=&quot;340&quot; height=&quot;70&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;
@@ -380,6 +392,20 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_lines</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="ident">filename</span>: <span class="ident">P</span>) -&gt; <span class="ident">io::Result</span><span class="op">&lt;</span><span class="ident">io::Lines</span><span class="op">&lt;</span><span class="ident">io::BufReader</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>, {
 	<span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File::open</span>(<span class="ident">filename</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot find file containing IPv4s.&quot;</span>);
 	<span class="prelude-val">Ok</span>(<span class="ident">io::BufReader::new</span>(<span class="ident">file</span>).<span class="ident">lines</span>())
+}
+
+<span class="doccomment">/// Find the maximum value in iterable</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_max</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">I::Item</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">Iterator</span>, <span class="ident">I::Item</span>: <span class="ident">Ord</span>, {
+  <span class="ident">iter</span>.<span class="ident">reduce</span>(<span class="op">|</span><span class="ident">accum</span>, <span class="ident">item</span><span class="op">|</span> {
+    <span class="kw">if</span> <span class="ident">accum</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">item</span> { <span class="ident">accum</span> } <span class="kw">else</span> { <span class="ident">item</span> }
+  })
+}
+
+<span class="doccomment">/// Find the minimum value in iterable</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_min</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">I::Item</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">Iterator</span>, <span class="ident">I::Item</span>: <span class="ident">Ord</span>, {
+  <span class="ident">iter</span>.<span class="ident">reduce</span>(<span class="op">|</span><span class="ident">accum</span>, <span class="ident">item</span><span class="op">|</span> {
+    <span class="kw">if</span> <span class="ident">accum</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">item</span> { <span class="ident">accum</span> } <span class="kw">else</span> { <span class="ident">item</span> }
+  })
 }
 
 <span class="doccomment">/// Convert an characrter IPv4 address into an integer.</span>
@@ -491,7 +517,7 @@
 }
 
 <span class="doccomment">/// CIDRs in Hilbert space can represent a bounding box</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BoundingBox</span> {
 	<span class="kw">pub</span> <span class="ident">xmin</span>: <span class="ident">u32</span>,
 	<span class="kw">pub</span> <span class="ident">xmax</span>: <span class="ident">u32</span>,
@@ -557,7 +583,7 @@
 <span class="doccomment">/// </span>
 <span class="doccomment">/// ```rust</span>
 <span class="doccomment">/// let result = bbox_from_cidr(&quot;218.0.0.0/7&quot;);</span>
-<span class="doccomment">/// ## BoundingBox { xmin: 2048, xmax: 2559, ymin: 1024, ymax: 1279 })</span>
+<span class="doccomment">/// // BoundingBox { xmin: 2048, xmax: 2559, ymin: 1024, ymax: 1279 }</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bbox_from_cidr</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">cidr</span>: <span class="ident">S</span>) -&gt; <span class="ident">BoundingBox</span> <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, {
 	
@@ -604,5 +630,5 @@
 	<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident"><span class="self">self</span>::bbox_from_cidr</span>(<span class="string">&quot;217.0.0.0/8&quot;</span>);
 	<span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">BoundingBox</span> { <span class="ident">xmin</span>: <span class="number">2048</span>, <span class="ident">xmax</span>: <span class="number">2303</span>, <span class="ident">ymin</span>: <span class="number">1280</span>, <span class="ident">ymax</span>: <span class="number">1535</span> });
 }</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ipv4_heatmap" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-beta.5 (93ef0cd7f 2022-07-10)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ipv4_heatmap" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

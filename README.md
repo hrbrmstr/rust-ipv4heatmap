@@ -50,8 +50,6 @@ Example heatmap & legend output are included in the repo (and displayed below). 
 
 Example JSON annotations files are included in `extras/`.
 
-R code to generate the Rust palette code is included.
-
 ## Licenses
 
 The heatmap code is MIT licensed. Credit would be nice but not necessary.
