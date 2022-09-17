@@ -300,7 +300,7 @@ dependencies = [
 
 [[package]]
 name = "ipv4-heatmap"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "cidr",
  "clap",

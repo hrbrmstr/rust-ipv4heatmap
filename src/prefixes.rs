@@ -13,28 +13,33 @@ pub fn annotate_prefixes(img: &mut Image<Rgba>, prefixes: Vec<Prefix>) {
 	
 	for prefix in prefixes {			
 		
-		let bbox = bbox_from_cidr(prefix.cidr.to_owned());		
-		let text = prefix.cidr.as_str().to_owned();
-		let font = builtin_font.to_owned();
-
-    let font_color = Rgba{r: 255, g:255, b:255, a:127};
-
-    let size = 24.0;
+		let bbox = bbox_from_cidr(prefix.cidr.to_owned());	
 		
-    let cx = bbox.xmin + (bbox.width()/2);
-		let by = bbox.ymax - (size as u32) - 1;
+		if bbox.width() >= 127 && bbox.height() >= 60 {
+		
+			let text = prefix.cidr.as_str().to_owned();
+			let font = builtin_font.to_owned();
 
-    let segment = 
-      TextSegment::new(&font, text, font_color.to_owned())
-        .with_size(size)
-        .with_overlay_mode(OverlayMode::Merge);
+			let font_color = Rgba{r: 255, g:255, b:255, a:127};
 
-		let layout = TextLayout::new()
-      .centered()
-      .with_position(cx, by)
-      .with_segment(&segment);
+			let size = 24.0;
+			
+			let cx = bbox.xmin + (bbox.width()/2);
+			let by = bbox.ymax - (size as u32) - 1;
 
-    img.draw(&layout);
+			let segment = 
+				TextSegment::new(&font, text, font_color.to_owned())
+					.with_size(size)
+					.with_overlay_mode(OverlayMode::Merge);
+
+			let layout = TextLayout::new()
+				.centered()
+				.with_position(cx, by)
+				.with_segment(&segment);
+
+			img.draw(&layout);
+
+		}
 		
 	}
 	
