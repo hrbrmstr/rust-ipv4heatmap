@@ -20,7 +20,8 @@ serde = "1.0.144"
 serde_derive = "1.0.144"
 serde_json = "1.0.85"
 conv = "0.3.3"
-ril = { version = "0.4.0", features = ["all"] }
+ril = { git = "https://github.com/jay3332/ril", features = ["all"] }
+# ril = { version = "0.4.0", features = ["all"] }
 colorgrad = "0.6.1"
 lazy_static = "1.4.0"
 #nsvg = "0.5.1"
