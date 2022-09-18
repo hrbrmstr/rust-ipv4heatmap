@@ -1,11 +1,11 @@
-; ModuleID = 'probe7.247106e0-cgu.0'
-source_filename = "probe7.247106e0-cgu.0"
+; ModuleID = 'probe7.1467026a-cgu.0'
+source_filename = "probe7.1467026a-cgu.0"
 target datalayout = "e-m:o-i64:64-i128:128-n32:64-S128"
 target triple = "arm64-apple-macosx11.0.0"
 
 ; std::f64::<impl f64>::copysign
 ; Function Attrs: inlinehint uwtable
-define internal double @"_ZN3std3f6421_$LT$impl$u20$f64$GT$8copysign17hb81fbc21ffc9f1aaE"(double %self, double %sign) unnamed_addr #0 {
+define internal double @"_ZN3std3f6421_$LT$impl$u20$f64$GT$8copysign17he8c6aa3300a37152E"(double %self, double %sign) unnamed_addr #0 {
 start:
   %0 = alloca double, align 8
   %1 = call double @llvm.copysign.f64(double %self, double %sign)
@@ -19,10 +19,10 @@ bb1:                                              ; preds = %start
 
 ; probe7::probe
 ; Function Attrs: uwtable
-define void @_ZN6probe75probe17h89c68d512262729eE() unnamed_addr #1 {
+define void @_ZN6probe75probe17h2bd9fd472a2f77feE() unnamed_addr #1 {
 start:
 ; call std::f64::<impl f64>::copysign
-  %_1 = call double @"_ZN3std3f6421_$LT$impl$u20$f64$GT$8copysign17hb81fbc21ffc9f1aaE"(double 1.000000e+00, double -1.000000e+00)
+  %_1 = call double @"_ZN3std3f6421_$LT$impl$u20$f64$GT$8copysign17he8c6aa3300a37152E"(double 1.000000e+00, double -1.000000e+00)
   br label %bb1
 
 bb1:                                              ; preds = %start

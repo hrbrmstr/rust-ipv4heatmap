@@ -76,7 +76,7 @@ cargo install --git https://github.com/hrbrmstr/rust-ipv4heatmap --branch batman
 
 ```bash
 $ ipv4-heatmap
-ipv4-heatmap 0.3.0
+ipv4-heatmap 0.3.2
 boB Rudis (@hrbrmstr)
 Generate an IPv4 12th order Hilbert Heatmap from a file of IPv4 addresses.
 
@@ -85,7 +85,7 @@ USAGE:
 
 OPTIONS:
     -a, --annotations <ANNOTATIONS>    file containing JSON CIDR annotations
-    -c, --crop <CROP>                  [PRESENTLY BROKEN]
+    -c, --crop <CROP>                  crop output to area represented by these CIDRs (comma separated CIDR list)
     -f, --filename <FILENAME>          input file of IPs [default: ips.txt]
     -h, --help                         Print help information
     -i, --invert                       invert the chosen color palette

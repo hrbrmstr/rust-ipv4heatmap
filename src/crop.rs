@@ -4,7 +4,7 @@ use ril::{Rgba, Image };
 
 use crate::utils::{BoundingBox, bbox_from_cidr, find_min, find_max};
 
-/// Crop heatmap to the given CIDR list PRESENTLY BROKEN
+/// Crop heatmap to the given CIDR list
 pub fn crop_cidrs<S>(img: &mut Image<Rgba>, crops: S) where S: Into<String>, {
 
   let crops = crops.into();
