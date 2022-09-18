@@ -47,6 +47,10 @@ oldschool:
 	cargo run --release -- --filename extras/ips.txt --output assets/map.png --annotations extras/iana.json --invert --legend-file assets/legend.svg
 	/usr/bin/open assets/map.png
 
+infra8:
+	cargo run --release -- --palette magma --filename extras/ips.txt --output assets/infra8s.png --annotations extras/infra-and-slash-8.json --invert
+	/usr/bin/open assets/infra8s.png
+
 example:
 	cargo run --release -- --filename extras/ips.txt --output assets/map.png --annotations extras/iana-modern.json --legend-file extras/assets.svg
 	/usr/bin/open assets/map.png

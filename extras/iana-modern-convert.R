@@ -53,4 +53,32 @@ c(
 ) |> 
 	writeLines("extras/iana-modern.json")
 
+xdf <- read_csv("extras/iana-modern.csv", col_types = "cc")
 
+xdf |>
+  filter(
+    label %in% c("6to4", "Carrier NAT", "Multicast", "RFC 1918", "RFC 5737", "RFC 6890", "Private", "Reserved")
+  ) |>
+  mutate(
+    `label-color` = "#4daf4a66",
+    `border-color` = "#4daf4a66",
+    `display-prefix` = TRUE
+  ) -> infra
+
+tibble(
+  cidr = sprintf("%s.0.0.0/8", c(0:255)),
+  `border-color` = "#ffffff66",
+  `display-prefix` = TRUE
+) |>
+  filter(
+    !(cidr %in% sprintf("%s.0.0.0/8", 224:255))
+  ) -> blocks_8
+  
+writeLines(jsonlite::toJSON(blocks_8), "extras/infra-and-slash-8.json")
+
+
+c(
+	sub("\\]$", ",", jsonlite::toJSON(blocks_8)),
+	sub("^\\[", "", jsonlite::toJSON(infra))
+) |> 
+  writeLines("extras/infra-and-slash-8.json")

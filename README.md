@@ -52,6 +52,8 @@ Example JSON annotations files are included in `extras/` including updated top-l
 
 IANA country registry choropleth (which aligns to the colors in the second graph below).
 
+`extras/infra-and-slash-8.json` which contains an overlay layer for orienteering in IP space (ref map `assets/infra8s.png`).
+
 The [justfile](justfile) has some more examples.
 
 The [generated Rust docs] have some 'splainers on the Hilbert algo.
