@@ -126,6 +126,19 @@ $ ipv4-heatmap --filename extras/ips.txt \
 ![moar-legend](assets/rir-map.svg)
 ![map](assets/modern.png)
 
+#! Cropping to CIDRs:
+
+The crop below is cropping `assets/map.png` (Old School Assignments full image) to the CIDR range: `0.0.0.0/8,33.0.0.0/8`:
+
+```bash
+$ ipv4-heatmap --filename extras/ips.txt \
+  --output assets/post-crop2.png \
+	--annotations extras/iana.json \
+	--invert \
+	--crop 0.0.0.0/8,33.0.0.0/8
+```
+
+![crop2](assets/crop2.png)
 
 ## Dependencies
 
