@@ -51,6 +51,10 @@ infra8:
 	cargo run --release -- --palette magma --filename extras/ips.txt --output assets/infra8s.png --annotations extras/infra-and-slash-8.json --invert
 	/usr/bin/open assets/infra8s.png
 
+mask:
+	cargo run --release -- --palette magma --invert --filename extras/ips.txt --annotations extras/mask-labels.json --output assets/mask.png --mask 109.0.0.0/8,141.0.0.0/8,145.0.0.0/8,151.0.0.0/8,176.0.0.0/8,178.0.0.0/8,185.0.0.0/8,188.0.0.0/8,193.0.0.0/8,194.0.0.0/8,195.0.0.0/8,2.0.0.0/8,212.0.0.0/8,213.0.0.0/8,217.0.0.0/8,31.0.0.0/8,37.0.0.0/8,46.0.0.0/8,5.0.0.0/8,51.0.0.0/8,57.0.0.0/8,62.0.0.0/8,77.0.0.0/8,78.0.0.0/8,79.0.0.0/8,80.0.0.0/8,81.0.0.0/8,82.0.0.0/8,83.0.0.0/8,84.0.0.0/8,85.0.0.0/8,86.0.0.0/8,87.0.0.0/8,88.0.0.0/8,89.0.0.0/8,90.0.0.0/8,91.0.0.0/8,92.0.0.0/8,93.0.0.0/8,94.0.0.0/8,95.0.0.0/8
+	open assets/mask.png
+
 example:
 	cargo run --release -- --filename extras/ips.txt --output assets/map.png --annotations extras/iana-modern.json --legend-file extras/assets.svg
 	/usr/bin/open assets/map.png

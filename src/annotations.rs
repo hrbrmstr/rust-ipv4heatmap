@@ -41,6 +41,7 @@ use serde_json;
 /// Deserialization structure for the annotation JSON object
 #[derive(Deserialize)]
 pub struct Annotation {
+
 	#[serde(rename = "cidr")]
 	cidr: String,
 	
@@ -61,6 +62,10 @@ pub struct Annotation {
 	
 	#[serde(rename = "display-prefix")]
 	display_prefix: Option<bool>,
+
+	#[serde(rename = "prefix-color")]
+	prefix_color: Option<String>,
+
 }
 
 /// An annotation describing the CIDR outline style
@@ -89,7 +94,8 @@ pub struct Label {
 /// An annotation that says to tag each CIDR block with the CIDR text
 #[derive(Debug, PartialEq)]
 pub struct Prefix {
-	pub cidr: String
+	pub cidr: String,
+	pub color: Option<String>
 }
 
 #[derive(Debug, PartialEq)]
@@ -143,7 +149,8 @@ pub fn load_config<P: AsRef<Path>>(path: P) -> AnnotationCollection {
 	  .filter(|x| x.display_prefix.is_some() && x.display_prefix.unwrap())
     .map(|x| 
 		Prefix { 
-			cidr: x.cidr.to_owned(), 
+			cidr: x.cidr.to_owned(),
+			color: x.prefix_color.to_owned()
 		})
     .collect();
 

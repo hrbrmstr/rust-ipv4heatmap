@@ -74,9 +74,6 @@ tibble(
     !(cidr %in% sprintf("%s.0.0.0/8", 224:255))
   ) -> blocks_8
   
-writeLines(jsonlite::toJSON(blocks_8), "extras/infra-and-slash-8.json")
-
-
 c(
 	sub("\\]$", ",", jsonlite::toJSON(blocks_8)),
 	sub("^\\[", "", jsonlite::toJSON(infra))

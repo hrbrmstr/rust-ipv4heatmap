@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["mask_cidrs","Given a vector of areas to highlight (masking all other blocks), turn all non-specified blocks transparent."]]};

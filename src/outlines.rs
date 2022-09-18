@@ -16,7 +16,8 @@ pub fn outline_cidrs(img: &mut Image<Rgba>, outlines: Vec<Outline>) {
 					
 		if bbox.width() > 1 && bbox.height() > 1 {
 
-  		let stroke = HexColor::parse_rgba(&outline.color.as_str()).expect("Invalid hex color in shade file.");
+  		let stroke = HexColor::parse_rgba(&outline.color.as_str())
+			  .expect("Invalid outline hex color in annotations file.");
 
 			let border = Border::new(
 				Rgba{r:stroke.r, g:stroke.g, b:stroke.b, a:stroke.a}, 

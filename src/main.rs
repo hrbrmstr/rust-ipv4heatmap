@@ -17,6 +17,7 @@ mod outlines;
 mod labels;
 mod prefixes;
 mod crop;
+mod mask;
 
 use crate::annotations::AnnotationCollection;
 use crate::colors::{WHITE, BLACK};
@@ -58,9 +59,14 @@ struct Args {
 	#[clap(short, long)]
 	legend_file: Option<String>,
 
-	// crop output to area represented by these CIDRs (comma separated CIDR list)
+	/// crop output to area represented by these CIDRs (comma separated CIDR list)
 	#[clap(short, long)]
-	crop: Option<String>
+	crop: Option<String>,
+
+	/// Hilight only certain CIDRs in the heatmap image. Can be used with the "crop" argument
+	/// to produce a masked and cropped heatmap image.
+	#[clap(short, long)]
+	mask: Option<String>,
 
 }
 
@@ -118,6 +124,11 @@ fn main() {
 		}
 
 	}
+
+  if let Some(masks) = args.mask {
+		mask::mask_cidrs(&mut img, masks);
+	}
+
 
   if let Some(crops) = args.crop {
 		crop::crop_cidrs(&mut img, crops);

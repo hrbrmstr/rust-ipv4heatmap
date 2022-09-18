@@ -130,6 +130,17 @@
 <span id="130">130</span>
 <span id="131">131</span>
 <span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # ipv4-heatmap</span>
 <span class="doccomment">//! </span>
 <span class="doccomment">//! This crate builds a binary that can be used to create </span>
@@ -149,6 +160,7 @@
 <span class="kw">mod</span> <span class="ident">labels</span>;
 <span class="kw">mod</span> <span class="ident">prefixes</span>;
 <span class="kw">mod</span> <span class="ident">crop</span>;
+<span class="kw">mod</span> <span class="ident">mask</span>;
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::annotations::AnnotationCollection</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::colors</span>::{<span class="ident">WHITE</span>, <span class="ident">BLACK</span>};
@@ -190,9 +202,14 @@
 	<span class="attribute">#[<span class="ident">clap</span>(<span class="ident">short</span>, <span class="ident">long</span>)]</span>
 	<span class="ident">legend_file</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 
-	<span class="comment">// crop output to area represented by these CIDRs (comma separated CIDR list)</span>
+	<span class="doccomment">/// crop output to area represented by these CIDRs (comma separated CIDR list)</span>
 	<span class="attribute">#[<span class="ident">clap</span>(<span class="ident">short</span>, <span class="ident">long</span>)]</span>
-	<span class="ident">crop</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>
+	<span class="ident">crop</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+
+	<span class="doccomment">/// Hilight only certain CIDRs in the heatmap image. Can be used with the &quot;crop&quot; argument</span>
+	<span class="doccomment">/// to produce a masked and cropped heatmap image.</span>
+	<span class="attribute">#[<span class="ident">clap</span>(<span class="ident">short</span>, <span class="ident">long</span>)]</span>
+	<span class="ident">mask</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 
 }
 
@@ -250,6 +267,11 @@
 		}
 
 	}
+
+  <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">masks</span>) <span class="op">=</span> <span class="ident">args</span>.<span class="ident">mask</span> {
+		<span class="ident">mask::mask_cidrs</span>(<span class="kw-2">&amp;mut</span> <span class="ident">img</span>, <span class="ident">masks</span>);
+	}
+
 
   <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">crops</span>) <span class="op">=</span> <span class="ident">args</span>.<span class="ident">crop</span> {
 		<span class="ident">crop::crop_cidrs</span>(<span class="kw-2">&amp;mut</span> <span class="ident">img</span>, <span class="ident">crops</span>);

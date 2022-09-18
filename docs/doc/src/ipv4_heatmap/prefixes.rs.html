@@ -44,12 +44,25 @@
 <span id="44">44</span>
 <span id="45">45</span>
 <span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # CIDR block prefix annotation</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::utils::bbox_from_cidr</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::annotations::Prefix</span>;
 
+<span class="kw">use</span> <span class="ident">hex_color::HexColor</span>;
+
 <span class="kw">use</span> <span class="ident">ril</span>::{<span class="ident">Font</span>, <span class="ident">Image</span>, <span class="ident">Rgba</span>, <span class="ident">TextSegment</span>, <span class="ident">TextLayout</span>, <span class="ident">OverlayMode</span>};
+
+<span class="kw">const</span> <span class="ident">PREFIX_DEFAULT_COLOR</span>: <span class="ident">Rgba</span> <span class="op">=</span> <span class="ident">Rgba</span>{<span class="ident">r</span>: <span class="number">255</span>, <span class="ident">g</span>:<span class="number">255</span>, <span class="ident">b</span>:<span class="number">255</span>, <span class="ident">a</span>:<span class="number">127</span>};
 
 <span class="doccomment">/// Given a vector of label annotations, draw the labels.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">annotate_prefixes</span>(<span class="ident">img</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Image</span><span class="op">&lt;</span><span class="ident">Rgba</span><span class="op">&gt;</span>, <span class="ident">prefixes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Prefix</span><span class="op">&gt;</span>) {
@@ -66,7 +79,12 @@
 			<span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="ident">prefix</span>.<span class="ident">cidr</span>.<span class="ident">as_str</span>().<span class="ident">to_owned</span>();
 			<span class="kw">let</span> <span class="ident">font</span> <span class="op">=</span> <span class="ident">builtin_font</span>.<span class="ident">to_owned</span>();
 
-			<span class="kw">let</span> <span class="ident">font_color</span> <span class="op">=</span> <span class="ident">Rgba</span>{<span class="ident">r</span>: <span class="number">255</span>, <span class="ident">g</span>:<span class="number">255</span>, <span class="ident">b</span>:<span class="number">255</span>, <span class="ident">a</span>:<span class="number">127</span>};
+			<span class="kw">let</span> <span class="ident">font_color</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">color</span>) <span class="op">=</span> <span class="ident">prefix</span>.<span class="ident">color</span> {
+				<span class="kw">let</span> <span class="ident">stroke</span> <span class="op">=</span> <span class="ident">HexColor::parse_rgba</span>(<span class="kw-2">&amp;</span><span class="ident">color</span>.<span class="ident">as_str</span>()).<span class="ident">expect</span>(<span class="string">&quot;Invalid prefix hex color in annotations file.&quot;</span>);
+				<span class="ident">Rgba</span>{<span class="ident">r</span>:<span class="ident">stroke</span>.<span class="ident">r</span>, <span class="ident">g</span>:<span class="ident">stroke</span>.<span class="ident">g</span>, <span class="ident">b</span>:<span class="ident">stroke</span>.<span class="ident">b</span>, <span class="ident">a</span>:<span class="ident">stroke</span>.<span class="ident">a</span>}
+			} <span class="kw">else</span> {
+				<span class="ident">PREFIX_DEFAULT_COLOR</span>
+			};
 
 			<span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="number">24.0</span>;
 			
