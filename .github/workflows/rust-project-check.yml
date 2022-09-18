@@ -1,4 +1,4 @@
-name: Quickstart
+name: RustCheck
 
 on: [push]
 
