@@ -10,8 +10,8 @@ use ril::{Rectangle, Image, L, Rgba};
 pub fn mask_cidrs<S>(img: &mut Image<Rgba>, masks: S) where S: Into<String>, {
 
   let masks = masks.into();
-  let mask_list: Vec<&str>  = masks.split(",").collect();
-  let cidrs: Vec<BoundingBox> = mask_list.into_iter().map(|x| bbox_from_cidr(x)).collect();
+  
+  let cidrs: Vec<BoundingBox> = masks.split(',').map(bbox_from_cidr).collect();
 
 	let mut img_mask = Image::new(4096, 4096, L(255));
 

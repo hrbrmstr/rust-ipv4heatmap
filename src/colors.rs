@@ -1,4 +1,4 @@
-//! # Color palettes and color utilities used by annotations
+//! # Color palettes and color utilities used by annotations and core functions
 
 use ril::Rgba;
 use colorgrad::*;

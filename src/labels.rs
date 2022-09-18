@@ -50,7 +50,7 @@ pub fn annotate_cidrs(img: &mut Image<Rgba>, labels: Vec<Label>) {
 
 		while (w > bw) || (h > bh) {
 
-      size = size * 0.95;
+      size *= 0.95;
       segment.size = size;
 
       layout = TextLayout::new()

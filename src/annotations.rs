@@ -36,8 +36,6 @@ use std::fs::File;
 use std::io::BufReader;
 use std::path::Path;
 
-use serde_json;
-
 /// Deserialization structure for the annotation JSON object
 #[derive(Deserialize)]
 pub struct Annotation {
@@ -69,21 +67,21 @@ pub struct Annotation {
 }
 
 /// An annotation describing the CIDR outline style
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Outline {
 	pub cidr: String,
 	pub color: String,
 }
 
 /// An annotation describing the CIDR fill style
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Shade {
 	pub cidr: String,
 	pub fill: String,
 }
 
 /// An annotation describing the CIDR label text & style
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Label {
 	pub cidr: String,
 	pub label: String,
@@ -92,13 +90,13 @@ pub struct Label {
 }
 
 /// An annotation that says to tag each CIDR block with the CIDR text
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Prefix {
 	pub cidr: String,
 	pub color: Option<String>
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 /// Annotations on top of the heatmap can be outlines, shades, labels, or the CIDR text.
 /// This structure holds all specified annotations.
 pub struct AnnotationCollection {
@@ -154,13 +152,13 @@ pub fn load_config<P: AsRef<Path>>(path: P) -> AnnotationCollection {
 		})
     .collect();
 
-  let annotation_collection = AnnotationCollection {
+  
+
+  AnnotationCollection {
 		outlines: Some(outlines),
 		shades: Some(shades),
 		labels: Some(labels),
 		prefixes: Some(prefixes)
-	};
-
-  annotation_collection
+	}
 
 }

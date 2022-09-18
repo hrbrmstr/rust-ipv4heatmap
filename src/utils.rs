@@ -15,7 +15,7 @@ use cidr::Ipv4Cidr;
 /// write an SVG legend out to the specified file.
 pub fn output_legend<P>(filename: P, name: &str, invert: bool) where P: AsRef<Path>, {
 
-	let cols = legend_cols(&name, invert);
+	let cols = legend_cols(name, invert);
 
  let res = format!(r#"
 	<svg class="hilbert-legend" width="340" height="70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -184,12 +184,12 @@ pub fn hil_xy_from_s(ip_as_int: u32, order: i16) -> (u32, u32) {
 	
 	while i >= 0 {
 		
-		row = 4 * state | ((s >> i) & 3);
+		row = (4 * state) | ((s >> i) & 3);
 		x = (x << 1) | ((0x936C >> row) & 1);
 		y = (y << 1) | ((0x39C6 >> row) & 1);
-		state = (0x3E6B94C1 >> 2 * row) & 3;
+		state = (0x3E6B94C1 >> (2 * row)) & 3;
 		
-		i = i - 2;
+		i -= 2;
 		
 	}
 	
@@ -198,7 +198,7 @@ pub fn hil_xy_from_s(ip_as_int: u32, order: i16) -> (u32, u32) {
 }
 
 /// CIDRs in Hilbert space can represent a bounding box
-#[derive(Debug, PartialEq, Copy, Clone)]
+#[derive(Debug, PartialEq, Eq, Copy, Clone)]
 pub struct BoundingBox {
 	pub xmin: u32,
 	pub xmax: u32,
@@ -297,11 +297,7 @@ fn test_ip_to_numeric() {
 
 #[test]
 fn test_read_lines() {
-	if let Ok(_result) = self::read_lines("Cargo.toml") {
-		assert!(true);
-	} else {
-		assert!(false);
-	}
+  assert!(self::read_lines("Cargo.toml").is_ok())
 }
 
 #[test]

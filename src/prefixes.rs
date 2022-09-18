@@ -25,7 +25,7 @@ pub fn annotate_prefixes(img: &mut Image<Rgba>, prefixes: Vec<Prefix>) {
 			let font = builtin_font.to_owned();
 
 			let font_color = if let Some(color) = prefix.color {
-				let stroke = HexColor::parse_rgba(&color.as_str()).expect("Invalid prefix hex color in annotations file.");
+				let stroke = HexColor::parse_rgba(color.as_str()).expect("Invalid prefix hex color in annotations file.");
 				Rgba{r:stroke.r, g:stroke.g, b:stroke.b, a:stroke.a}
 			} else {
 				PREFIX_DEFAULT_COLOR
