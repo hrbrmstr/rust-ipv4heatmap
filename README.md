@@ -56,6 +56,8 @@ The [justfile](justfile) has some more examples.
 
 The [generated Rust docs] have some 'splainers on the Hilbert algo.
 
+Pre-built binaries for macOS, Windows, and Linux are in the [releases](https://github.com/hrbrmstr/rust-ipv4heatmap/releases).
+
 ## Licenses
 
 The heatmap code is MIT licensed. Credit would be nice but not necessary.
