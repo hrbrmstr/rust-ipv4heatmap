@@ -21,6 +21,7 @@ pub fn crop_cidrs<S>(img: &mut Image<Rgba>, crops: S) where S: Into<String>, {
   let x2 = find_max(xmaxs.iter()).unwrap().clone(); 
   let y2 = find_max(ymaxs.iter()).unwrap().clone();
 
-  img.crop(x1, y1, x2, y2);
+  // img.crop(x1, y1, x2, y2);
+	img.crop(0, 0, 1024, 1024);
 
 }

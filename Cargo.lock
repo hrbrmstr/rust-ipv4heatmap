@@ -565,14 +565,14 @@ dependencies = [
 [[package]]
 name = "ril"
 version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d2812f41735b83b8f6e93342d94f52083866445b75664ecfc2197159f86b2e0c"
+source = "git+https://github.com/jay3332/ril#aa39ef52e048fcb640601aae3888997edc9961fc"
 dependencies = [
  "fast_image_resize",
  "fontdue",
  "gif",
  "jpeg-decoder",
  "jpeg-encoder",
+ "num-traits",
  "png",
 ]
 
