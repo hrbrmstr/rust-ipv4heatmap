@@ -31,7 +31,7 @@ The original `ipv4-heatmap` program had each annotation "layer" in separate TSVs
     "border-color": "#FFFFFFFF",
     "fill-color": "#FF00FF22",
     "display-prefix": true,
-		"prefix-color": "#FFFFFFFF"
+    "prefix-color": "#FFFFFFFF"
 },
 …
 ```
