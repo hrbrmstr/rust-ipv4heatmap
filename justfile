@@ -39,12 +39,9 @@ invert:
 	/usr/bin/open assets/modern.png
 
 crop:
-	cargo run --release -- --filename extras/ips.txt --output assets/crop.png --annotations extras/iana-modern.json --invert --legend-file assets/legend.svg --crop 0.0.0.0/8,33.0.0.0/8
-	/usr/bin/open assets/crop2.png
-
-crop-test:
-	cargo run --release -- --filename extras/ips.txt --output assets/crop.png --annotations extras/iana-modern.json --invert --legend-file assets/legend.svg --crop 0.0.0.0/8,33.0.0.0/8
-	/usr/bin/open /tmp/pre-crop.png /tmp/post-crop.png
+	cargo run --release -- --filename extras/ips.txt --output assets/pre-crop2.png --annotations extras/iana.json --invert --legend-file assets/legend.svg
+	cargo run --release -- --filename extras/ips.txt --output assets/post-crop2.png --annotations extras/iana.json --invert --legend-file assets/legend.svg --crop 0.0.0.0/8,33.0.0.0/8
+	/usr/bin/open assets/pre-crop2.png assets/post-crop2.png
 
 oldschool:
 	cargo run --release -- --filename extras/ips.txt --output assets/map.png --annotations extras/iana.json --invert --legend-file assets/legend.svg

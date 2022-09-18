@@ -119,14 +119,11 @@ fn main() {
 
 	}
 
-	img.save_inferred("/tmp/pre-crop.png").expect("Error saving file.");
-
   if let Some(crops) = args.crop {
 		crop::crop_cidrs(&mut img, crops);
 	}
 
- 	// img.save_inferred(args.output).expect("Error saving file.");
-	img.save_inferred("/tmp/post-crop.png").expect("Error saving file.");
+ 	img.save_inferred(args.output).expect("Error saving file.");
 
   if let Some(f) = args.legend_file {
     utils::output_legend(f, &args.palette, args.invert)

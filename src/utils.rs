@@ -85,7 +85,7 @@ pub fn find_max<I>(iter: I) -> Option<I::Item> where I: Iterator, I::Item: Ord, 
 /// Find the minimum value in iterable
 pub fn find_min<I>(iter: I) -> Option<I::Item> where I: Iterator, I::Item: Ord, {
   iter.reduce(|accum, item| {
-    if accum <= item { accum } else { item }
+    if accum >= item { item } else { accum }
   })
 }
 
