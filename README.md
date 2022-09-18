@@ -1,25 +1,25 @@
 # Rustified IPv4 Heatmap
 
-This is a pure Rust version of the C [ipv4-heatmap][def] utility originally published by The Measurement Factory.
+This is a pure Rust version of the C [ipv4-heatmap][def] utility originally published by The Measurement Factory and [updated forever-and-a-day ago by me](https://github.com/hrbrmstr/ipv4-heatmap) to add better palettes.
 
-Differences between this and the C version:
+Differences between this and the C version(s):
 
 - Only supports Hilbert curves (deliberate design decision)
-- Only supports 4096 ✖️ 4096 full IPv4 address space heatmaps (deliberate design decision)
+- Only supports 4096 ✖️ 4096 full IPv4 address space heatmaps (deliberate design decision — open to debate)
 - SVG separate legend file generation (see #5)
 - Annotations are all in one JSON file (see below)
 - Color values in annotations _require_ the RGBa transparency value; so instead of `#FFFFFF` for white, you'd use `#FFFFFFFF` (deliberate design decision)
 - [Inconsolata Condensed](https://fonts.google.com/specimen/Inconsolata) is embedded in the binary, but there is support for using more fonts (see JSON explanation below)
-- CIDR prefix display is at CIDR center-bottom w/fixed size and white-with-alpha (deliberate design decision)
+- CIDR prefix display is at CIDR center-bottom w/fixed size and white-with-alpha (deliberate design decision — open to debate)
 - Supports all Viridis palettes as well as all ColorBrewer palettes
 - No support for a side/bottom "legend" and blathering area
 - No animated gif support, which means no timestamps in the IPv4 input (deliberate design decision)
 - No support for specifying/embedding a color in the IPv4 input (deliberate design decision)
 - No support for log fill (see #4)
 
-## One JSON vs Multiple TSVs
+## One JSON To Rule All Annotations (vs Multiple TSVs)
 
-The original `ipv4-heatmap` program had each annotation "layer" in separate TSVs. This Rust version uses a single JSON file that is an array of records that look like this:
+The original `ipv4-heatmap` program had each annotation "layer" in separate TSVs. This Rust version uses a single JSON file that is an array of records which look like this:
 
 ```json
 …
@@ -48,7 +48,13 @@ in that order.
 
 Example heatmap & legend output are included in the repo (and displayed below). The SVG has built-in CSS that enables support (where honored) for light/dark mode.
 
-Example JSON annotations files are included in `extras/`.
+Example JSON annotations files are included in `extras/` including updated top-level number assignments via <https://en.wikipedia.org/wiki/List_of_assigned_/8_IPv4_address_blocks>.
+
+IANA country registry choropleth (which aligns to the colors in the second graph below).
+
+The [justfile](justfile) has some more examples.
+
+The [generated Rust docs] have some 'splainers on the Hilbert algo.
 
 ## Licenses
 
@@ -82,23 +88,42 @@ OPTIONS:
     -l, --legend-file <LEGEND_FILE>    output an SVG colourbar legend to this file
     -o, --output <OUTPUT>              heatmap output file; extenstion determines format [default:
                                        map.png]
-    -p, --palette <PALETTE>            color palette to use; one of (blues br_bg bu_gn bu_pu cividis
-                                       cool gn_bu greens greys inferno magma or_rd oranges pi_yg
-                                       plasma pr_gn pu_bu pu_bu_gn pu_or pu_rd purples rainbow rd_bu
-                                       rd_gy rd_pu rd_yl_bu rd_yl_gn reds sinebow spectral turbo
-                                       viridis warm yl_gn yl_gn_bu yl_or_br yl_or_rd) [default:
-                                       cividis]
+    -p, --palette <PALETTE>            color palette to use; one of (blues br_bg bu_gn bu_pu
+		                                   cividis cool gn_bu greens greys inferno magma or_rd 
+																			 oranges pi_yg plasma pr_gn pu_bu pu_bu_gn pu_or pu_rd
+																			 purples rainbow rd_bu rd_gy rd_pu rd_yl_bu rd_yl_gn 
+																			 reds sinebow spectral turbo viridis warm yl_gn yl_gn_bu
+																			 yl_or_br yl_or_rd) [default: cividis]
     -r, --reverse                      reverse the heatmap base (i.e. white background, black text)
     -V, --version                      Print version information
 ```
 
+## Old School Assignments
+
 ```bash
-$ ipv4-heatmap --annotations extras/iana.json --invert --legend-file extras/legend.svg
+$ ipv4-heatmap --filename extras/ips.txt \
+  --annotations extras/iana.json \
+	--invert \
+	--legend-file extras/legend.svg
 ```
 
 ![legend](assets/legend.svg)
 
 ![map](assets/map.png)
+
+## Modern/Boring Assignments
+
+```bash
+$ ipv4-heatmap --filename extras/ips.txt \
+  --annotations extras/iana-modern.json \
+	--invert \
+	--legend-file assets/legend.svg
+```
+
+![legend](assets/legend.svg)
+![moar-legend](assets/rir-map.svg)
+![map](assets/modern.png)
+
 
 ## Dependencies
 

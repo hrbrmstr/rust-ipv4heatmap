@@ -1,4 +1,4 @@
-//! # CIDR block text label annotation
+//! # CIDR block text wlabel annotation
 
 use crate::utils::bbox_from_cidr;
 use crate::annotations::Label;

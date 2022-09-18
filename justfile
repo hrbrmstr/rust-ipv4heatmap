@@ -35,16 +35,19 @@ blues:
 	/usr/bin/open assets/blues.png
 
 invert:
+	cargo run --release -- --filename extras/ips.txt --output assets/modern.png --annotations extras/iana-modern.json --invert --legend-file assets/legend.svg
+	/usr/bin/open assets/modern.png
+
+crop:
+	cargo run --release -- --filename extras/ips.txt --output assets/crop.png --annotations extras/iana-modern.json --invert --legend-file assets/legend.svg --crop 0.0.0.0/8,33.0.0.0/8
+	/usr/bin/open assets/crop2.png
+
+oldschool:
 	cargo run --release -- --filename extras/ips.txt --output assets/map.png --annotations extras/iana.json --invert --legend-file assets/legend.svg
 	/usr/bin/open assets/map.png
 
-crop:
-	cargo run --release -- --filename extras/ips.txt --output assets/crop.png --annotations extras/iana.json --invert --legend-file assets/legend.svg --crop 0.0.0.0/8,33.0.0.0/8
-	/usr/bin/open assets/crop2.png
-
-
 example:
-	cargo run --release -- --filename extras/ips.txt --output assets/map.png --annotations extras/iana.json --legend-file extras/assets.svg
+	cargo run --release -- --filename extras/ips.txt --output assets/map.png --annotations extras/iana-modern.json --legend-file extras/assets.svg
 	/usr/bin/open assets/map.png
 
 legend: example
