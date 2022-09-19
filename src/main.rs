@@ -86,38 +86,18 @@ fn main() -> Result<()> {
 		
 		let ann: AnnotationCollection = annotations::load_config(annotations)?;
 		
-		if let Some(shades) = ann.shades {
-			shades::shade_cidrs(&mut img, shades)?;
-		}
-		
-		if let Some(outlines) = ann.outlines {
-			outlines::outline_cidrs(&mut img, outlines)?;
-		}
-		
-		if let Some(labels) = ann.labels {
-			labels::annotate_cidrs(&mut img, labels)?;		
-		}
-		
-		if let Some(prefixes) = ann.prefixes {
-			prefixes::annotate_prefixes(&mut img, prefixes)?;		
-		}
+		shades::shade_cidrs(&mut img, ann.shades)?;
+  	outlines::outline_cidrs(&mut img, ann.outlines)?;
+		labels::annotate_cidrs(&mut img, ann.labels)?;		
+		prefixes::annotate_prefixes(&mut img, ann.prefixes)?;		
 		
 	}
 	
-	if let Some(masks) = args.mask {
-		mask::mask_cidrs(&mut img, masks);
-	}
-	
-	if let Some(crops) = args.crop {
-		crop::crop_cidrs(&mut img, crops);
-	}
+	mask::mask_cidrs(&mut img, args.mask);
+	crop::crop_cidrs(&mut img, args.crop);
 	
 	match img.save_inferred(args.output) {
-		Ok(_) => {
-			if let Some(f) = args.legend_file {
-				utils::output_legend(f, &args.palette, args.invert)?;
-			}
-		},
+		Ok(_) => utils::output_legend(args.legend_file, &args.palette, args.invert)?,
 		Err(e) => return Err(anyhow!("Error saving heatmap image file: {e}."))
 	}
 	
