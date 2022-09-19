@@ -1,7 +1,6 @@
 //! # Hilight only a list of CIDRs on the heatmap image
 
 use crate::utils::{ bbox_from_cidr, BoundingBox };
-// use crate::annotations::Prefix;
 
 use ril::{Rectangle, Image, L, Rgba};
 

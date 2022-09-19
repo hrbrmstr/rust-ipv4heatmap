@@ -1,10 +1,13 @@
 //! # Color palettes and color utilities used by annotations and core functions
 
+use anyhow::{Context, Result};
+
 use ril::Rgba;
+
 use colorgrad::*;
+
 use lazy_static::lazy_static;
 use std::collections::HashMap;
-use anyhow::{Context, Result};
 
 lazy_static! {
   static ref PALETTES: HashMap<&'static str, fn() -> Gradient > = {

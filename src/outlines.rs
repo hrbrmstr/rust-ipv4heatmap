@@ -2,6 +2,7 @@
 
 use crate::utils::bbox_from_cidr;
 use crate::annotations::Outline;
+
 use anyhow::{Context, Result};
 
 use hex_color::HexColor;

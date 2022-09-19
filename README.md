@@ -148,9 +148,9 @@ $ ipv4-heatmap --filename extras/ips.txt \
 
 ![crop2](assets/crop2.png)
 
-## Masking/Hilighting
+## Masking/Highlighting
 
-We can use the `mask` option to focus the visualization on a given set of CIDRs to show their contribution to internet noise. This show's RIPE's contibution of garbage:
+We can use the `mask` option to focus the visualization on a given set of CIDRs to show their contribution to internet noise. This shows RIPE's contribution of garbage:
 
 ```bash
 $ ipv4-heatmap --palette magma --invert \

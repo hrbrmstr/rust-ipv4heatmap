@@ -9,7 +9,19 @@
 
   {
     "cidr": "4.0.0.0/8",
-    "fill-color": "#FF000066"
+    "fill-color": "#FF000066",
+		"label": "Not GE",
+    "label-font": "extras/Lato-Black.ttf",
+		"label-color": "#FFFFFFFF"
+  },
+
+  {
+    "cidr": "8.0.0.0/8",
+    "fill-color": "#FF000066",
+		"label": "Font Cache Test",
+    "label-font": "extras/Lato-Black.ttf",
+		"label-color": "#FFFFFFFF"
   }
+
 
 ]

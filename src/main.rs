@@ -11,6 +11,7 @@
 
 mod annotations;
 pub mod utils;
+mod fonts;
 mod colors;
 mod heatmap;
 mod shades;

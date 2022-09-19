@@ -31,12 +31,13 @@
 //! 
 //! in that order.
 
-use serde_derive::Deserialize;
+use anyhow::{Context, Result};
+
 use std::fs::File;
 use std::io::BufReader;
 use std::path::Path;
 
-use anyhow::{Context, Result};
+use serde_derive::Deserialize;
 
 /// Deserialization structure for the annotation JSON object
 #[derive(Deserialize)]

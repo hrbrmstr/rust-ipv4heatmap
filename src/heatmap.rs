@@ -1,12 +1,12 @@
 //! # Heatmap renderer.
 
-use std::fs::File;
-use std::io::{self, BufRead};
+use crate::colors;
+use crate::utils;
 
 use anyhow::{Context, Result};
 
-use crate::colors;
-use crate::utils;
+use std::fs::File;
+use std::io::{self, BufRead};
 
 use ril::{Rgba, Image};
 

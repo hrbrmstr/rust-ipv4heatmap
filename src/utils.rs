@@ -8,7 +8,9 @@ use std::net::Ipv4Addr;
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
+
 use anyhow::{Context, Result};
+
 use cidr::Ipv4Cidr;
 
 /// Given a filename or path and palette name (+ whether the palette should be inverted) 

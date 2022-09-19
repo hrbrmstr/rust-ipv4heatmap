@@ -2,11 +2,13 @@
 
 use crate::utils::bbox_from_cidr;
 use crate::annotations::Prefix;
+use crate::fonts::BUILTIN_FONT;
+
 use anyhow::{Context, Result};
 
 use hex_color::HexColor;
 
-use ril::{Font, Image, Rgba, TextSegment, TextLayout, OverlayMode};
+use ril::{Image, Rgba, TextSegment, TextLayout, OverlayMode};
 
 const PREFIX_DEFAULT_COLOR: Rgba = Rgba{r: 255, g:255, b:255, a:127};
 
@@ -15,11 +17,7 @@ pub fn annotate_prefixes(img: &mut Image<Rgba>, prefixes: Option<Vec<Prefix>>) -
 	
 	if let Some(prefixes) = prefixes {
 		
-		let builtin_font: ril::Font = Font::from_bytes(
-			include_bytes!("Inconsolata-CondensedRegular.ttf") as &[u8], 
-			128.0
-		)
-		.expect("Error loading builtin font.");
+		let builtin_font = BUILTIN_FONT.font.to_owned();
 		
 		for prefix in prefixes {			
 			

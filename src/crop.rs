@@ -1,8 +1,8 @@
 //! # Crop final heatmap output to the bounding box surrounding a list of CIDRs
 
-use ril::{Rgba, Image };
-
 use crate::utils::{BoundingBox, bbox_from_cidr, find_min, find_max};
+
+use ril::{Rgba, Image };
 
 /// Crop heatmap to the given CIDR list
 pub fn crop_cidrs<S>(img: &mut Image<Rgba>, crops: Option<S>) where S: Into<String>, {

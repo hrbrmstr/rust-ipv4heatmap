@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["load_font","Load the specified font from the annotations file. The builtin one will be used if the font fails to load."]],"struct":[["BUILTIN_FONT",""],["CrateFont",""]],"type":[["FontCache",""]]};
