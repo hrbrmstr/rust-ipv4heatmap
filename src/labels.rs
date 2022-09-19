@@ -1,4 +1,5 @@
 //! # CIDR block text wlabel annotation
+use anyhow::{Context, Result};
 
 use crate::utils::bbox_from_cidr;
 use crate::annotations::Label;
@@ -8,20 +9,29 @@ use hex_color::HexColor;
 use ril::{Font, Image, Rgba, TextSegment, TextLayout, OverlayMode};
 
 /// Given a vector of label annotations, draw the labels.
-pub fn annotate_cidrs(img: &mut Image<Rgba>, labels: Vec<Label>) {
-	
-	let builtin_font = include_bytes!("Inconsolata-CondensedRegular.ttf") as &[u8];
-	let builtin_font = Font::from_bytes(builtin_font, 128.0).expect("Error reading in default font");
-	
-	for label in labels {			
+pub fn annotate_cidrs(img: &mut Image<Rgba>, labels: Vec<Label>) -> Result<()> {
+
+	let builtin_font: ril::Font = Font::from_bytes(
+		include_bytes!("Inconsolata-CondensedRegular.ttf") as &[u8], 
+		128.0
+	)
+	.expect("Error loading builtin font.");
+		
+	for label in labels {
 		
 		let bbox = bbox_from_cidr(label.cidr);
-		let color = HexColor::parse_rgba(label.color.as_str()).expect("Invalid hex color in shade file.");
+		let color = HexColor::parse_rgba(label.color.as_str())
+		  .context("Invalid hex color in shade file.")?;
 		
 		let text = label.label.as_str();
 		let font = match label.font {
 			Some(f) => {
-        Font::open(f, 64.0).expect("Error parsing user-specified font.")
+        if let Ok(font) = Font::open(&f, 64.0) {
+					font
+				} else {
+					eprintln!("{} not found", f);
+					builtin_font.to_owned()
+				}
 			},
 			None => builtin_font.to_owned()
 		};
@@ -63,7 +73,9 @@ pub fn annotate_cidrs(img: &mut Image<Rgba>, labels: Vec<Label>) {
     }
 
     img.draw(&layout);
-		
+	
 	}
+  
+	Ok(())
 	
 }

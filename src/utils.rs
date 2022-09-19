@@ -6,16 +6,16 @@ use std::cmp::{min, max};
 use std::str::FromStr;
 use std::net::Ipv4Addr;
 use std::fs::File;
-use std::io::{self, BufRead, Write};
+use std::io::Write;
 use std::path::Path;
-
+use anyhow::{Context, Result};
 use cidr::Ipv4Cidr;
 
 /// Given a filename or path and palette name (+ whether the palette should be inverted) 
 /// write an SVG legend out to the specified file.
-pub fn output_legend<P>(filename: P, name: &str, invert: bool) where P: AsRef<Path>, {
+pub fn output_legend<P>(filename: P, name: &str, invert: bool) -> Result<()> where P: AsRef<Path>, {
 
-	let cols = legend_cols(name, invert);
+	let cols = legend_cols(name, invert)?;
 
  let res = format!(r#"
 	<svg class="hilbert-legend" width="340" height="70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -62,18 +62,13 @@ pub fn output_legend<P>(filename: P, name: &str, invert: bool) where P: AsRef<Pa
 	</svg>
 	"#, cols[0], cols[1], cols[2], cols[3], cols[4], cols[5], cols[6], cols[7], cols[8]);
 
-	let mut output = File::create(filename).expect("Error opening legend file for writing.");
-  write!(output, "{}", res).expect("Error writing legend file.");
+	let mut output = File::create(filename).context("Error opening legend file for writing.")?;
+  write!(output, "{}", res).context("Error writing legend file.")?;
+
+	Ok(())
 
 }
 
-/// Given a filename or `Path`, open the text file for reading and send back buffered lines
-/// 
-/// Panics on file not found since it's in a CLI.
-pub fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> where P: AsRef<Path>, {
-	let file = File::open(filename).expect("Cannot find file containing IPv4s.");
-	Ok(io::BufReader::new(file).lines())
-}
 
 /// Find the maximum value in iterable
 pub fn find_max<I>(iter: I) -> Option<I::Item> where I: Iterator, I::Item: Ord, {
@@ -97,10 +92,10 @@ pub fn find_min<I>(iter: I) -> Option<I::Item> where I: Iterator, I::Item: Ord, 
 /// let res = ip_to_numeric("192.168.1.1");
 /// ## 3232235777
 /// ```
-pub fn ip_to_numeric<S>(ip: S) -> u32 where S: Into<String>, {
-	let addr = Ipv4Addr::from_str(&ip.into()).expect("Invalid IPv4");
+pub fn ip_to_numeric<S>(ip: S) -> Result<u32> where S: Into<String>, {
+	let addr = Ipv4Addr::from_str(&ip.into()).context("Invalid IPv4")?;
 	let addr_u32: u32 = addr.into();
-	addr_u32
+	Ok(addr_u32)
 }
 
 /// Convert an IPv4 address (in integer form) to a 12th order Hilbert x/y point
@@ -291,13 +286,8 @@ fn test_hil_xy_from_s() {
 
 #[test]
 fn test_ip_to_numeric() {
-	let result = self::ip_to_numeric("192.168.1.1");
+	let result = self::ip_to_numeric("192.168.1.1").expect("IP conversion error");
 	assert_eq!(result, 3232235777);
-}
-
-#[test]
-fn test_read_lines() {
-  assert!(self::read_lines("Cargo.toml").is_ok())
 }
 
 #[test]

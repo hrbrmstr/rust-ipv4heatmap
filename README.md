@@ -1,3 +1,4 @@
+[![RustCheck](https://github.com/hrbrmstr/rust-ipv4heatmap/actions/workflows/rust-project-check.yml/badge.svg)](https://github.com/hrbrmstr/rust-ipv4heatmap/actions/workflows/rust-project-check.yml)
 # Rustified IPv4 Heatmap
 
 This is a pure Rust version of the C [ipv4-heatmap][def] utility originally published by The Measurement Factory and [updated forever-and-a-day ago by me](https://github.com/hrbrmstr/ipv4-heatmap) to add better palettes.

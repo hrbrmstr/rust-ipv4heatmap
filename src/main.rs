@@ -12,6 +12,7 @@
 mod annotations;
 pub mod utils;
 mod colors;
+mod heatmap;
 mod shades;
 mod outlines;
 mod labels;
@@ -25,6 +26,8 @@ use crate::colors::{WHITE, BLACK};
 use clap::Parser;
 
 use ril::{Image};
+
+use anyhow::{Result, anyhow};
 
 /// Supported CLI args
 #[derive(Parser, Debug)]
@@ -71,54 +74,32 @@ struct Args {
 }
 
 /// main!
-fn main() {
+fn main() -> Result<()> {
 	
 	let args = Args::parse();
 	
-	let colors: Vec<ril::Rgba> = colors::select_palette(&args.palette, args.invert);
-	
 	let mut img = Image::new(4096, 4096, if args.reverse { WHITE } else { BLACK });
 	
-	if let Ok(lines) = utils::read_lines(args.filename) {
-		
-		for ip in lines.flatten() {
-			
-			
-			let (x, y) = utils::hil_xy_from_s(utils::ip_to_numeric(ip), 12);
-			
-			let pixel = img.get_pixel(x, y).unwrap();
-			
-			let k = colors.iter().position(|x| x == pixel);
-			
-			match k {
-				Some(pos) => 
-				if pos < colors.len()-1 { 
-					img.set_pixel(x, y, colors[pos+1])
-				}
-				None => img.set_pixel(x, y, colors[0])
-			}
-			
-		}
-	}
+	heatmap::render_heatmap(&mut img, args.filename, args.palette.to_owned(), args.invert)?;
 	
 	if let Some(annotations) = args.annotations {
 		
-		let ann: AnnotationCollection = annotations::load_config(annotations);
+		let ann: AnnotationCollection = annotations::load_config(annotations)?;
 		
 		if let Some(shades) = ann.shades {
-			shades::shade_cidrs(&mut img, shades);
+			shades::shade_cidrs(&mut img, shades)?;
 		}
 		
 		if let Some(outlines) = ann.outlines {
-			outlines::outline_cidrs(&mut img, outlines);
+			outlines::outline_cidrs(&mut img, outlines)?;
 		}
 		
 		if let Some(labels) = ann.labels {
-			labels::annotate_cidrs(&mut img, labels);		
+			labels::annotate_cidrs(&mut img, labels)?;		
 		}
 		
 		if let Some(prefixes) = ann.prefixes {
-			prefixes::annotate_prefixes(&mut img, prefixes);		
+			prefixes::annotate_prefixes(&mut img, prefixes)?;		
 		}
 		
 	}
@@ -127,15 +108,19 @@ fn main() {
 		mask::mask_cidrs(&mut img, masks);
 	}
 	
-	
 	if let Some(crops) = args.crop {
 		crop::crop_cidrs(&mut img, crops);
 	}
 	
-	img.save_inferred(args.output).expect("Error saving file.");
-	
-	if let Some(f) = args.legend_file {
-		utils::output_legend(f, &args.palette, args.invert)
+	match img.save_inferred(args.output) {
+		Ok(_) => {
+			if let Some(f) = args.legend_file {
+				utils::output_legend(f, &args.palette, args.invert)?;
+			}
+		},
+		Err(e) => return Err(anyhow!("Error saving heatmap image file: {e}."))
 	}
+	
+	Ok(())
 	
 }

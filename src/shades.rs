@@ -3,17 +3,19 @@
 use crate::utils::bbox_from_cidr;
 use crate::annotations::Shade;
 
+use anyhow::{Context, Result};
+
 use hex_color::HexColor;
 
 use ril::{Rectangle, Rgba, OverlayMode, Image};
 
 /// Given a vector of CIDRs, shade them in.
-pub fn shade_cidrs(img: &mut Image<Rgba>, shades: Vec<Shade>) {
+pub fn shade_cidrs(img: &mut Image<Rgba>, shades: Vec<Shade>) -> Result<()> {
   
   for shade in shades {
     
     let bbox = bbox_from_cidr(&shade.cidr);
-    let fill = HexColor::parse_rgba(shade.fill.as_str()).expect("Invalid hex color in shade file.");
+    let fill = HexColor::parse_rgba(shade.fill.as_str()).context("Invalid hex color in shade file.")?;
     
     let fill = Rgba{r:fill.r, g:fill.g, b:fill.b, a:fill.a};
 
@@ -30,5 +32,7 @@ pub fn shade_cidrs(img: &mut Image<Rgba>, shades: Vec<Shade>) {
 		}
     
   }
+
+	Ok(())
   
 }

@@ -36,6 +36,8 @@ use std::fs::File;
 use std::io::BufReader;
 use std::path::Path;
 
+use anyhow::{Context, Result};
+
 /// Deserialization structure for the annotation JSON object
 #[derive(Deserialize)]
 pub struct Annotation {
@@ -107,12 +109,12 @@ pub struct AnnotationCollection {
 }
 
 /// Open and read the spefified annotations JSON file.
-pub fn load_config<P: AsRef<Path>>(path: P) -> AnnotationCollection {
+pub fn load_config<P: AsRef<Path>>(path: P) -> Result<AnnotationCollection> {
 
-	let file = File::open(path).expect("Error opening annotations file.");
+	let file = File::open(path).context("Error opening annotations file.")?;
 	let reader = BufReader::new(file);
 	
-	let ann: Vec<Annotation> = serde_json::from_reader(reader).expect("Error loading annotations.");
+	let ann: Vec<Annotation> = serde_json::from_reader(reader).context("Error loading annotations.")?;
 
 	let outlines: Vec<Outline> = ann.iter()
 	  .filter(|x| x.border_color.is_some())
@@ -152,13 +154,11 @@ pub fn load_config<P: AsRef<Path>>(path: P) -> AnnotationCollection {
 		})
     .collect();
 
-  
-
-  AnnotationCollection {
+  Ok(AnnotationCollection {
 		outlines: Some(outlines),
 		shades: Some(shades),
 		labels: Some(labels),
 		prefixes: Some(prefixes)
-	}
+	})
 
 }

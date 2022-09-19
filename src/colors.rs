@@ -4,6 +4,7 @@ use ril::Rgba;
 use colorgrad::*;
 use lazy_static::lazy_static;
 use std::collections::HashMap;
+use anyhow::{Context, Result};
 
 lazy_static! {
   static ref PALETTES: HashMap<&'static str, fn() -> Gradient > = {
@@ -57,9 +58,9 @@ pub const BLACK:Rgba = Rgba{r:0, g:0, b:0, a:255};
 fn upgrade(dom: f64) -> u8 { (dom * 255.0) as u8 }
 
 /// Return 256 colors from the selected palette, optionally reversing it
-pub fn select_palette(name: &str, invert: bool) -> Vec<Rgba> {
+pub fn select_palette(name: &str, invert: bool) -> Result<Vec<Rgba>> {
   
-  let pal = PALETTES.get(name).expect("Unsupported palette.");
+  let pal = PALETTES.get(name).context("Unsupported palette.")?;
   let cols = pal().colors(256);
   
   let mut res: Vec<Rgba> = cols.into_iter().map(|c| Rgba{r:upgrade(c.r) , g:upgrade(c.g), b:upgrade(c.b), a:255}).collect();
@@ -68,14 +69,14 @@ pub fn select_palette(name: &str, invert: bool) -> Vec<Rgba> {
     res.reverse();
   }
   
-  res
+  Ok(res)
   
 }
 
 /// Generate the 9-color palette used in the legend gradient, optionally reversing it
-pub fn legend_cols(name: &str, invert: bool) -> Vec<String> {
+pub fn legend_cols(name: &str, invert: bool) -> Result<Vec<String>> {
   
-  let pal = PALETTES.get(name).expect("Unsupported palette.");
+  let pal = PALETTES.get(name).context("Unsupported palette.")?;
   let cols = pal().colors(9);
   
   let mut res: Vec<String> = cols.into_iter().map(|c| c.to_hex_string()).collect();
@@ -84,5 +85,6 @@ pub fn legend_cols(name: &str, invert: bool) -> Vec<String> {
     res.reverse()
   }
   
-  res
+  Ok(res)
+
 }
