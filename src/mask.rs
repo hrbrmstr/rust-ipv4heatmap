@@ -2,7 +2,7 @@
 
 use crate::utils::{ bbox_from_cidr, BoundingBox };
 
-use ril::{Rectangle, Image, L, Rgba};
+use ril::prelude::*;
 
 /// Given a vector of areas to highlight (masking all other blocks), turn all non-specified
 /// blocks transparent.
@@ -18,9 +18,8 @@ pub fn mask_cidrs<S>(img: &mut Image<Rgba>, masks: Option<S>) where S: Into<Stri
 		
 		for cidr in cidrs {
 			
-			let rect  = Rectangle::new()
-			.with_position(cidr.x() as u32, cidr.y() as u32)
-			.with_size(cidr.width() as u32, cidr.height() as u32)
+			let rect: Rectangle<L>  = Rectangle::at(cidr.x() as u32, cidr.y() as u32)
+			.with_size(cidr.width(), cidr.height())
 			.with_fill(L(0));
 			
 			img_mask.draw(&rect);

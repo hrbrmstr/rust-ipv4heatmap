@@ -8,20 +8,20 @@ categories = ["data-visualization", "command-line-utilities"]
 keywords = ["cli", "ipaddress", "ipv4", "datavis", "hilbert"]
 homepage = "https://github.com/hrbrmstr/rust-ipv4-heatmap"
 repository = "https://github.com/hrbrmstr/rust-ipv4-heatmap"
-version = "0.5.0"
+version = "0.5.1"
 edition = "2021"
 
 [dependencies]
-clap = { version = "3.2.20", features = ["derive"] }
-hex_color = "2.0.0"
+clap = { version = "4.0.1", features = ["derive"] }
+hex_color = "3.0.0"
 cidr = "0.2.1"
 rusttype = "0.9.2"
 serde = "1.0.144"
 serde_derive = "1.0.144"
 serde_json = "1.0.85"
 conv = "0.3.3"
-ril = { git = "https://github.com/jay3332/ril", features = ["all"] }
-# ril = { version = "0.4.0", features = ["all"] }
+# ril = { git = "https://github.com/jay3332/ril", features = ["all"] }
+ril = { version = "0.10.1", features = ["all"] }
 colorgrad = "0.6.1"
 lazy_static = "1.4.0"
 anyhow = "1.0.65"

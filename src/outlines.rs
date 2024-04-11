@@ -7,7 +7,7 @@ use anyhow::{Context, Result};
 
 use hex_color::HexColor;
 
-use ril::{Border, Rectangle, Rgba, Image};
+use ril::prelude::*;
 
 /// Given a vector of CIDRs, draw a border around them.
 pub fn outline_cidrs(img: &mut Image<Rgba>, outlines: Option<Vec<Outline>>) -> Result<()> {
@@ -32,10 +32,10 @@ pub fn outline_cidrs(img: &mut Image<Rgba>, outlines: Option<Vec<Outline>>) -> R
 						ril::BorderPosition::Outset
 					}
 				);
+
 				
-				let rect  = Rectangle::new()
-				.with_position(bbox.x() as u32, bbox.y() as u32)
-				.with_size(bbox.width() as u32, bbox.height() as u32)
+				let rect: Rectangle<Rgba> = Rectangle::at(bbox.x() as u32, bbox.y() as u32)
+				.with_size(bbox.width(), bbox.height())
 				.with_border(border);
 				
 				img.draw(&rect);

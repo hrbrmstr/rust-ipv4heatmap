@@ -24,9 +24,8 @@ pub fn shade_cidrs(img: &mut Image<Rgba>, shades: Option<Vec<Shade>>) -> Result<
 			if bbox.width() <= 1 || bbox.height() <= 1 {
 				img.set_pixel(bbox.x() as u32, bbox.y() as u32, fill)
 			} else {
-				let rect  = Rectangle::new()
-				.with_position(bbox.x() as u32, bbox.y() as u32)
-				.with_size(bbox.width() as u32, bbox.height() as u32)
+				let rect  = Rectangle::at(bbox.x() as u32, bbox.y() as u32)
+				.with_size(bbox.width(), bbox.height())
 				.with_fill(fill)
 				.with_overlay_mode(OverlayMode::Merge);
 				
